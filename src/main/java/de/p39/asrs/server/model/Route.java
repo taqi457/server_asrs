@@ -4,6 +4,10 @@ package de.p39.asrs.server.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+@Entity
 public class Route extends ABasicObject<Long> {
 
 	/**
@@ -11,8 +15,10 @@ public class Route extends ABasicObject<Long> {
 	 */
 	private static final long serialVersionUID = 2711246951505591683L;
 	
-	
+	@OneToMany
 	private List<Coordinate> coordinates;
+	
+	@OneToMany
 	private List<Site> sites;
 
 	public Route(Long id, String name) {
@@ -51,6 +57,16 @@ public class Route extends ABasicObject<Long> {
 	 */
 	public void setSites(List<Site> sites) {
 		this.sites = sites;
+	}
+	
+	@Id
+	public Long getId(){
+		return this.getId();
+	}
+	
+	@Id
+	public void setId(Long id){
+		this.setId(id);
 	}
 
 }
