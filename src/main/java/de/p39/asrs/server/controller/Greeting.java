@@ -1,4 +1,4 @@
-package hello;
+package de.p39.asrs.server.controller;
 
 public class Greeting {
 

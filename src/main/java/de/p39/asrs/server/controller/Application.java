@@ -1,4 +1,4 @@
-package hello;
+package de.p39.asrs.server.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
