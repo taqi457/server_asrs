@@ -2,6 +2,11 @@ package de.p39.asrs.server.model;
 
 import java.util.Locale;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Picture extends Medium {
 
 	/**
@@ -29,4 +34,15 @@ public class Picture extends Medium {
 		this.path = path;
 	}
 
+	@Id
+	@GeneratedValue
+	public Long getId(){
+		return this.getId();
+	}
+	
+	@Id
+	@GeneratedValue
+	public void setId(Long id){
+		this.setId(id);
+	}
 }

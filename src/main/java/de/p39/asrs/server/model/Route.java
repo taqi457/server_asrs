@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 @Entity
 public class Route extends ABasicObject<Long> {
 
@@ -15,10 +18,10 @@ public class Route extends ABasicObject<Long> {
 	 */
 	private static final long serialVersionUID = 2711246951505591683L;
 	
-	@OneToMany
+	@OneToMany(targetEntity=Coordinate.class, fetch=FetchType.EAGER)
 	private List<Coordinate> coordinates;
 	
-	@OneToMany
+	@OneToMany(targetEntity=Site.class, fetch=FetchType.EAGER)
 	private List<Site> sites;
 
 	public Route(Long id, String name) {
@@ -60,11 +63,13 @@ public class Route extends ABasicObject<Long> {
 	}
 	
 	@Id
+	@GeneratedValue
 	public Long getId(){
 		return this.getId();
 	}
 	
 	@Id
+	@GeneratedValue
 	public void setId(Long id){
 		this.setId(id);
 	}

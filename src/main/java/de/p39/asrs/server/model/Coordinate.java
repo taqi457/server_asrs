@@ -1,5 +1,10 @@
 package de.p39.asrs.server.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Coordinate extends ABasicObject<Long> {
 
 	/**
@@ -45,7 +50,17 @@ public class Coordinate extends ABasicObject<Long> {
 		this.longitude = longitude;
 	}
 
-
+	@Id
+	@GeneratedValue
+	public Long getId(){
+		return this.getId();
+	}
+	
+	@Id
+	@GeneratedValue
+	public void setId(Long id){
+		this.setId(id);
+	}
 	
 
 }

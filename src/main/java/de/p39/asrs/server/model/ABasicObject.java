@@ -2,7 +2,7 @@ package de.p39.asrs.server.model;
 
 import java.io.Serializable;
 
-public abstract class ABasicObject<K> implements Serializable {
+public abstract class ABasicObject<K extends Serializable> implements Serializable {
 
 	/**
 	 * 
