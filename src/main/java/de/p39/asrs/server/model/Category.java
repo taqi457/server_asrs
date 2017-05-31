@@ -2,8 +2,13 @@ package de.p39.asrs.server.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+/**
+ * 
+ * @author adrianrebmann
+ *
+ */
 @Entity
 public class Category extends ABasicObject<Long> {
 
@@ -33,13 +38,13 @@ public class Category extends ABasicObject<Long> {
 	}
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId(){
 		return this.getId();
 	}
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public void setId(Long id){
 		this.setId(id);
 	}

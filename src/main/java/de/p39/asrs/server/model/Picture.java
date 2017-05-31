@@ -4,8 +4,13 @@ import java.util.Locale;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+/**
+ * 
+ * @author adrianrebmann
+ *
+ */
 @Entity
 public class Picture extends Medium {
 
@@ -35,13 +40,13 @@ public class Picture extends Medium {
 	}
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId(){
 		return this.getId();
 	}
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public void setId(Long id){
 		this.setId(id);
 	}

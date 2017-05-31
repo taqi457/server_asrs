@@ -1,11 +1,12 @@
 package de.p39.asrs.server.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,17 +24,16 @@ public class Site extends ABasicObject<Long> {
 	 */
 	private static final long serialVersionUID = -4050480950169388654L;
 
-	@OneToOne
 	private Coordinate coordinate;
-	@OneToMany(targetEntity=Audio.class, fetch=FetchType.EAGER)
-	private List<Audio> audios;
-	@OneToMany(targetEntity=Video.class, fetch=FetchType.EAGER)
-	private List<Video> videos;
-	@OneToMany(targetEntity=Text.class, fetch=FetchType.EAGER)
-	private List<Text> texts;
-	@OneToMany(targetEntity=Picture.class, fetch=FetchType.EAGER)
-	private List<Picture> pictures;
-	@ManyToOne(targetEntity=Category.class, fetch=FetchType.EAGER)
+
+	private Set<Audio> audios;
+
+	private Set<Video> videos;
+
+	private Set<Text> texts;
+
+	private Set<Picture> pictures;
+	
 	private Category category;
 
 	public Site(Long id, String name,Category category) {
@@ -48,15 +48,16 @@ public class Site extends ABasicObject<Long> {
 	}
 
 	private void init() {
-		this.audios=new ArrayList<>();
-		this.videos=new ArrayList<>();
-		this.pictures=new ArrayList<>();
-		this.texts=new ArrayList<>();
+		this.audios=new HashSet<>();
+		this.videos=new HashSet<>();
+		this.pictures=new HashSet<>();
+		this.texts=new HashSet<>();
 	}
 
 	/**
 	 * @return the coordinate
 	 */
+	@OneToOne
 	public Coordinate getCoordinate() {
 		return coordinate;
 	}
@@ -65,6 +66,7 @@ public class Site extends ABasicObject<Long> {
 	 * @param coordinate
 	 *            the coordinate to set
 	 */
+	@OneToOne
 	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
@@ -72,62 +74,71 @@ public class Site extends ABasicObject<Long> {
 	/**
 	 * @return the audios
 	 */
-	public List<Audio> getAudios() {
+	@OneToMany(targetEntity=Audio.class, fetch=FetchType.EAGER)
+	public Set<Audio> getAudios() {
 		return audios;
 	}
 
 	/**
 	 * @param audios the audios to set
 	 */
-	public void setAudios(List<Audio> audios) {
+	@OneToMany(targetEntity=Audio.class, fetch=FetchType.EAGER)
+	public void setAudios(Set<Audio> audios) {
 		this.audios = audios;
 	}
 
 	/**
 	 * @return the videos
 	 */
-	public List<Video> getVideos() {
+	@OneToMany(targetEntity=Video.class, fetch=FetchType.EAGER)
+	public Set<Video> getVideos() {
 		return videos;
 	}
 
 	/**
 	 * @param videos the videos to set
 	 */
-	public void setVideos(List<Video> videos) {
+	@OneToMany(targetEntity=Video.class, fetch=FetchType.EAGER)
+	public void setVideos(Set<Video> videos) {
 		this.videos = videos;
 	}
 
 	/**
 	 * @return the texts
 	 */
-	public List<Text> getTexts() {
+	@OneToMany(targetEntity=Text.class, fetch=FetchType.EAGER)
+	public Set<Text> getTexts() {
 		return texts;
 	}
 
 	/**
 	 * @param texts the texts to set
 	 */
-	public void setTexts(List<Text> texts) {
+	@OneToMany(targetEntity=Text.class, fetch=FetchType.EAGER)
+	public void setTexts(Set<Text> texts) {
 		this.texts = texts;
 	}
 
 	/**
 	 * @return the pictures
 	 */
-	public List<Picture> getPictures() {
+	@OneToMany(targetEntity=Picture.class, fetch=FetchType.EAGER)
+	public Set<Picture> getPictures() {
 		return pictures;
 	}
 
 	/**
 	 * @param pictures the pictures to set
 	 */
-	public void setPictures(List<Picture> pictures) {
+	@OneToMany(targetEntity=Picture.class, fetch=FetchType.EAGER)
+	public void setPictures(Set<Picture> pictures) {
 		this.pictures = pictures;
 	}
 
 	/**
 	 * @return the category
 	 */
+	@ManyToOne(targetEntity=Category.class, fetch=FetchType.EAGER)
 	public Category getCategory() {
 		return category;
 	}
@@ -135,18 +146,19 @@ public class Site extends ABasicObject<Long> {
 	/**
 	 * @param category the category to set
 	 */
+	@ManyToOne(targetEntity=Category.class, fetch=FetchType.EAGER)
 	public void setCategory(Category category) {
 		this.category = category;
 	}
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId(){
 		return this.getId();
 	}
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public void setId(Long id){
 		this.setId(id);
 	}

@@ -12,5 +12,15 @@
 		<class>de.p39.asrs.server.model.Site</class>
 		<class>de.p39.asrs.server.model.Text</class>
 		<class>de.p39.asrs.server.model.Video</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/server" />
+			<property name="javax.persistence.jdbc.user" value="asrs" />
+			<property name="javax.persistence.jdbc.password" value="roman" />
+
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
+		</properties>
 	</persistence-unit>
 </persistence>
