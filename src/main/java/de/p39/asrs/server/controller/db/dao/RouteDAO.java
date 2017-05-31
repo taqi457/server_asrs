@@ -1,6 +1,6 @@
 package de.p39.asrs.server.controller.db.dao;
 
-import java.util.Set;
+import java.util.List;
 
 import de.p39.asrs.server.model.Route;
 
@@ -10,10 +10,13 @@ public interface RouteDAO {
 	
 	public Route getRouteById(Long id);
 	
-	public Set<Route> getAllRoutes();
+	public List<Route> getAllRoutes();
 	
-	public void deleteRoute(Route r);
+	public void deleteRoute(Long id);
 	
 	public void updateRoute(Route r);
+	
+	public List<Route> getRoutesByName(String s);
+	
 
 }

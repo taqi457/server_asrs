@@ -27,6 +27,12 @@ public class Medium extends ABasicObject<Long> {
 		super(id, name);
 		this.setLocale(locale);
 	}
+	
+	public Medium(){super();}
+	
+	public Medium(String name){
+		super(name);
+	}
 
 	/**
 	 * @return the locale
@@ -47,13 +53,13 @@ public class Medium extends ABasicObject<Long> {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId(){
-		return this.getId();
+		return super.getId();
 	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public void setId(Long id){
-		this.setId(id);
+		super.setId(id);
 	}
 
 }

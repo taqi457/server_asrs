@@ -1,11 +1,14 @@
 package de.p39.asrs.server.model;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 /**
  * 
  * @author adrianrebmann
@@ -24,6 +27,10 @@ public class Video extends Medium {
 	public Video(Long id, String name,Locale locale) {
 		super(id, name,locale);
 	}
+	
+	public Video(){super();}
+	
+	public Video(String name){super(name);}
 
 	/**
 	 * @return the link
@@ -42,13 +49,45 @@ public class Video extends Medium {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId(){
-		return this.getId();
+		return super.getId();
 	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public void setId(Long id){
-		this.setId(id);
+		super.setId(id);
+	}
+	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return super.getName();
+	}
+
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		super.setName(name);
+	}
+
+	/**
+	 * @return the timestamp
+	 */
+	@Temporal(TemporalType.TIMESTAMP) 
+	public Date getTimestamp() {
+		return super.getTimestamp();
+	}
+
+	/**
+	 * @param timestamp
+	 *            the timestamp to set
+	 */
+	@Temporal(TemporalType.TIMESTAMP) 
+	public void setTimestamp(Date timestamp) {
+		super.setTimestamp(timestamp);
 	}
 
 }

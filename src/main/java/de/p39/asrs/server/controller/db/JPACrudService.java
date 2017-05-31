@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -219,6 +220,12 @@ public class JPACrudService implements CrudFacade {
 	 */
 	public EntityManagerFactory getEmf() {
 		return emf;
+	}
+
+	@Override
+	public Query createQuery(String jpql) {
+		EntityManager em = this.emf.createEntityManager();
+		return em.createQuery(jpql);
 	}
 
 	

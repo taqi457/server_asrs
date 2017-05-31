@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import de.p39.asrs.server.model.ABasicObject;
 
 /**
@@ -97,7 +99,7 @@ public interface CrudFacade {
 	/*********************************************************************
 	 * below there are more specific methods to access persistent objects
 	 *********************************************************************/
-	
+	public Query createQuery(String jpql);
 	
 
 }
