@@ -15,5 +15,7 @@ public class DBTest {
 		CrudFacade cf = new JPACrudService("server");
 		assertTrue(cf.count(Route.class)==0);
 	}
+	
+	
 
 }
