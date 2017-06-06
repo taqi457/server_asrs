@@ -43,11 +43,12 @@ public class RouteDAOImpl implements RouteDAO {
 		this.cf.update(r);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Route> getRoutesByName(String s) {
 		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE name = :name");
 		q.setParameter("name", s);
-		return (List) q.getResultList();
+		return (List<Route>) q.getResultList();
 	}
 
 	@Override

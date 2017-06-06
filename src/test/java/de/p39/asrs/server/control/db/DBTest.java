@@ -3,6 +3,10 @@ package de.p39.asrs.server.control.db;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
+<<<<<<< HEAD
+=======
+import java.util.LinkedList;
+>>>>>>> bd8171a03a4624289695dfbe43d0bf18c10d2d8e
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -113,7 +117,7 @@ public class DBTest {
 		s2.addMedium(p2);
 		
 		Route r1 = new Route("iCoffe to Mensa");
-		Set<Coordinate> coordinates = new HashSet<>();
+		List<Coordinate> coordinates = new LinkedList<>();
 		coordinates.add(co1);
 		coordinates.add(co2);
 		r1.setCoordinates(coordinates);

@@ -241,4 +241,8 @@ public class Site extends ABasicObject<Long> {
 			this.pictures.remove((Picture) m);
 		}
 	}
+
+	public Double calculateDist(Coordinate coord) {
+		return coordinate.getDistance(coord);
+	}
 }
