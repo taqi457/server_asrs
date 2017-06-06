@@ -2,7 +2,7 @@ package de.p39.asrs.server.controller.db.dao.impl;
 
 import java.util.List;
 
-import de.p39.asrs.server.controller.db.JPACrudService;
+import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.Medium;
@@ -10,7 +10,7 @@ import de.p39.asrs.server.model.Site;
 
 public class SiteDAOImpl implements SiteDAO {
 
-	public SiteDAOImpl(JPACrudService jpaCrudService) {
+	public SiteDAOImpl(CrudFacade jpaCrudService) {
 		// TODO Auto-generated constructor stub
 	}
 

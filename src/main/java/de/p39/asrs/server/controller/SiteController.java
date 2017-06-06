@@ -4,13 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.p39.asrs.server.controller.db.JPACrudService;
+import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.db.dao.impl.SiteDAOImpl;
 import de.p39.asrs.server.controller.exceptions.BadRequestException;
@@ -22,11 +23,16 @@ import de.p39.asrs.server.model.Site;
 @RequestMapping("/site")
 public class SiteController {
 
-	private final SiteDAO daoInterface = new SiteDAOImpl(new JPACrudService());
+	private final SiteDAO daoInterface;
 
+	@Autowired
+	public SiteController(CrudFacade cf) {
+		daoInterface = new SiteDAOImpl(cf);
+	}
+	
 	@RequestMapping(value = "", method = RequestMethod.GET)
     public List<Site> routeAll(@RequestParam(value = "kind") String kind){
-		if(kind != "all"){
+		if(!kind.equals("all")){
     		throw new BadRequestException("Specifiy an ID by /site/{id} or all by /site?kind=all");
     	}
     	return daoInterface.getAllSites();
@@ -41,21 +47,25 @@ public class SiteController {
 	}
 
 	@RequestMapping(value="/gps", method=RequestMethod.GET)
-    public List<Site> routeGPS(@RequestParam Map<String,Double> requestParam) {
-    	Double lat = requestParam.get("lat");
-    	Double lon = requestParam.get("lon");
-    	Double rad = requestParam.get("radius");
-    	if(lat == null || lon == null || rad == null)
-    		throw new BadRequestException("Specify longitude (lon), latitide (lat) and radius in meters");
-    	Coordinate coord = new Coordinate(lat,lon);
-    
-    	List<Site> result = new LinkedList<>();
-    	List<Site> allSites = daoInterface.getAllSites();
-    	
-    	for (Site site : allSites){
-    		if(site.calculateDist(coord) <= rad)
-    			result.add(site);
-    	}
-    	return result;
+    public List<Site> routeGPS(@RequestParam Map<String,String> requestParam) {
+		Double lat, lon, rad;
+		try {
+			lat = Double.parseDouble(requestParam.get("lat"));
+			lon = Double.parseDouble(requestParam.get("lon"));
+			rad = Double.parseDouble(requestParam.get("radius"));
+		} catch (NullPointerException | NumberFormatException e) {
+			throw new BadRequestException(
+					"Provide latitude, longitude and radius e.g. /gps?lat=1.0&lon=1.0&radius=10.0");
+		}
+		Coordinate coord = new Coordinate(lat, lon);
+
+		List<Site> result = new LinkedList<>();
+		List<Site> allSites = daoInterface.getAllSites();
+
+		for (Site site : allSites) {
+			if (site.calculateDist(coord) <= rad)
+				result.add(site);
+		}
+		return result;
     } 
 }
