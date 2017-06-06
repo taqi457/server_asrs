@@ -6,13 +6,9 @@ import javax.persistence.Query;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
-import de.p39.asrs.server.model.Audio;
 import de.p39.asrs.server.model.Coordinate;
-import de.p39.asrs.server.model.Picture;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
-import de.p39.asrs.server.model.Text;
-import de.p39.asrs.server.model.Video;
 
 public class RouteDAOImpl implements RouteDAO {
 
@@ -24,26 +20,6 @@ public class RouteDAOImpl implements RouteDAO {
 
 	@Override
 	public void instertRoute(Route r) {
-		/*for(Coordinate c : r.getCoordinates()){
-			this.cf.create(c);
-		}
-		for(Site s : r.getSites()){
-			this.cf.create(s.getCoordinate());
-			this.cf.create(s.getCategory());
-			for(Audio a : s.getAudios()){
-				this.cf.create(a);
-			}
-			for(Video v : s.getVideos()){
-				this.cf.create(v);
-			}
-			for(Text t : s.getTexts()){
-				this.cf.create(t);
-			}
-			for(Picture p: s.getPictures()){
-				this.cf.create(p);
-			}
-			this.cf.create(s);
-		}*/
 		this.cf.create(r);
 	}
 
@@ -72,6 +48,42 @@ public class RouteDAOImpl implements RouteDAO {
 		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE name = :name");
 		q.setParameter("name", s);
 		return (List) q.getResultList();
+	}
+
+	@Override
+	public void addSite(Route r, Site s) {
+		r.addSite(s);
+		this.cf.update(r);
+	}
+
+	@Override
+	public List<Site> getSites(Route r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addCoordinate(Route r, Coordinate c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Coordinate> getCoordinates(Route r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getGPX(Route r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setGPX(Route r, String gpx) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

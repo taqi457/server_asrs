@@ -144,5 +144,24 @@ public class Route extends ABasicObject<Long> {
 	public void setGpx(String gpx) {
 		this.gpx = gpx;
 	}
+	
+	/**
+	 * add and remove methods
+	 */
+	public void addCoordinate(Coordinate c){
+		this.coordinates.add(c);
+	}
+	
+	public void removeCoordinate(Coordinate c){
+		this.coordinates.remove(c);
+	}
+	
+	public void addSite(Site s){
+		this.sites.add(s);
+	}
+	
+	public void removeSite(Site s){
+		this.sites.remove(s);
+	}
 
 }

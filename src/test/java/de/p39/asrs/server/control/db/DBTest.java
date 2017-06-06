@@ -3,9 +3,11 @@ package de.p39.asrs.server.control.db;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
@@ -25,17 +27,42 @@ public class DBTest {
 
 	
 	@Test
+	@Ignore
 	public void createDbTest(){
 		CrudFacade cf = new JPACrudService("server");
 		assertTrue(cf.count(Route.class)==0);
 	}
 	
 	@Test
+	@Ignore
 	public void routeCreationThenFindingTest(){
 		CrudFacade cf = new JPACrudService("server");
 		RouteDAO dao= new RouteDAOImpl(cf);
 		Route r = this.createDummyData();
 		dao.instertRoute(r);
+		List<Route> routes = dao.getRoutesByName("iCoffe to Mensa");
+		assertTrue(routes.size()==1);
+		r = routes.get(0);
+		assertTrue(r.getSites().size()==2);
+		for(Site s : r.getSites()){
+			assertTrue(s.getAudios().size()==1);
+			assertTrue(s.getPictures().size()==1);
+			assertTrue(s.getTexts().size()==1);
+			assertTrue(s.getVideos().size()==1);
+		}
+	}
+	
+	@Test
+	public void routeCreationThenFindingThenUpdateingTest(){
+		CrudFacade cf = new JPACrudService("server");
+		RouteDAO dao= new RouteDAOImpl(cf);
+		Route r = this.createDummyData();
+		dao.instertRoute(r);
+		List<Route> routes = dao.getRoutesByName("iCoffe to Mensa");
+		assertTrue(routes.size()==1);
+		r = routes.get(0);
+		r.setName("Mensa to iCoffee");
+		dao.updateRoute(r);
 	}
 	
 	
