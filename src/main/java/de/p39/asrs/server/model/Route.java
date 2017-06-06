@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,7 +36,13 @@ public class Route extends ABasicObject<Long> {
 	private List<Coordinate> coordinates;
 	private String gpx;
 	private Set<Site> sites;
-
+	/**
+	 * in ms
+	 */
+	private Long duration;
+	private Category category;
+	private Double amplitude;
+	
 	public Route(Long id, String name) {
 		super(id, name);
 		this.init();
@@ -149,6 +156,52 @@ public class Route extends ABasicObject<Long> {
 		this.gpx = gpx;
 	}
 	
+	
+	
+	/**
+	 * @return the duration
+	 */
+	public Long getDuration() {
+		return duration;
+	}
+
+	/**
+	 * @param duration the duration to set
+	 */
+	public void setDuration(Long duration) {
+		this.duration = duration;
+	}
+
+	/**
+	 * @return the category
+	 */
+	@ManyToOne(targetEntity = Category.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public Category getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	@ManyToOne(targetEntity = Category.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	/**
+	 * @return the amplitude
+	 */
+	public Double getAmplitude() {
+		return amplitude;
+	}
+
+	/**
+	 * @param amplitude the amplitude to set
+	 */
+	public void setAmplitude(Double amplitude) {
+		this.amplitude = amplitude;
+	}
+
 	/**
 	 * add and remove methods
 	 */
