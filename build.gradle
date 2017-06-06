@@ -29,6 +29,7 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-jersey')
+	compile group: 'javax.faces', name: 'javax.faces-api', version: '2.1'
 	compile group: 'org.primefaces', name: 'primefaces', version: '6.0'
 	runtime('mysql:mysql-connector-java')
     testCompile('com.jayway.jsonpath:json-path')
