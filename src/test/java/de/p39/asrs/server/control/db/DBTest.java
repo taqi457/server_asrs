@@ -3,10 +3,7 @@ package de.p39.asrs.server.control.db;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
-<<<<<<< HEAD
-=======
 import java.util.LinkedList;
->>>>>>> bd8171a03a4624289695dfbe43d0bf18c10d2d8e
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
