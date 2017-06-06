@@ -1,6 +1,6 @@
 package de.p39.asrs.server.controller.db.dao;
 
-import java.util.Set;
+import java.util.List;
 
 import de.p39.asrs.server.model.Site;
 /**
@@ -12,9 +12,9 @@ public interface SiteDAO {
 	
 	public void insertSite(Site s);
 	
-	public void getSiteById(Long id);
+	public Site getSiteById(Long id);
 	
-	public Set<Site> getAllSites();
+	public List<Site> getAllSites();
 	
 	public void deleteSite();
 	
