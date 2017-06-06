@@ -11,4 +11,7 @@ public class NotFoundExecption extends RuntimeException {
 	 */
 	private static final long serialVersionUID = -8808407848276692356L;
    
+	public NotFoundExecption(String message){
+		super(message);
+	}
 }

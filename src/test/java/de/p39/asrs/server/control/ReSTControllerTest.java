@@ -38,11 +38,11 @@ public class ReSTControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-/* TODO generate test jsons
+
 	@Test
 	public void getRouteTest() throws Exception {
 		this.mockMvc.perform(get("/route")).andDo(print()).andExpect(status().isOk())
 				.andExpect(jsonPath("$.content").value("Hello, World!"));
 	}
-	*/
+	
 }

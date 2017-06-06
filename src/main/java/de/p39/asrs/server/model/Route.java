@@ -3,6 +3,8 @@ package de.p39.asrs.server.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,11 +26,13 @@ import javax.persistence.TemporalType;
 public class Route extends ABasicObject<Long> {
 
 	/**
-	 * 
+	 * Stepwidth for distance calculation if performance breaks down
 	 */
 	private static final long serialVersionUID = 2711246951505591683L;
+	
+	private static final int stepwidth = 5;
 
-	private Set<Coordinate> coordinates;
+	private List<Coordinate> coordinates;
 	private String gpx;
 	private Set<Site> sites;
 
@@ -48,7 +52,7 @@ public class Route extends ABasicObject<Long> {
 	}
 
 	private void init() {
-		this.coordinates = new HashSet<>();
+		this.coordinates = new LinkedList<>();
 		this.sites = new HashSet<>();
 	}
 
@@ -56,7 +60,7 @@ public class Route extends ABasicObject<Long> {
 	 * @return the coordinates
 	 */
 	@OneToMany(targetEntity = Coordinate.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	public Set<Coordinate> getCoordinates() {
+	public List<Coordinate> getCoordinates() {
 		return coordinates;
 	}
 
@@ -65,7 +69,7 @@ public class Route extends ABasicObject<Long> {
 	 *            the coordinates to set
 	 */
 	@OneToMany(targetEntity = Coordinate.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-	public void setCoordinates(Set<Coordinate> coordinates) {
+	public void setCoordinates(List<Coordinate> coordinates) {
 		this.coordinates = coordinates;
 	}
 
@@ -144,5 +148,13 @@ public class Route extends ABasicObject<Long> {
 	public void setGpx(String gpx) {
 		this.gpx = gpx;
 	}
-
+	
+	public double calculateDist(Coordinate coord){
+		double distance = Double.MAX_VALUE;
+		for(int i = 0;i<coordinates.size();i+=stepwidth){
+			Coordinate c = coordinates.get(i);
+			distance = Double.min(c.getDistance(coord),distance);
+		}
+		return distance;
+	}
 }

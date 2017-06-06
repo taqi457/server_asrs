@@ -6,13 +6,7 @@ import javax.persistence.Query;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
-import de.p39.asrs.server.model.Audio;
-import de.p39.asrs.server.model.Coordinate;
-import de.p39.asrs.server.model.Picture;
 import de.p39.asrs.server.model.Route;
-import de.p39.asrs.server.model.Site;
-import de.p39.asrs.server.model.Text;
-import de.p39.asrs.server.model.Video;
 
 public class RouteDAOImpl implements RouteDAO {
 
@@ -67,11 +61,12 @@ public class RouteDAOImpl implements RouteDAO {
 		this.cf.update(r);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Route> getRoutesByName(String s) {
 		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE name = :name");
 		q.setParameter("name", s);
-		return (List) q.getResultList();
+		return (List<Route>) q.getResultList();
 	}
 
 }
