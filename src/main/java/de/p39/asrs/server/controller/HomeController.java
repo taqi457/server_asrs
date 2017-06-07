@@ -19,7 +19,7 @@ public class HomeController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String baseUrlRedirect(HttpServletRequest request,
                                   HttpServletResponse httpServletResponse) {
-        return "redirect:" + request.getRequestURL().append("index.xhtml").toString();
+        return "redirect:" + request.getRequestURL().append("index.jsf").toString();
     }
 
 }
