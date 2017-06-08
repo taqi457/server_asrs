@@ -33,9 +33,16 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-jersey')
-	compile group: 'javax.faces', name: 'javax.faces-api', version: '2.1'
-	compile group: 'org.primefaces', name: 'primefaces', version: '6.0'
-	runtime('mysql:mysql-connector-java')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+    compile group: 'org.apache.myfaces.core', name: 'myfaces-impl', version: '2.2.12'
+    compile group: 'org.apache.myfaces.core', name: 'myfaces-api', version: '2.2.12'
+    compile ('org.apache.tomcat.embed:tomcat-embed-jasper')
+    compile ('org.ocpsoft.rewrite:rewrite-servlet:3.4.1.Final')
+    compile ('org.ocpsoft.rewrite:rewrite-integration-faces:3.4.1.Final')
+    compile ('org.ocpsoft.rewrite:rewrite-config-prettyfaces:3.4.1.Final')
+    compile ('org.primefaces:primefaces:6.1')
+    compile 'org.springframework:spring-context:4.3.8.RELEASE'
+    runtime('mysql:mysql-connector-java')
     testCompile('com.jayway.jsonpath:json-path')
 }
 
