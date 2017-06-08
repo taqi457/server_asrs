@@ -1,6 +1,8 @@
 package de.p39.asrs.server.controller.db.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Query;
 
@@ -59,31 +61,31 @@ public class RouteDAOImpl implements RouteDAO {
 
 	@Override
 	public List<Site> getSites(Route r) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Site> set =r.getSites();
+		List<Site> res = new ArrayList<>();
+		res.addAll(set);
+		return res;
 	}
 
 	@Override
 	public void addCoordinate(Route r, Coordinate c) {
-		// TODO Auto-generated method stub
-		
+		r.addCoordinate(c);
 	}
 
 	@Override
 	public List<Coordinate> getCoordinates(Route r) {
-		// TODO Auto-generated method stub
-		return null;
+		return r.getCoordinates();
 	}
 
 	@Override
 	public String getGPX(Route r) {
-		// TODO Auto-generated method stub
+		// TODO not needed
 		return null;
 	}
 
 	@Override
 	public void setGPX(Route r, String gpx) {
-		// TODO Auto-generated method stub
+		// TODO not needed
 		
 	}
 

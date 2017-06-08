@@ -2,6 +2,8 @@ package de.p39.asrs.server.controller.db.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.model.Coordinate;
@@ -10,57 +12,54 @@ import de.p39.asrs.server.model.Site;
 
 public class SiteDAOImpl implements SiteDAO {
 
-	public SiteDAOImpl(CrudFacade jpaCrudService) {
-		// TODO Auto-generated constructor stub
+	private CrudFacade cf;
+	
+	public SiteDAOImpl(CrudFacade cf) {
+		this.cf=cf;
 	}
 
 	@Override
 	public void insertSite(Site s) {
-		// TODO Auto-generated method stub
-
+		this.cf.create(s);
 	}
 
 	@Override
 	public Site getSiteById(Long id) {
-		return null;
-		// TODO Auto-generated method stub
+		return this.cf.find(id, Site.class);
 
 	}
 
 	@Override
 	public List<Site> getAllSites() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.cf.findAll(Site.class);
 	}
 
 	@Override
-	public void deleteSite() {
-		// TODO Auto-generated method stub
-
+	public void deleteSite(Long id) {
+		this.cf.delete(id, Site.class);
 	}
 
 	@Override
 	public void updateSite(Site s) {
-		// TODO Auto-generated method stub
-
+		this.cf.update(s);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void getSiteByName(String s) {
-		// TODO Auto-generated method stub
-		
+	public List<Site> getSitesByName(String s) {
+		Query q = this.cf.createQuery("SELECT e FROM " + Site.class.getName() + " e WHERE name = :name");
+		q.setParameter("name", s);
+		return (List<Site>) q.getResultList();
 	}
 
 	@Override
 	public void addMedium(Site s, Medium m) {
-		// TODO Auto-generated method stub
-		
+		s.addMedium(m);
 	}
 
 	@Override
 	public void setCoordinate(Site s, Coordinate c) {
-		// TODO Auto-generated method stub
-		
+		s.setCoordinate(c);
 	}
 
 }

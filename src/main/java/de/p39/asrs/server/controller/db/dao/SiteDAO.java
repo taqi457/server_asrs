@@ -18,11 +18,11 @@ public interface SiteDAO {
 	
 	public List<Site> getAllSites();
 	
-	public void deleteSite();
+	public void deleteSite(Long id);
 	
 	public void updateSite(Site s);
 	
-	public void getSiteByName(String s);
+	public List<Site> getSitesByName(String s);
 	
 	public void addMedium(Site s, Medium m);
 	
