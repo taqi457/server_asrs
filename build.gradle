@@ -13,8 +13,12 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 jar {
-    baseName = 'gs-rest-service'
+    baseName = 'asrs-spring-boot-aplication'
     version =  '0.1.0'
+}
+
+springBoot {
+    executable = true
 }
 
 repositories {
