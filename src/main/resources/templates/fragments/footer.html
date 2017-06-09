@@ -5,24 +5,49 @@
 <body>
 <div th:fragment="footer">
 
-    <div class="container">
+    <div class="footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Saarromanus</span>
+							Upload-Plattform &copy; 2017
+						</span>
 
-        <footer>
-        <!-- this is footer -->
-        &copy; 2017 mkyong.com
-            <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <a th:href="@{/logout}">Sign Out</a>
-            </span>
-
-        <script type="text/javascript"
-                src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <script type="text/javascript"
-                    src="webjars/jquery/1.11.1/jquery.min.js"></script>
-
-        </footer>
+                &nbsp; &nbsp;
+            </div>
+        </div>
     </div>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+<!-- /.main-container -->
+</div>
+<div th:fragment="js">
+<script th:src="@{/js/jquery-2.1.4.min.js}"
+        src="../../js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script th:src="@{/js/jquery-1.11.3.min.js}"
+        src="../../js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+
+<script th:src="@{/js/bootstrap.min.js}"
+        src="../../js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+
+<!-- ace scripts -->
+<script th:src="@{/js/ace-elements.min.js}"
+        src="../../js/ace-elements.min.js"></script>
+<script th:src="@{/js/ace.min.js}"
+        src="../../js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+
+
 
 </div>
 </body>
