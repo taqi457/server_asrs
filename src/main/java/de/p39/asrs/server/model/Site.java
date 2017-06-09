@@ -16,13 +16,19 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.p39.asrs.server.model.media.Audio;
+import de.p39.asrs.server.model.media.Medium;
+import de.p39.asrs.server.model.media.Picture;
+import de.p39.asrs.server.model.media.Text;
+import de.p39.asrs.server.model.media.Video;
+
 /**
  * 
  * @author Adrian Rebmann <adrianrebmann@gmail.com>
  *
  */
 @Entity
-public class Site extends ABasicObject<Long> {
+public class Site extends ANamedObject<Long> {
 
 	/**
 	 * 
@@ -41,26 +47,11 @@ public class Site extends ABasicObject<Long> {
 
 	private Category category;
 
-	public Site(Long id, String name, Category category) {
-		super(id, name);
-		this.category = category;
-		this.init();
-	}
-
-	public Site(Long id, String name) {
-		super(id, name);
-		this.init();
-	}
-
 	public Site() {
 		super();
 		this.init();
 	}
 
-	public Site(String name) {
-		super(name);
-		this.init();
-	}
 
 	private void init() {
 		this.audios = new HashSet<>();
@@ -183,20 +174,6 @@ public class Site extends ABasicObject<Long> {
 		super.setId(id);
 	}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
 
 	/**
 	 * @return the timestamp
@@ -213,6 +190,96 @@ public class Site extends ABasicObject<Long> {
 	@Temporal(TemporalType.TIMESTAMP)
 	public void setTimestamp(Date timestamp) {
 		super.setTimestamp(timestamp);
+	}
+	
+	/**
+	 * @return the nameDE
+	 */
+	public String getNameDE() {
+		return super.getNameDE();
+	}
+
+	/**
+	 * @param nameDE
+	 *            the nameDE to set
+	 */
+	public void setNameDE(String nameDE) {
+		super.setNameDE(nameDE);
+	}
+
+	/**
+	 * @return the nameFR
+	 */
+	public String getNameFR() {
+		return super.getNameFR();
+	}
+
+	/**
+	 * @param nameFR
+	 *            the nameFR to set
+	 */
+	public void setNameFR(String nameFR) {
+		super.setNameFR(nameFR);
+	}
+
+	/**
+	 * @return the nameEN
+	 */
+	public String getNameEN() {
+		return super.getNameEN();
+	}
+
+	/**
+	 * @param nameEN
+	 *            the nameEN to set
+	 */
+	public void setNameEN(String nameEN) {
+		super.setNameEN(nameEN);
+	}
+
+	/**
+	 * @return the descriptionDE
+	 */
+	public String getDescriptionDE() {
+		return super.getDescriptionDE();
+	}
+
+	/**
+	 * @param descriptionDE
+	 *            the descriptionDE to set
+	 */
+	public void setDescriptionDE(String descriptionDE) {
+		super.setDescriptionDE(descriptionDE);
+	}
+
+	/**
+	 * @return the descriptionFR
+	 */
+	public String getDescriptionFR() {
+		return super.getDescriptionFR();
+	}
+
+	/**
+	 * @param descriptionFR
+	 *            the descriptionFR to set
+	 */
+	public void setDescriptionFR(String descriptionFR) {
+		super.setDescriptionFR(descriptionFR);
+	}
+
+	/**
+	 * @return the descriptionEN
+	 */
+	public String getDescriptionEN() {
+		return super.getDescriptionEN();
+	}
+
+	/**
+	 * @param descriptionEN
+	 *            the descriptionEN to set
+	 */
+	public void setDescriptionEN(String descriptionEN) {
+		super.setDescriptionEN(descriptionEN);
 	}
 
 	/**

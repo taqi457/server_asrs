@@ -7,8 +7,8 @@ import javax.persistence.Query;
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.model.Coordinate;
-import de.p39.asrs.server.model.Medium;
 import de.p39.asrs.server.model.Site;
+import de.p39.asrs.server.model.media.Medium;
 
 public class SiteDAOImpl implements SiteDAO {
 

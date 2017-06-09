@@ -1,4 +1,4 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
 import java.util.Date;
 
@@ -14,16 +14,14 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Category extends ANamedObject<Long> {
+public class Text extends Medium {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5143652688538221831L;
+	private static final long serialVersionUID = -5139030591840399032L;
 	
-	
-	public Category(){super();}
-
+	public Text(){super();}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

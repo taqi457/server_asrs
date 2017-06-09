@@ -1,4 +1,4 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
 import java.util.Date;
 
@@ -14,16 +14,31 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Category extends ANamedObject<Long> {
+public class Audio extends Medium {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5143652688538221831L;
-	
-	
-	public Category(){super();}
+	private static final long serialVersionUID = -1282454048651640596L;
 
+	private String path;
+	
+	public Audio(){super();}
+	
+
+	/**
+	 * @return the path
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -37,7 +52,6 @@ public class Category extends ANamedObject<Long> {
 		super.setId(id);
 	}
 	
-
 	/**
 	 * @return the timestamp
 	 */

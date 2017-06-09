@@ -1,7 +1,6 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,16 +13,30 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Category extends ANamedObject<Long> {
+public class Video extends Medium {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5143652688538221831L;
+	private static final long serialVersionUID = 19094117932109529L;
 	
+	private String link;
 	
-	public Category(){super();}
+	public Video(){super();}
+	
+	/**
+	 * @return the link
+	 */
+	public String getLink() {
+		return link;
+	}
 
+	/**
+	 * @param link the link to set
+	 */
+	public void setLink(String link) {
+		this.link = link;
+	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

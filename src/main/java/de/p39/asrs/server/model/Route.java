@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Route extends ABasicObject<Long> {
+public class Route extends ANamedObject<Long> {
 
 	/**
 	 * Stepwidth for distance calculation if performance breaks down
@@ -34,6 +34,7 @@ public class Route extends ABasicObject<Long> {
 	private static final int stepwidth = 5;
 
 	private List<Coordinate> coordinates;
+	
 	private String gpx;
 	private Set<Site> sites;
 	/**
@@ -43,20 +44,12 @@ public class Route extends ABasicObject<Long> {
 	private Category category;
 	private Double amplitude;
 	
-	public Route(Long id, String name) {
-		super(id, name);
-		this.init();
-	}
 
 	public Route() {
 		super();
 		this.init();
 	}
 
-	public Route(String name) {
-		super(name);
-		this.init();
-	}
 
 	private void init() {
 		this.coordinates = new LinkedList<>();
@@ -109,20 +102,6 @@ public class Route extends ABasicObject<Long> {
 		super.setId(id);
 	}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
 
 	/**
 	 * @return the timestamp
@@ -186,6 +165,96 @@ public class Route extends ABasicObject<Long> {
 	@ManyToOne(targetEntity = Category.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	
+	/**
+	 * @return the nameDE
+	 */
+	public String getNameDE() {
+		return super.getNameDE();
+	}
+
+	/**
+	 * @param nameDE
+	 *            the nameDE to set
+	 */
+	public void setNameDE(String nameDE) {
+		super.setNameDE(nameDE);
+	}
+
+	/**
+	 * @return the nameFR
+	 */
+	public String getNameFR() {
+		return super.getNameFR();
+	}
+
+	/**
+	 * @param nameFR
+	 *            the nameFR to set
+	 */
+	public void setNameFR(String nameFR) {
+		super.setNameFR(nameFR);
+	}
+
+	/**
+	 * @return the nameEN
+	 */
+	public String getNameEN() {
+		return super.getNameEN();
+	}
+
+	/**
+	 * @param nameEN
+	 *            the nameEN to set
+	 */
+	public void setNameEN(String nameEN) {
+		super.setNameEN(nameEN);
+	}
+
+	/**
+	 * @return the descriptionDE
+	 */
+	public String getDescriptionDE() {
+		return super.getDescriptionDE();
+	}
+
+	/**
+	 * @param descriptionDE
+	 *            the descriptionDE to set
+	 */
+	public void setDescriptionDE(String descriptionDE) {
+		super.setDescriptionDE(descriptionDE);
+	}
+
+	/**
+	 * @return the descriptionFR
+	 */
+	public String getDescriptionFR() {
+		return super.getDescriptionFR();
+	}
+
+	/**
+	 * @param descriptionFR
+	 *            the descriptionFR to set
+	 */
+	public void setDescriptionFR(String descriptionFR) {
+		super.setDescriptionFR(descriptionFR);
+	}
+
+	/**
+	 * @return the descriptionEN
+	 */
+	public String getDescriptionEN() {
+		return super.getDescriptionEN();
+	}
+
+	/**
+	 * @param descriptionEN
+	 *            the descriptionEN to set
+	 */
+	public void setDescriptionEN(String descriptionEN) {
+		super.setDescriptionEN(descriptionEN);
 	}
 
 	/**

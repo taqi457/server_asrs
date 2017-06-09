@@ -1,29 +1,27 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
-import java.util.Date;
-
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Inheritance;
+
+import de.p39.asrs.server.model.ANamedObject;
 /**
  * 
  * @author adrianrebmann
  *
  */
-@Entity
-public class Category extends ANamedObject<Long> {
+@Inheritance
+public class Medium extends ANamedObject<Long> {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5143652688538221831L;
-	
-	
-	public Category(){super();}
+	private static final long serialVersionUID = -5552779801693557981L;
 
+	
+	public Medium(){super();}
+	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -36,25 +34,7 @@ public class Category extends ANamedObject<Long> {
 	public void setId(Long id){
 		super.setId(id);
 	}
-	
 
-	/**
-	 * @return the timestamp
-	 */
-	@Temporal(TemporalType.TIMESTAMP) 
-	public Date getTimestamp() {
-		return super.getTimestamp();
-	}
-
-	/**
-	 * @param timestamp
-	 *            the timestamp to set
-	 */
-	@Temporal(TemporalType.TIMESTAMP) 
-	public void setTimestamp(Date timestamp) {
-		super.setTimestamp(timestamp);
-	}
-	
 	/**
 	 * @return the nameDE
 	 */

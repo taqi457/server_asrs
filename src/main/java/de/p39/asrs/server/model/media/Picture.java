@@ -1,4 +1,4 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
 import java.util.Date;
 
@@ -14,17 +14,32 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Category extends ANamedObject<Long> {
+public class Picture extends Medium {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5143652688538221831L;
+	private static final long serialVersionUID = 2524529774881275743L;
 	
+	private String path;
 	
-	public Category(){super();}
+	public Picture(){super();}
+	
 
-	
+	/**
+	 * @return the path
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId(){
@@ -144,5 +159,4 @@ public class Category extends ANamedObject<Long> {
 	public void setDescriptionEN(String descriptionEN) {
 		super.setDescriptionEN(descriptionEN);
 	}
-
 }
