@@ -1,4 +1,4 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
 import java.util.Date;
 import java.util.Locale;
@@ -15,35 +15,35 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Audio extends Medium {
+public class Video extends Medium {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1282454048651640596L;
-
-	private String path;
+	private static final long serialVersionUID = 19094117932109529L;
 	
-	public Audio(Long id, String name,Locale locale) {
+	private String link;
+
+	public Video(Long id, String name,Locale locale) {
 		super(id, name,locale);
 	}
 	
-	public Audio(){super();}
+	public Video(){super();}
 	
-	public Audio(String name){super(name);}
+	public Video(String name){super(name);}
 
 	/**
-	 * @return the path
+	 * @return the link
 	 */
-	public String getPath() {
-		return path;
+	public String getLink() {
+		return link;
 	}
 
 	/**
-	 * @param path the path to set
+	 * @param link the link to set
 	 */
-	public void setPath(String path) {
-		this.path = path;
+	public void setLink(String link) {
+		this.link = link;
 	}
 	
 	@Id

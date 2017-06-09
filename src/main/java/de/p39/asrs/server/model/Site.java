@@ -16,6 +16,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.p39.asrs.server.model.media.Audio;
+import de.p39.asrs.server.model.media.Medium;
+import de.p39.asrs.server.model.media.Picture;
+import de.p39.asrs.server.model.media.Text;
+import de.p39.asrs.server.model.media.Video;
+
 /**
  * 
  * @author Adrian Rebmann <adrianrebmann@gmail.com>

@@ -1,4 +1,4 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
 import java.util.Date;
 import java.util.Locale;

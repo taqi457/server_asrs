@@ -1,4 +1,4 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
 import java.util.Date;
 import java.util.Locale;
@@ -15,35 +15,35 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Video extends Medium {
+public class Text extends Medium {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 19094117932109529L;
-	
-	private String link;
+	private static final long serialVersionUID = -5139030591840399032L;
 
-	public Video(Long id, String name,Locale locale) {
+	private String content;
+	
+	public Text(Long id, String name,Locale locale) {
 		super(id, name,locale);
 	}
 	
-	public Video(){super();}
+	public Text(String name){super(name);}
 	
-	public Video(String name){super(name);}
+	public Text(){super();}
 
 	/**
-	 * @return the link
+	 * @return the content
 	 */
-	public String getLink() {
-		return link;
+	public String getContent() {
+		return content;
 	}
 
 	/**
-	 * @param link the link to set
+	 * @param content the content to set
 	 */
-	public void setLink(String link) {
-		this.link = link;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 	@Id

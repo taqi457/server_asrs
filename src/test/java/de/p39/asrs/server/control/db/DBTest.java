@@ -15,14 +15,14 @@ import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.JPACrudService;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
-import de.p39.asrs.server.model.Audio;
 import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.Coordinate;
-import de.p39.asrs.server.model.Picture;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
-import de.p39.asrs.server.model.Text;
-import de.p39.asrs.server.model.Video;
+import de.p39.asrs.server.model.media.Audio;
+import de.p39.asrs.server.model.media.Picture;
+import de.p39.asrs.server.model.media.Text;
+import de.p39.asrs.server.model.media.Video;
 
 public class DBTest {
 

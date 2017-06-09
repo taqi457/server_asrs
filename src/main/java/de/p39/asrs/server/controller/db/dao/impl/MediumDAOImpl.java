@@ -5,11 +5,11 @@ import java.util.List;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
-import de.p39.asrs.server.model.Audio;
-import de.p39.asrs.server.model.Medium;
-import de.p39.asrs.server.model.Picture;
-import de.p39.asrs.server.model.Text;
-import de.p39.asrs.server.model.Video;
+import de.p39.asrs.server.model.media.Audio;
+import de.p39.asrs.server.model.media.Medium;
+import de.p39.asrs.server.model.media.Picture;
+import de.p39.asrs.server.model.media.Text;
+import de.p39.asrs.server.model.media.Video;
 
 public class MediumDAOImpl implements MediumDAO {
 

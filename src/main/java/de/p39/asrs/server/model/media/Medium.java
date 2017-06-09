@@ -1,4 +1,4 @@
-package de.p39.asrs.server.model;
+package de.p39.asrs.server.model.media;
 
 import java.util.Locale;
 
@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
+
+import de.p39.asrs.server.model.ABasicObject;
 /**
  * 
  * @author adrianrebmann
