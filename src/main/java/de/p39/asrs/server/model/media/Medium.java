@@ -22,34 +22,15 @@ public class Medium extends ABasicObject<Long> {
 	 * 
 	 */
 	private static final long serialVersionUID = -5552779801693557981L;
-	
-	private Locale locale;
 
-	public Medium(Long id, String name, Locale locale) {
+	public Medium(Long id, String name) {
 		super(id, name);
-		this.setLocale(locale);
 	}
 	
 	public Medium(){super();}
 	
 	public Medium(String name){
 		super(name);
-	}
-
-	/**
-	 * @return the locale
-	 */
-	@ManyToOne(targetEntity= Locale.class, fetch=FetchType.EAGER)
-	public Locale getLocale() {
-		return locale;
-	}
-
-	/**
-	 * @param locale the locale to set
-	 */
-	@ManyToOne(targetEntity= Locale.class, fetch=FetchType.EAGER)
-	public void setLocale(Locale locale) {
-		this.locale = locale;
 	}
 	
 	@Id

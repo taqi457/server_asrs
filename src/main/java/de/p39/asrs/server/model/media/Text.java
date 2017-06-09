@@ -25,7 +25,7 @@ public class Text extends Medium {
 	private String content;
 	
 	public Text(Long id, String name,Locale locale) {
-		super(id, name,locale);
+		super(id, name);
 	}
 	
 	public Text(String name){super(name);}

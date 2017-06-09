@@ -1,7 +1,6 @@
 package de.p39.asrs.server.model.media;
 
 import java.util.Date;
-import java.util.Locale;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +23,8 @@ public class Audio extends Medium {
 
 	private String path;
 	
-	public Audio(Long id, String name,Locale locale) {
-		super(id, name,locale);
+	public Audio(Long id, String name) {
+		super(id, name);
 	}
 	
 	public Audio(){super();}

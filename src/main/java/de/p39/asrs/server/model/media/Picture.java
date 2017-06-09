@@ -24,8 +24,8 @@ public class Picture extends Medium {
 	
 	private String path;
 
-	public Picture(Long id, String name,Locale locale) {
-		super(id, name,locale);
+	public Picture(Long id, String name) {
+		super(id, name);
 	}
 	
 	public Picture(){super();}

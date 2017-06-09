@@ -7,6 +7,10 @@
 		<class>de.p39.asrs.server.model.Category</class>
 		<class>de.p39.asrs.server.model.Coordinate</class>
 		<class>de.p39.asrs.server.model.Medium</class>
+		<class>de.p39.asrs.server.model.media.AudioSet</class>
+		<class>de.p39.asrs.server.model.media.PictureSet</class>
+		<class>de.p39.asrs.server.model.media.VideoSet</class>
+		<class>de.p39.asrs.server.model.media.TextSet</class>
 		<class>de.p39.asrs.server.model.Picture</class>
 		<class>de.p39.asrs.server.model.Route</class>
 		<class>de.p39.asrs.server.model.Site</class>

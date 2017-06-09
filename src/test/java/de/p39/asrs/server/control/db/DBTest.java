@@ -13,7 +13,9 @@ import org.junit.Test;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.JPACrudService;
+import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
+import de.p39.asrs.server.controller.db.dao.impl.MediumDAOImpl;
 import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
 import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.Coordinate;
@@ -54,6 +56,7 @@ public class DBTest {
 	}
 	
 	@Test
+	@Ignore
 	public void routeCreationThenFindingThenUpdateingTest(){
 		CrudFacade cf = new JPACrudService("server");
 		RouteDAO dao= new RouteDAOImpl(cf);
@@ -67,16 +70,11 @@ public class DBTest {
 	}
 	
 	
-	
 	private Route createDummyData(){
 		Audio a1 = new Audio("test_audio");
-		a1.setLocale(Locale.GERMAN);
 		Video v1 = new Video("test_video");
-		v1.setLocale(Locale.GERMAN);
 		Text t1 = new Text("test_text");
-		t1.setLocale(Locale.GERMAN);
 		Picture p1 = new Picture("test_pic");
-		p1.setLocale(Locale.GERMAN);
 		
 		Category c1 = new Category("interesting_stuff");
 		Coordinate co1 = new Coordinate("icoffee");
@@ -92,13 +90,9 @@ public class DBTest {
 		s1.addMedium(p1);
 		
 		Audio a2 = new Audio("test_audio");
-		a2.setLocale(Locale.GERMAN);
 		Video v2 = new Video( "test_video");
-		v2.setLocale(Locale.GERMAN);
 		Text t2 = new Text("test_text");
-		t2.setLocale(Locale.GERMAN);
 		Picture p2 = new Picture("test_pic");
-		p2.setLocale(Locale.GERMAN);
 		
 		Category c2 = new Category("interesting_stuff");
 		Coordinate co2 = new Coordinate("mensa");

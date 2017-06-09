@@ -25,7 +25,7 @@ public class Video extends Medium {
 	private String link;
 
 	public Video(Long id, String name,Locale locale) {
-		super(id, name,locale);
+		super(id, name);
 	}
 	
 	public Video(){super();}

@@ -34,6 +34,7 @@ public class Route extends ABasicObject<Long> {
 	private static final int stepwidth = 5;
 
 	private List<Coordinate> coordinates;
+	
 	private String gpx;
 	private Set<Site> sites;
 	/**
