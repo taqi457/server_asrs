@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Bean;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.JPACrudService;
+import de.p39.asrs.server.controller.db.dao.RouteDAO;
+import de.p39.asrs.server.controller.db.dao.SiteDAO;
+import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
+import de.p39.asrs.server.controller.db.dao.impl.SiteDAOImpl;
 
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
@@ -17,10 +21,17 @@ import java.util.EnumSet;
 @SpringBootApplication
 public class Application {
 	
+	private final CrudFacade cf = new JPACrudService();
+	
 	@Bean
-    public CrudFacade JPACrudService() {
-        return new JPACrudService();
-    }
+	public RouteDAO RouteDAOImpl(){
+		return new RouteDAOImpl(cf);
+	}
+	
+	@Bean 
+	public SiteDAO SiteDAOImpl(){
+		return new SiteDAOImpl(cf);
+	}
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
-import de.p39.asrs.server.controller.db.dao.impl.SiteDAOImpl;
 import de.p39.asrs.server.controller.exceptions.BadRequestException;
 import de.p39.asrs.server.controller.exceptions.NotFoundExecption;
 import de.p39.asrs.server.model.Coordinate;
@@ -23,13 +21,9 @@ import de.p39.asrs.server.model.Site;
 @RequestMapping("/site")
 public class SiteController {
 
-	private final SiteDAO daoInterface;
-
 	@Autowired
-	public SiteController(CrudFacade cf) {
-		daoInterface = new SiteDAOImpl(cf);
-	}
-	
+	private SiteDAO daoInterface;
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
     public List<Site> routeAll(@RequestParam(value = "kind") String kind){
 		if(!kind.equals("all")){
