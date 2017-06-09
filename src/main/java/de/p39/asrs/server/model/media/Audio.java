@@ -23,13 +23,8 @@ public class Audio extends Medium {
 
 	private String path;
 	
-	public Audio(Long id, String name) {
-		super(id, name);
-	}
-	
 	public Audio(){super();}
 	
-	public Audio(String name){super(name);}
 
 	/**
 	 * @return the path
@@ -57,21 +52,6 @@ public class Audio extends Medium {
 		super.setId(id);
 	}
 	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
-
 	/**
 	 * @return the timestamp
 	 */

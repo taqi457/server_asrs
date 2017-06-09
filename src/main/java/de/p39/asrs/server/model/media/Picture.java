@@ -1,7 +1,6 @@
 package de.p39.asrs.server.model.media;
 
 import java.util.Date;
-import java.util.Locale;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,14 +22,9 @@ public class Picture extends Medium {
 	private static final long serialVersionUID = 2524529774881275743L;
 	
 	private String path;
-
-	public Picture(Long id, String name) {
-		super(id, name);
-	}
 	
 	public Picture(){super();}
 	
-	public Picture(String name){super(name);}
 
 	/**
 	 * @return the path
@@ -58,20 +52,6 @@ public class Picture extends Medium {
 		super.setId(id);
 	}
 	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
 
 	/**
 	 * @return the timestamp

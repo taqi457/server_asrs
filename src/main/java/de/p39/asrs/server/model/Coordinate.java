@@ -29,8 +29,8 @@ public class Coordinate extends ABasicObject<Long> {
 	private Double latitude;
 	private Double longitude;
 
-	public Coordinate(Long id, String name) {
-		super(id, name);
+	public Coordinate(Long id) {
+		super(id);
 	}
 	
 	public Coordinate(Double lat, Double lon) {
@@ -89,20 +89,6 @@ public class Coordinate extends ABasicObject<Long> {
 		super.setId(id);
 	}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
 
 	/**
 	 * @return the timestamp

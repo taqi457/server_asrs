@@ -1,8 +1,6 @@
 package de.p39.asrs.server.model.media;
 
 import java.util.Date;
-import java.util.Locale;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,15 +21,9 @@ public class Video extends Medium {
 	private static final long serialVersionUID = 19094117932109529L;
 	
 	private String link;
-
-	public Video(Long id, String name,Locale locale) {
-		super(id, name);
-	}
 	
 	public Video(){super();}
 	
-	public Video(String name){super(name);}
-
 	/**
 	 * @return the link
 	 */
@@ -58,20 +50,6 @@ public class Video extends Medium {
 		super.setId(id);
 	}
 	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
 
 	/**
 	 * @return the timestamp

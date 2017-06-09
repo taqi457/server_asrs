@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Category extends ABasicObject<Long> {
+public class Category extends ANamedObject<Long> {
 
 	/**
 	 * 
@@ -23,13 +23,9 @@ public class Category extends ABasicObject<Long> {
 
 	private String category;
 	
-	public Category(Long id, String name) {
-		super(id, name);
-	}
 	
 	public Category(){super();}
 	
-	public Category(String name){super(name);}
 
 	/**
 	 * @return the category
@@ -57,20 +53,6 @@ public class Category extends ABasicObject<Long> {
 		super.setId(id);
 	}
 	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
 
 	/**
 	 * @return the timestamp

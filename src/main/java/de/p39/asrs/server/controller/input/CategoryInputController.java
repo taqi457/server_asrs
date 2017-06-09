@@ -16,7 +16,9 @@ import de.p39.asrs.server.model.Category;
 public class CategoryInputController {
 
 	private CategoryDAO dao;
-	private String name;
+	private String germanname;
+	private String frenchname;
+	private String englishname;
 	
 	@Autowired
 	public CategoryInputController(CrudFacade cf) {
@@ -25,11 +27,57 @@ public class CategoryInputController {
 	}
 
 	public void create(){
-		if(name!=null){
+		if(germanname!=null&&englishname!=null&&frenchname!=null){
 			Category c = new Category();
-			c.setName(name);
+			c.setNameDE(germanname);
+			c.setNameEN(englishname);
+			c.setNameFR(frenchname);
 			this.dao.insertCategory(c);
 		}
 	}
+
+	/**
+	 * @return the germanname
+	 */
+	public String getGermanname() {
+		return germanname;
+	}
+
+	/**
+	 * @param germanname the germanname to set
+	 */
+	public void setGermanname(String germanname) {
+		this.germanname = germanname;
+	}
+
+	/**
+	 * @return the frenchname
+	 */
+	public String getFrenchname() {
+		return frenchname;
+	}
+
+	/**
+	 * @param frenchname the frenchname to set
+	 */
+	public void setFrenchname(String frenchname) {
+		this.frenchname = frenchname;
+	}
+
+	/**
+	 * @return the englishname
+	 */
+	public String getEnglishname() {
+		return englishname;
+	}
+
+	/**
+	 * @param englishname the englishname to set
+	 */
+	public void setEnglishname(String englishname) {
+		this.englishname = englishname;
+	}
+	
+	
 
 }

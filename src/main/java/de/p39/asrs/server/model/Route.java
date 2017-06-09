@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-public class Route extends ABasicObject<Long> {
+public class Route extends ANamedObject<Long> {
 
 	/**
 	 * Stepwidth for distance calculation if performance breaks down
@@ -44,20 +44,12 @@ public class Route extends ABasicObject<Long> {
 	private Category category;
 	private Double amplitude;
 	
-	public Route(Long id, String name) {
-		super(id, name);
-		this.init();
-	}
 
 	public Route() {
 		super();
 		this.init();
 	}
 
-	public Route(String name) {
-		super(name);
-		this.init();
-	}
 
 	private void init() {
 		this.coordinates = new LinkedList<>();
@@ -110,20 +102,6 @@ public class Route extends ABasicObject<Long> {
 		super.setId(id);
 	}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
 
 	/**
 	 * @return the timestamp

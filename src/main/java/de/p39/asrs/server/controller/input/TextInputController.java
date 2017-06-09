@@ -9,6 +9,7 @@ import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.db.dao.impl.MediumDAOImpl;
 import de.p39.asrs.server.model.media.Text;
+
 /**
  * 
  * @author adrianrebmann
@@ -18,35 +19,37 @@ import de.p39.asrs.server.model.media.Text;
 public class TextInputController {
 
 	private MediumDAO dao;
-	
+
 	private String germanName;
 	private String englishName;
 	private String frenchName;
-	
+
 	private String germanContent;
 	private String englishContent;
 	private String frenchContent;
-	
+
 	@Autowired
 	public TextInputController(CrudFacade cf) {
 		super();
-		this.dao=new MediumDAOImpl(cf);
+		this.dao = new MediumDAOImpl(cf);
 	}
-	
-	private Text create(String content, String name){
-		if(content!=null&&name!=null){
+
+	public Text create() {
+		if (germanName != null && frenchName != null && englishName != null && germanContent != null
+				&& frenchContent != null && englishContent != null) {
 			Text t = new Text();
-			t.setContent(content);
-			t.setName(name);
+			t.setNameDE(germanName);
+			t.setNameEN(englishName);
+			t.setNameFR(frenchName);
+			t.setDescriptionDE(germanContent);
+			t.setDescriptionEN(englishContent);
+			t.setDescriptionFR(frenchContent);
+			dao.insertText(t);
 			return t;
-		}else{
-			//TODO notify user about failure
+		} else {
+			// TODO notify user about failure
 			return null;
 		}
-	}
-	
-	public void create(){
-		
 	}
 
 	/**
@@ -57,7 +60,8 @@ public class TextInputController {
 	}
 
 	/**
-	 * @param germanName the germanName to set
+	 * @param germanName
+	 *            the germanName to set
 	 */
 	public void setGermanName(String germanName) {
 		this.germanName = germanName;
@@ -71,7 +75,8 @@ public class TextInputController {
 	}
 
 	/**
-	 * @param englishName the englishName to set
+	 * @param englishName
+	 *            the englishName to set
 	 */
 	public void setEnglishName(String englishName) {
 		this.englishName = englishName;
@@ -85,7 +90,8 @@ public class TextInputController {
 	}
 
 	/**
-	 * @param frenchName the frenchName to set
+	 * @param frenchName
+	 *            the frenchName to set
 	 */
 	public void setFrenchName(String frenchName) {
 		this.frenchName = frenchName;
@@ -99,7 +105,8 @@ public class TextInputController {
 	}
 
 	/**
-	 * @param germanContent the germanContent to set
+	 * @param germanContent
+	 *            the germanContent to set
 	 */
 	public void setGermanContent(String germanContent) {
 		this.germanContent = germanContent;
@@ -113,7 +120,8 @@ public class TextInputController {
 	}
 
 	/**
-	 * @param englishContent the englishContent to set
+	 * @param englishContent
+	 *            the englishContent to set
 	 */
 	public void setEnglishContent(String englishContent) {
 		this.englishContent = englishContent;
@@ -127,12 +135,11 @@ public class TextInputController {
 	}
 
 	/**
-	 * @param frenchContent the frenchContent to set
+	 * @param frenchContent
+	 *            the frenchContent to set
 	 */
 	public void setFrenchContent(String frenchContent) {
 		this.frenchContent = frenchContent;
 	}
-	
-	
 
 }

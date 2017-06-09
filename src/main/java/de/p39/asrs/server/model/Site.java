@@ -28,7 +28,7 @@ import de.p39.asrs.server.model.media.Video;
  *
  */
 @Entity
-public class Site extends ABasicObject<Long> {
+public class Site extends ANamedObject<Long> {
 
 	/**
 	 * 
@@ -47,26 +47,11 @@ public class Site extends ABasicObject<Long> {
 
 	private Category category;
 
-	public Site(Long id, String name, Category category) {
-		super(id, name);
-		this.category = category;
-		this.init();
-	}
-
-	public Site(Long id, String name) {
-		super(id, name);
-		this.init();
-	}
-
 	public Site() {
 		super();
 		this.init();
 	}
 
-	public Site(String name) {
-		super(name);
-		this.init();
-	}
 
 	private void init() {
 		this.audios = new HashSet<>();
@@ -189,20 +174,6 @@ public class Site extends ABasicObject<Long> {
 		super.setId(id);
 	}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return super.getName();
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		super.setName(name);
-	}
 
 	/**
 	 * @return the timestamp

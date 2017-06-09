@@ -10,17 +10,14 @@ public abstract class ABasicObject<K extends Serializable> implements Serializab
 	 */
 	private static final long serialVersionUID = 1172925949019006047L;
 	private K id;
-	private String name;
 	private Date timestamp;
 
-	public ABasicObject(K id, String name) {
+	public ABasicObject(K id) {
 		this.setId(id);
-		this.setName(name);
 		this.timestamp = new Date();
 	}
 	
 	public ABasicObject(String name){
-		this.setName(name);
 		this.timestamp=new Date();
 	}
 	
@@ -29,20 +26,6 @@ public abstract class ABasicObject<K extends Serializable> implements Serializab
 	 */
 	public ABasicObject(){this.timestamp=new Date();}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	/**
 	 * @return the timestamp

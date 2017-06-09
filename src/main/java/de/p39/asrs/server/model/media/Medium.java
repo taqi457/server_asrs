@@ -1,37 +1,27 @@
 package de.p39.asrs.server.model.media;
 
-import java.util.Locale;
-
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.ManyToOne;
 
-import de.p39.asrs.server.model.ABasicObject;
+import de.p39.asrs.server.model.ANamedObject;
 /**
  * 
  * @author adrianrebmann
  *
  */
 @Inheritance
-public class Medium extends ABasicObject<Long> {
+public class Medium extends ANamedObject<Long> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5552779801693557981L;
 
-	public Medium(Long id, String name) {
-		super(id, name);
-	}
 	
 	public Medium(){super();}
 	
-	public Medium(String name){
-		super(name);
-	}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
