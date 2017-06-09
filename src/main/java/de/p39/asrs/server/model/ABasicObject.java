@@ -17,15 +17,10 @@ public abstract class ABasicObject<K extends Serializable> implements Serializab
 		this.timestamp = new Date();
 	}
 	
-	public ABasicObject(String name){
+	public ABasicObject(){
 		this.timestamp=new Date();
 	}
 	
-	/**
-	 * plain constructor
-	 */
-	public ABasicObject(){this.timestamp=new Date();}
-
 
 	/**
 	 * @return the timestamp

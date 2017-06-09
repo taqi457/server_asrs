@@ -43,9 +43,6 @@ public class Coordinate extends ABasicObject<Long> {
 		super();
 	}
 
-	public Coordinate(String name) {
-		super(name);
-	}
 
 	/**
 	 * @return the latitude
