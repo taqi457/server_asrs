@@ -3,8 +3,8 @@ package de.p39.asrs.server.controller.db.dao;
 import java.util.List;
 
 import de.p39.asrs.server.model.Coordinate;
-import de.p39.asrs.server.model.Medium;
 import de.p39.asrs.server.model.Site;
+import de.p39.asrs.server.model.media.Medium;
 /**
  * 
  * @author adrianrebmann

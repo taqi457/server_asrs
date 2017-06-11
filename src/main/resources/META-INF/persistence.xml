@@ -3,10 +3,10 @@
 	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 	<persistence-unit name="server" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>de.p39.asrs.server.model.Audio</class>
-		<class>de.p39.asrs.server.model.Category</class>
-		<class>de.p39.asrs.server.model.Coordinate</class>
-		<class>de.p39.asrs.server.model.Medium</class>
+		<class>de.p39.asrs.server.model.media.Audio</class>
+		<class>de.p39.asrs.server.model.media.Picture</class>
+		<class>de.p39.asrs.server.model.media.Video</class>
+		<class>de.p39.asrs.server.model.media.Text</class>
 		<class>de.p39.asrs.server.model.Picture</class>
 		<class>de.p39.asrs.server.model.Route</class>
 		<class>de.p39.asrs.server.model.Site</class>

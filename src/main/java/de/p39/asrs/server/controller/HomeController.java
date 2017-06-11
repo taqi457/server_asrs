@@ -1,5 +1,7 @@
 package de.p39.asrs.server.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -26,13 +28,15 @@ public class HomeController {
         return "/user";
     }
 
-    @GetMapping("/about")
-    public String about() {
-        return "/about";
-    }
-
     @GetMapping("/login")
     public String login() {
+        Authentication auth
+                = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!auth.getPrincipal().equals("anonymousUser")) {
+        return "/home";
+        }
+
         return "/login";
     }
 
