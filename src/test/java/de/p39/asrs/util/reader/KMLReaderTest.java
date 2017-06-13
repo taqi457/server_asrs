@@ -18,7 +18,7 @@ public class KMLReaderTest {
 	public void test() {
 		Route r = new KMLReader("src/main/resources/kml/saarbrucken_tour.kml").parseKml();
 		assertNotNull("Returned route was null",r);
-		assertEquals("Auf den Spuren der Römer: Radtour Saarbrücken",r.getName());
+		assertEquals("Auf den Spuren der Römer: Radtour Saarbrücken",r.getNameDE());
 		
 		//check first and last koordinate
 		List<Coordinate> coordList = r.getCoordinates();

@@ -44,7 +44,10 @@ public class KMLReader {
 	            Document document = (Document) feature;
 	            List<Feature> featureList = document.getFeature();
 	            
-	            Route res = new Route(document.getName());
+	            Route res = new Route();
+	            res.setNameDE(document.getName());
+	            res.setNameEN(document.getName());
+	            res.setNameFR(document.getName());
 	            for(Feature documentFeature : featureList) {
 	                if(documentFeature instanceof Folder) {
 	                    Folder folder = (Folder) documentFeature;
@@ -75,7 +78,10 @@ public class KMLReader {
 	            }
 	        } else if (geometry instanceof Point){
 	        	Point point = (Point) geometry;
-	        	Site site = new Site(placemark.getName());
+	        	Site site = new Site();
+	        	site.setNameDE(placemark.getName());
+	        	site.setNameEN(placemark.getName());
+	        	site.setNameFR(placemark.getName());
 	        	
 	        	site.setCoordinate(transformCoord(point.getCoordinates().get(0)));
 	        	r.addSite(site);
