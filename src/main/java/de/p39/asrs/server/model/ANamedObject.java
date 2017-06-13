@@ -25,6 +25,11 @@ public abstract class ANamedObject<K extends Serializable> extends ABasicObject<
 	public ANamedObject() {
 		super();
 	}
+	
+	public ANamedObject(String name){
+		super();
+		nameDE = name;
+	}
 
 	public ANamedObject(K id, String nameDE, String nameFR, String nameEN, String descriptionDE, String descriptionFR,
 			String descriptionEN) {

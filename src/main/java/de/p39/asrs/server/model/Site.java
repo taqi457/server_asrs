@@ -51,6 +51,11 @@ public class Site extends ANamedObject<Long> {
 		super();
 		this.init();
 	}
+	
+	public Site(String name){
+		super(name);
+		this.init();
+	}
 
 
 	private void init() {

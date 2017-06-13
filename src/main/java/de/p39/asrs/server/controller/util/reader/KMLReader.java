@@ -78,10 +78,7 @@ public class KMLReader {
 	            }
 	        } else if (geometry instanceof Point){
 	        	Point point = (Point) geometry;
-	        	Site site = new Site();
-	        	site.setNameDE(placemark.getName());
-	        	site.setNameEN(placemark.getName());
-	        	site.setNameFR(placemark.getName());
+	        	Site site = new Site(placemark.getName());
 	        	
 	        	site.setCoordinate(transformCoord(point.getCoordinates().get(0)));
 	        	r.addSite(site);

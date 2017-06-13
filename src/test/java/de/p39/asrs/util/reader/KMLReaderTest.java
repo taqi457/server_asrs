@@ -35,21 +35,21 @@ public class KMLReaderTest {
 		Set<Site> sites = r.getSites();
 		assertNotNull(sites);
 		assertFalse(sites.isEmpty());
-		/*Site site = new Site("Museum für Vor- und Frühgeschichte, Schloßstraße, Saarbrücken");
-		site.setCoordinate(new Coordinate(6.9910729,49.2309227));
+		Site site = new Site("Museum für Vor- und Frühgeschichte, Schloßstraße, Saarbrücken");
+		site.setCoordinate(new Coordinate(49.2309227,6.9910729));
 		assertTrue(sites.contains(site));
 		site = new Site("Stiftskirche St. Arnual, St.Arnualer Markt, Saarbrücken");
-		site.setCoordinate(new Coordinate(7.0178181,49.2177141));
+		site.setCoordinate(new Coordinate(49.2177141,7.0178181));
 		assertTrue(sites.contains(site));
 		site = new Site("An der Römerbrücke 1, Saarbrücken");
-		site.setCoordinate(new Coordinate(7.02466,49.2225925));
+		site.setCoordinate(new Coordinate(49.2225925,7.02466));
 		assertTrue(sites.contains(site));
 		site = new Site("Römerstadt 1, Saarbrücken");
-		site.setCoordinate(new Coordinate(7.0264679,49.2247862));
+		site.setCoordinate(new Coordinate(49.2247862,7.0264679));
 		assertTrue(sites.contains(site));
 		site = new Site("Mithraskapelle am Halberg, Brebacher Landstraße, Saarbrücken");
-		site.setCoordinate(new Coordinate(7.0283524,49.2225203));
-		assertTrue(sites.contains(site));*/
+		site.setCoordinate(new Coordinate(49.2225203,7.0283524));
+		assertTrue(sites.contains(site));
 	}
 
 }
