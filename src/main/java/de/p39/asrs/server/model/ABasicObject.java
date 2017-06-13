@@ -3,6 +3,9 @@ package de.p39.asrs.server.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public abstract class ABasicObject<K extends Serializable> implements Serializable {
 
 	/**
@@ -25,6 +28,8 @@ public abstract class ABasicObject<K extends Serializable> implements Serializab
 	/**
 	 * @return the timestamp
 	 */
+    @JsonIgnore
+    @JsonProperty(value = "timestamp")
 	public Date getTimestamp() {
 		return timestamp;
 	}

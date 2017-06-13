@@ -21,9 +21,9 @@ public class CategoryInputController {
 	private String englishname;
 	
 	@Autowired
-	public CategoryInputController(CrudFacade cf) {
+	public CategoryInputController(CategoryDAOImpl dao) {
 		super();
-		this.dao = new CategoryDAOImpl(cf);
+		this.dao = dao;
 	}
 
 	public void create(){

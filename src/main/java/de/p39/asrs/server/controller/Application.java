@@ -11,7 +11,8 @@ import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
 import de.p39.asrs.server.controller.db.dao.impl.SiteDAOImpl;
-
+import de.p39.asrs.server.controller.db.dao.impl.CategoryDAOImpl;
+import de.p39.asrs.server.controller.db.dao.impl.MediumDAOImpl;
 
 @SpringBootApplication
 public class Application {
@@ -26,6 +27,16 @@ public class Application {
 	@Bean 
 	public SiteDAO SiteDAOImpl(){
 		return new SiteDAOImpl(cf);
+	}
+	
+	@Bean
+	public CategoryDAOImpl CategoryDAOImpl(){
+		return new CategoryDAOImpl(cf);
+	}
+	
+	@Bean
+	public MediumDAOImpl MediumDAOImpl(){
+		return new MediumDAOImpl(cf);
 	}
 
     public static void main(String[] args) {

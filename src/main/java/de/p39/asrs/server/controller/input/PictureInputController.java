@@ -34,9 +34,9 @@ public class PictureInputController {
 	private boolean upladed;
 
 	@Autowired
-	public PictureInputController(CrudFacade cf) {
+	public PictureInputController(MediumDAOImpl dao) {
 		super();
-		this.dao = new MediumDAOImpl(cf);
+		this.dao = dao;
 	}
 
 	public void upload() {

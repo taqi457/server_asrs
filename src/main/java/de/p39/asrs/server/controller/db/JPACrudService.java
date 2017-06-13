@@ -46,7 +46,7 @@ public class JPACrudService implements CrudFacade {
 	}
 	
 	public JPACrudService(){
-		persistenceUnit = PropertiesReader.getDBName("src/main/resources/persistence.properties");
+		persistenceUnit = "server";
 		init();
 	}
 	

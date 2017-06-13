@@ -29,9 +29,9 @@ public class TextInputController {
 	private String frenchContent;
 
 	@Autowired
-	public TextInputController(CrudFacade cf) {
+	public TextInputController(MediumDAOImpl dao) {
 		super();
-		this.dao = new MediumDAOImpl(cf);
+		this.dao = dao;
 	}
 
 	public Text create() {
