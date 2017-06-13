@@ -42,8 +42,8 @@ dependencies {
     compile 'org.webjars:bootstrap:3.3.7'
     
     // https://mvnrepository.com/artifact/de.micromata.jak/JavaAPIforKml
-	compile group: 'de.micromata.jak', name: 'JavaAPIforKml', version: '2.2.0'
 
+	compile 'de.micromata.jak:JavaAPIforKml:2.2.1'
     compile 'org.springframework:spring-context:4.3.8.RELEASE'
     runtime('mysql:mysql-connector-java')
     testCompile('com.jayway.jsonpath:json-path')
