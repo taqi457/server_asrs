@@ -2,10 +2,13 @@ package de.p39.asrs.server.model.media;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 /**
@@ -22,6 +25,7 @@ public class Picture extends Medium {
 	private static final long serialVersionUID = 2524529774881275743L;
 	
 	private String path;
+	private Text text;
 	
 	public Picture(){super();}
 	
@@ -158,5 +162,16 @@ public class Picture extends Medium {
 	 */
 	public void setDescriptionEN(String descriptionEN) {
 		super.setDescriptionEN(descriptionEN);
+	}
+
+
+	@OneToOne(targetEntity = Text.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public Text getText() {
+		return text;
+	}
+
+	@OneToOne(targetEntity = Text.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public void setText(Text text) {
+		this.text = text;
 	}
 }
