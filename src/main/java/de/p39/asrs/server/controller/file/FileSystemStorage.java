@@ -26,7 +26,7 @@ public class FileSystemStorage implements Storage{
 	final Path rootLocation;
 	
     public FileSystemStorage() {
-        this.rootLocation = Paths.get(ApplicationConstants.PATH_TO_PICTURES);        
+        this.rootLocation = Paths.get(ApplicationConstants.PATH_TO_FILES);        
     }
 
     @Override

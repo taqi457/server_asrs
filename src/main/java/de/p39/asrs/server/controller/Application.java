@@ -43,10 +43,10 @@ public class Application {
 		return new MediumDAOImpl(cf);
 	}
 	
-	@Bean
-	public Storage FileSystemStorage(){
-		return new FileSystemStorage();
-	}
+	//@Bean
+	//public Storage FileSystemStorage(){
+	//	return new FileSystemStorage();
+	//}
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

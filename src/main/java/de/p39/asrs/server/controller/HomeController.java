@@ -49,5 +49,10 @@ public class HomeController {
     public String upload(){
     	return "/upload";
     }
+    
+    @GetMapping("/uploadkml")
+    public String uploadkml(){
+    	return "/uploadkml";
+    }
 
 }

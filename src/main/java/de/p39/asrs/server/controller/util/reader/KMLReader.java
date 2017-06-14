@@ -28,8 +28,21 @@ public class KMLReader {
 		this.path = path;
 	}
 	
+	public KMLReader(){}
+	
+	public Route parseKml(File f){
+		Kml kml = Kml.unmarshal(f);
+	    Feature feature = kml.getFeature();
+	    
+	    return parseFeature(feature);
+	}
+	
 	public Route parseKml(){
 	    //InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
+		if(path!=null){
+			System.out.println("path is null");
+			return null;
+		}
 		File f = new File(path);
 	   
 	    Kml kml = Kml.unmarshal(f);

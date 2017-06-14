@@ -61,7 +61,7 @@ public class PictureInputController {
 		try {
 			System.out.println("upload");
 			InputStream in = picture.getInputStream();
-			File f = new File(ApplicationConstants.PATH_TO_PICTURES + picture.getSubmittedFileName());
+			File f = new File(ApplicationConstants.PATH_TO_FILES + picture.getSubmittedFileName());
 			f.createNewFile();
 			FileOutputStream out = new FileOutputStream(f);
 			byte[] buffer = new byte[1024];
@@ -90,7 +90,7 @@ public class PictureInputController {
 	@PostMapping("/")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		this.path = storageService.store(file);
-		System.out.println(path);
+		//System.out.println(path);
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		return "redirect:/upload";
