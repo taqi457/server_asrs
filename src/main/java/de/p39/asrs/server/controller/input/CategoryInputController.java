@@ -21,7 +21,7 @@ public class CategoryInputController {
 	private String englishname;
 	
 	@Autowired
-	public CategoryInputController(CategoryDAOImpl dao) {
+	public CategoryInputController(CategoryDAO dao) {
 		super();
 		this.dao = dao;
 	}

@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ import de.p39.asrs.server.controller.file.FileSystemStorage;
  * @author adrianrebmann
  *
  */
-@Component
+@Controller
 public class PictureInputController {
 
 	private MediumDAO dao;
@@ -49,7 +50,7 @@ public class PictureInputController {
 	private boolean upladed;
 
 	@Autowired
-	public PictureInputController(MediumDAOImpl dao, FileSystemStorage storage) {
+	public PictureInputController(MediumDAO dao, FileSystemStorage storage) {
 		super();
 		this.dao = dao;
 		this.storageService = storage;
@@ -89,9 +90,10 @@ public class PictureInputController {
 	@PostMapping("/")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		this.path = storageService.store(file);
+		System.out.println(path);
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
-		return "redirect:/";
+		return "redirect:/upload";
 	}
 
 	@ExceptionHandler(StorageException.class)

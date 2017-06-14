@@ -44,5 +44,10 @@ public class HomeController {
     public String error403() {
         return "/error/403";
     }
+    
+    @GetMapping("/upload")
+    public String upload(){
+    	return "/upload";
+    }
 
 }
