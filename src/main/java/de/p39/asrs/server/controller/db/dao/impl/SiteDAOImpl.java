@@ -44,13 +44,13 @@ public class SiteDAOImpl implements SiteDAO {
 		this.cf.update(s);
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	@Override
 	public List<Site> getSitesByName(String s) {
 		Query q = this.cf.createQuery("SELECT e FROM " + Site.class.getName() + " e WHERE name = :name");
 		q.setParameter("name", s);
 		return (List<Site>) q.getResultList();
-	}
+	}*/
 
 	@Override
 	public void addMedium(Site s, Medium m) {

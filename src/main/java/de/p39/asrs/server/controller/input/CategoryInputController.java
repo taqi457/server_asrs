@@ -29,9 +29,7 @@ public class CategoryInputController {
 	public void create(){
 		if(germanname!=null&&englishname!=null&&frenchname!=null){
 			Category c = new Category();
-			c.setNameDE(germanname);
-			c.setNameEN(englishname);
-			c.setNameFR(frenchname);
+			
 			this.dao.insertCategory(c);
 		}
 	}

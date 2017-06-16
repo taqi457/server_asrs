@@ -58,9 +58,7 @@ public class KMLReader {
 	            List<Feature> featureList = document.getFeature();
 	            
 	            Route res = new Route();
-	            res.setNameDE(document.getName());
-	            res.setNameEN(document.getName());
-	            res.setNameFR(document.getName());
+	            
 	            for(Feature documentFeature : featureList) {
 	                if(documentFeature instanceof Folder) {
 	                    Folder folder = (Folder) documentFeature;

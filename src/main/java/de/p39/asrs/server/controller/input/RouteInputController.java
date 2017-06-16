@@ -51,7 +51,6 @@ public class RouteInputController {
 		String path = storageService.store(file);
 		KMLReader kmlreader=new KMLReader(path);
 		Route r = kmlreader.parseKml();
-		System.out.println(r.getNameDE());
         redirectAttributes.addFlashAttribute("message",
                 "Route successfully created with " + file.getOriginalFilename() + "!");
 

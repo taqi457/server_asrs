@@ -18,8 +18,6 @@ public interface RouteDAO {
 	
 	public void updateRoute(Route r);
 	
-	public List<Route> getRoutesByName(String s);
-	
 	public void addSite(Route r, Site s);
 	
 	public List<Site> getSites(Route r);
