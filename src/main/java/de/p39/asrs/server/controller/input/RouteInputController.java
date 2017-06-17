@@ -4,17 +4,29 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import de.p39.asrs.server.controller.db.dao.RouteDAO;
+import de.p39.asrs.server.controller.file.Storage;
+import de.p39.asrs.server.controller.util.reader.KMLReader;
 import de.p39.asrs.server.model.Category;
+import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 /**
  * 
  * @author adrianrebmann
  *
  */
-@Component
+@Controller
 public class RouteInputController {
+	
+	private RouteDAO dao;
 
 	private String germanName;
 	private String englishName;
@@ -25,10 +37,25 @@ public class RouteInputController {
 	private Category selectedCategory;
 	
 	private Part kmlDocument;
+	private Storage storageService;
 	
-	public RouteInputController() {
-		// TODO Auto-generated constructor stub
+	@Autowired
+	public RouteInputController(RouteDAO dao, Storage storage) {
+		this.dao=dao;
+		this.storageService = storage;
 	}
+	
+	@PostMapping("/kml")
+    public String handleFileUploadAndCreateRoute(@RequestParam("kml") MultipartFile file,
+                                   RedirectAttributes redirectAttributes) {
+		String path = storageService.store(file);
+		KMLReader kmlreader=new KMLReader(path);
+		Route r = kmlreader.parseKml();
+        redirectAttributes.addFlashAttribute("message",
+                "Route successfully created with " + file.getOriginalFilename() + "!");
+
+        return "redirect:/";
+    }
 
 	/**
 	 * @return the germanName

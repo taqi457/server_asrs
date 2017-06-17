@@ -9,6 +9,8 @@ import javax.persistence.Query;
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.model.Coordinate;
+import de.p39.asrs.server.model.LocaleDescription;
+import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 
@@ -22,6 +24,12 @@ public class RouteDAOImpl implements RouteDAO {
 
 	@Override
 	public void instertRoute(Route r) {
+		/*for(LocaleDescription s :r.getDescriptions()){
+			this.cf.create(s);
+		}
+		for(LocaleName s:r.getNames()){
+			this.cf.create(s);
+		}*/
 		this.cf.create(r);
 	}
 
@@ -43,14 +51,6 @@ public class RouteDAOImpl implements RouteDAO {
 	@Override
 	public void updateRoute(Route r) {
 		this.cf.update(r);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Route> getRoutesByName(String s) {
-		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE name = :name");
-		q.setParameter("name", s);
-		return (List<Route>) q.getResultList();
 	}
 
 	@Override

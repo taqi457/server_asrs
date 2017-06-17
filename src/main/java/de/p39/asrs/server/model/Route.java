@@ -18,13 +18,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * 
  * @author adrianrebmann
  *
  */
 @Entity
-public class Route extends ANamedObject<Long> {
+public class Route extends NamedObject {
 
 	/**
 	 * Stepwidth for distance calculation if performance breaks down
@@ -166,97 +169,46 @@ public class Route extends ANamedObject<Long> {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
 	
 	/**
-	 * @return the nameDE
+	 * @return the names
 	 */
-	public String getNameDE() {
-		return super.getNameDE();
+	@OneToMany(targetEntity = LocaleName.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public List<LocaleName> getNames() {
+		return names;
+	}
+
+
+
+	/**
+	 * @param names the names to set
+	 */
+	@OneToMany(targetEntity = LocaleName.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public void setNames(List<LocaleName> names) {
+		this.names = names;
 	}
 
 	/**
-	 * @param nameDE
-	 *            the nameDE to set
+	 * @return the descriptions
 	 */
-	public void setNameDE(String nameDE) {
-		super.setNameDE(nameDE);
+	@OneToMany(targetEntity = LocaleDescription.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public List<LocaleDescription> getDescriptions() {
+		return descriptions;
 	}
 
 	/**
-	 * @return the nameFR
+	 * @param descriptions the descriptions to set
 	 */
-	public String getNameFR() {
-		return super.getNameFR();
+	@OneToMany(targetEntity = LocaleDescription.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public void setDescriptions(List<LocaleDescription> descriptions) {
+		this.descriptions = descriptions;
 	}
-
-	/**
-	 * @param nameFR
-	 *            the nameFR to set
-	 */
-	public void setNameFR(String nameFR) {
-		super.setNameFR(nameFR);
-	}
-
-	/**
-	 * @return the nameEN
-	 */
-	public String getNameEN() {
-		return super.getNameEN();
-	}
-
-	/**
-	 * @param nameEN
-	 *            the nameEN to set
-	 */
-	public void setNameEN(String nameEN) {
-		super.setNameEN(nameEN);
-	}
-
-	/**
-	 * @return the descriptionDE
-	 */
-	public String getDescriptionDE() {
-		return super.getDescriptionDE();
-	}
-
-	/**
-	 * @param descriptionDE
-	 *            the descriptionDE to set
-	 */
-	public void setDescriptionDE(String descriptionDE) {
-		super.setDescriptionDE(descriptionDE);
-	}
-
-	/**
-	 * @return the descriptionFR
-	 */
-	public String getDescriptionFR() {
-		return super.getDescriptionFR();
-	}
-
-	/**
-	 * @param descriptionFR
-	 *            the descriptionFR to set
-	 */
-	public void setDescriptionFR(String descriptionFR) {
-		super.setDescriptionFR(descriptionFR);
-	}
-
-	/**
-	 * @return the descriptionEN
-	 */
-	public String getDescriptionEN() {
-		return super.getDescriptionEN();
-	}
-
-	/**
-	 * @param descriptionEN
-	 *            the descriptionEN to set
-	 */
-	public void setDescriptionEN(String descriptionEN) {
-		super.setDescriptionEN(descriptionEN);
-	}
-
+	
 	/**
 	 * @return the amplitude
 	 */
@@ -298,5 +250,6 @@ public class Route extends ANamedObject<Long> {
 		}
 		return distance;
 	}
+	
 
 }

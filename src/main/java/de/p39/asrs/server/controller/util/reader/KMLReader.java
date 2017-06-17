@@ -28,8 +28,21 @@ public class KMLReader {
 		this.path = path;
 	}
 	
+	public KMLReader(){}
+	
+	public Route parseKml(File f){
+		Kml kml = Kml.unmarshal(f);
+	    Feature feature = kml.getFeature();
+	    
+	    return parseFeature(feature);
+	}
+	
 	public Route parseKml(){
 	    //InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
+		if(path!=null){
+			System.out.println("path is null");
+			return null;
+		}
 		File f = new File(path);
 	   
 	    Kml kml = Kml.unmarshal(f);
@@ -45,9 +58,7 @@ public class KMLReader {
 	            List<Feature> featureList = document.getFeature();
 	            
 	            Route res = new Route();
-	            res.setNameDE(document.getName());
-	            res.setNameEN(document.getName());
-	            res.setNameFR(document.getName());
+	            
 	            for(Feature documentFeature : featureList) {
 	                if(documentFeature instanceof Folder) {
 	                    Folder folder = (Folder) documentFeature;
