@@ -7,13 +7,18 @@
 		<class>de.p39.asrs.server.model.media.Picture</class>
 		<class>de.p39.asrs.server.model.media.Video</class>
 		<class>de.p39.asrs.server.model.media.Text</class>
-		<class>de.p39.asrs.server.model.Picture</class>
+		<class>de.p39.asrs.server.model.media.Picture</class>
 		<class>de.p39.asrs.server.model.Route</class>
 		<class>de.p39.asrs.server.model.LocaleName</class>
 		<class>de.p39.asrs.server.model.LocaleDescription</class>
 		<class>de.p39.asrs.server.model.Site</class>
-		<class>de.p39.asrs.server.model.Text</class>
-		<class>de.p39.asrs.server.model.Video</class>
+		<class>de.p39.asrs.server.model.media.Text</class>
+		<class>de.p39.asrs.server.model.media.Video</class>
+		<class>de.p39.asrs.server.model.Category</class>
+		<class>de.p39.asrs.server.model.media.Video</class>
+		<class>de.p39.asrs.server.model.Coordinate</class>
+
+
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/server" />
