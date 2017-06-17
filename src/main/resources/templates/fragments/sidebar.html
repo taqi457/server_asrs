@@ -3,15 +3,8 @@
 <head>
 </head>
 <body>
-<div th:fragment="sidebar">
 
-
-
-    <script type="text/javascript">
-        try{ace.settings.loadState('main-container')}catch(e){}
-    </script>
-
-    <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
+    <div th:fragment="sidebar" id="sidebar" class="sidebar                  responsive                    ace-save-state">
         <script type="text/javascript">
             try{ace.settings.loadState('sidebar')}catch(e){}
         </script>
@@ -19,20 +12,20 @@
 
         <ul class="nav nav-list">
             <li class="">
-                <a href="index.html">
+                <a href="/locationoveriew">
                     <i class="menu-icon fa fa-map-marker"></i>
                     <span class="menu-text"> Locations </span>
                 </a>
             </li>
             <li class="">
-                <a href="index.html">
+                <a href="/routeoverview">
                     <i class="menu-icon fa fa-map-o"></i>
                     <span class="menu-text"> Routen </span>
                 </a>
 
             </li>
             <li class="">
-                <a href="index.html">
+                <a href="useroverview">
                     <i class="menu-icon fa fa-user"></i>
                     <span class="menu-text"> User </span>
                 </a>
@@ -44,9 +37,6 @@
         <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
             <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
         </div>
-    </div>
-
-
     </div>
 </body>
 </html>

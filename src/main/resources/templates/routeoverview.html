@@ -10,27 +10,107 @@
 <body class="no-skin">
 	<div th:replace="fragments/header :: header" />
 	<div class="main-container ace-save-state" id="main-container">
+		<script type="text/javascript">
+            try{ace.settings.loadState('main-container')}catch(e){}
+		</script>
 		<div th:replace="fragments/sidebar :: sidebar" />
 		<div class="main-content">
-			<div class="routelist"
-				th:unless="${#lists.isEmpty(allRoutes)}">
+			<div class="main-content-inner">
 
-				<h2 th:text="#{title.list}">List of Routes</h2>
+				<div class="page-content">
 
-				<table>
-					<thead>
-						<tr>
-							<th th:text="#{route.id}">Id</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="sb : ${allRoutes}">
-							<td th:text="${{sb.id}}">13/01/2011</td>
-						</tr>
-					</tbody>
-				</table>
+					<div class="page-header">
+						<h1>
+							Routen
+
+						</h1>
+					</div><!-- /.page-header -->
+
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<div class="row">
+								<div class="col-xs-12">
+									<table id="simple-table" class="table  table-bordered table-hover">
+										<thead>
+										<tr>
+
+											<th>ID</th>
+
+											<th></th>
+										</tr>
+										</thead>
+
+										<tbody>
+										<tr th:each="sb : ${allRoutes}">
+											<td th:text="${{sb.id}}">13/01/2011</td>
+
+											<td>
+												<div class="hidden-sm hidden-xs btn-group">
+													<button class="btn btn-xs btn-success">
+														<i class="ace-icon fa fa-check bigger-120"></i>
+													</button>
+
+													<button class="btn btn-xs btn-info">
+														<i class="ace-icon fa fa-pencil bigger-120"></i>
+													</button>
+
+													<button class="btn btn-xs btn-danger">
+														<i class="ace-icon fa fa-trash-o bigger-120"></i>
+													</button>
+
+													<button class="btn btn-xs btn-warning">
+														<i class="ace-icon fa fa-flag bigger-120"></i>
+													</button>
+												</div>
+
+												<div class="hidden-md hidden-lg">
+													<div class="inline pos-rel">
+														<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+															<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+														</button>
+
+														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+															<li>
+																<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+																			<span class="blue">
+																				<i class="ace-icon fa fa-search-plus bigger-120"></i>
+																			</span>
+																</a>
+															</li>
+
+															<li>
+																<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+																			<span class="green">
+																				<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																			</span>
+																</a>
+															</li>
+
+															<li>
+																<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+																			<span class="red">
+																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																			</span>
+																</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</td>
+										</tr>
+										</tbody>
+									</table>
+								</div><!-- /.span -->
+							</div><!-- /.row -->
+
+							<!-- PAGE CONTENT ENDS -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+				</div><!-- /.page-content -->
 			</div>
-		</div>
+		</div><!-- /.main-content -->
+
 		<!-- /.main-content -->
 		<div th:replace="fragments/footer :: footer" />
 	</div>
