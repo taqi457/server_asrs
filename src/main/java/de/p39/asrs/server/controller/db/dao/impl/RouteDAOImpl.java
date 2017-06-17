@@ -22,12 +22,25 @@ public class RouteDAOImpl implements RouteDAO {
 
 	@Override
 	public void instertRoute(Route r) {
+		/*for(LocaleDescription s :r.getDescriptions()){
+			this.cf.create(s);
+		}
+		for(LocaleName s:r.getNames()){
+			this.cf.create(s);
+		}*/
 		this.cf.create(r);
 	}
 
 	@Override
 	public Route getRouteById(Long id) {
 		return this.cf.find(id, Route.class);
+	}
+	
+	@Override
+	public List<Route> getRouteByPath(String path){
+		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE pathToKml = :path");
+		q.setParameter("path", path);
+		return (List<Route>) q.getResultList();
 	}
 
 	@Override
@@ -43,14 +56,6 @@ public class RouteDAOImpl implements RouteDAO {
 	@Override
 	public void updateRoute(Route r) {
 		this.cf.update(r);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Route> getRoutesByName(String s) {
-		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE name = :name");
-		q.setParameter("name", s);
-		return (List<Route>) q.getResultList();
 	}
 
 	@Override

@@ -12,13 +12,13 @@ public interface RouteDAO {
 	
 	public Route getRouteById(Long id);
 	
+	public List<Route> getRouteByPath(String path);
+	
 	public List<Route> getAllRoutes();
 	
 	public void deleteRoute(Long id);
 	
 	public void updateRoute(Route r);
-	
-	public List<Route> getRoutesByName(String s);
 	
 	public void addSite(Route r, Site s);
 	

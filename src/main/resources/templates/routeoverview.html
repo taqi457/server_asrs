@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>Home - Saarromanus</title>
+<div th:replace="fragments/header :: header-css" />
+
+</head>
+<body class="no-skin">
+	<div th:replace="fragments/header :: header" />
+	<div class="main-container ace-save-state" id="main-container">
+		<div th:replace="fragments/sidebar :: sidebar" />
+		<div class="main-content">
+			<div class="routelist"
+				th:unless="${#lists.isEmpty(allRoutes)}">
+
+				<h2 th:text="#{title.list}">List of Routes</h2>
+
+				<table>
+					<thead>
+						<tr>
+							<th th:text="#{route.id}">Id</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="sb : ${allRoutes}">
+							<td th:text="${{sb.id}}">13/01/2011</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- /.main-content -->
+		<div th:replace="fragments/footer :: footer" />
+	</div>
+	<div th:replace="fragments/footer :: js " />
+</body>
+<!-- /.container -->
+</html>

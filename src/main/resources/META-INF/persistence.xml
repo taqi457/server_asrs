@@ -9,6 +9,8 @@
 		<class>de.p39.asrs.server.model.media.Text</class>
 		<class>de.p39.asrs.server.model.Picture</class>
 		<class>de.p39.asrs.server.model.Route</class>
+		<class>de.p39.asrs.server.model.LocaleName</class>
+		<class>de.p39.asrs.server.model.LocaleDescription</class>
 		<class>de.p39.asrs.server.model.Site</class>
 		<class>de.p39.asrs.server.model.Text</class>
 		<class>de.p39.asrs.server.model.Video</class>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Home - Saarromanus</title>
+    <div th:replace="fragments/header :: header-css"/>
+
+</head>
+<body class="no-skin">
+<div th:replace="fragments/header :: header"/>
+<div class="main-container ace-save-state" id="main-container">
+    <div th:replace="fragments/sidebar :: sidebar"/>
+    <div class="main-content">
+<div th:if="${message}">
+			<h2 th:text="${message}"></h2>
+		</div>
+		<div>
+			<form method="POST" enctype="multipart/form-data" action="/">
+				<table>
+					<tr>
+						<td>File to upload:</td>
+						<td><input type="file" name="picture" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit" value="Upload" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!--  div>
+		<ul>
+			<li th:each="file : ${files}"><a th:href="${file}"
+				th:text="${file}"></a></li>
+		</ul>
+	</div-->
+    </div><!-- /.main-content -->
+    <div th:replace="fragments/footer :: footer"/>
+</div>
+<div th:replace="fragments/footer :: js "/>
+</body>
+<!-- /.container -->
+</html>
+
+

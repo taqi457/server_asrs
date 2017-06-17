@@ -21,17 +21,15 @@ public class CategoryInputController {
 	private String englishname;
 	
 	@Autowired
-	public CategoryInputController(CrudFacade cf) {
+	public CategoryInputController(CategoryDAO dao) {
 		super();
-		this.dao = new CategoryDAOImpl(cf);
+		this.dao = dao;
 	}
 
 	public void create(){
 		if(germanname!=null&&englishname!=null&&frenchname!=null){
 			Category c = new Category();
-			c.setNameDE(germanname);
-			c.setNameEN(englishname);
-			c.setNameFR(frenchname);
+			
 			this.dao.insertCategory(c);
 		}
 	}

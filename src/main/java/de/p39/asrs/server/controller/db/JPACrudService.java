@@ -21,7 +21,6 @@ import javax.persistence.criteria.Root;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import de.p39.asrs.server.controller.util.reader.PropertiesReader;
 import de.p39.asrs.server.model.ABasicObject;
 
 /**
@@ -46,7 +45,7 @@ public class JPACrudService implements CrudFacade {
 	}
 	
 	public JPACrudService(){
-		persistenceUnit = PropertiesReader.getDBName("src/main/resources/persistence.properties");
+		persistenceUnit = "server";
 		init();
 	}
 	

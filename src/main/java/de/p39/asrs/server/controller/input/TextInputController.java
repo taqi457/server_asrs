@@ -29,21 +29,16 @@ public class TextInputController {
 	private String frenchContent;
 
 	@Autowired
-	public TextInputController(CrudFacade cf) {
+	public TextInputController(MediumDAOImpl dao) {
 		super();
-		this.dao = new MediumDAOImpl(cf);
+		this.dao = dao;
 	}
 
 	public Text create() {
 		if (germanName != null && frenchName != null && englishName != null && germanContent != null
 				&& frenchContent != null && englishContent != null) {
 			Text t = new Text();
-			t.setNameDE(germanName);
-			t.setNameEN(englishName);
-			t.setNameFR(frenchName);
-			t.setDescriptionDE(germanContent);
-			t.setDescriptionEN(englishContent);
-			t.setDescriptionFR(frenchContent);
+			
 			dao.insertText(t);
 			return t;
 		} else {
