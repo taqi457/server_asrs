@@ -12,6 +12,8 @@ public interface RouteDAO {
 	
 	public Route getRouteById(Long id);
 	
+	public List<Route> getRouteByPath(String path);
+	
 	public List<Route> getAllRoutes();
 	
 	public void deleteRoute(Long id);

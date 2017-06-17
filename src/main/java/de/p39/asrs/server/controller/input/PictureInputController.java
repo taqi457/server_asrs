@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.Part;
 
@@ -11,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.p39.asrs.server.controller.ApplicationConstants;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
-import de.p39.asrs.server.controller.db.dao.impl.MediumDAOImpl;
 import de.p39.asrs.server.controller.exceptions.StorageException;
 import de.p39.asrs.server.controller.file.FileSystemStorage;
+import de.p39.asrs.server.controller.file.FileType;
+import de.p39.asrs.server.model.LocaleDescription;
+import de.p39.asrs.server.model.LocaleName;
+import de.p39.asrs.server.model.Route;
+import de.p39.asrs.server.model.media.Picture;
+import de.p39.asrs.server.model.media.Text;
 
 /**
  * 
@@ -42,8 +48,10 @@ public class PictureInputController {
 	private String germanName;
 	private String englishName;
 	private String frenchName;
-
-	private String path;
+	
+	private String germanDescription;
+	private String englishDescription;
+	private String frenchDescription;
 
 	private Part picture;
 
@@ -61,7 +69,7 @@ public class PictureInputController {
 		try {
 			System.out.println("upload");
 			InputStream in = picture.getInputStream();
-			File f = new File(ApplicationConstants.PATH_TO_FILES + picture.getSubmittedFileName());
+			File f = new File(ApplicationConstants.PATH_TO_PICTURES + picture.getSubmittedFileName());
 			f.createNewFile();
 			FileOutputStream out = new FileOutputStream(f);
 			byte[] buffer = new byte[1024];
@@ -78,22 +86,69 @@ public class PictureInputController {
 		}
 	}
 
-	@GetMapping("/files/{filename:.+}")
+	@GetMapping("/pictures/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-		Resource file = storageService.loadAsResource(filename);
+		Resource file = storageService.loadAsResource(FileType.PICTURE,filename);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
 	}
 
-	@PostMapping("/")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-		this.path = storageService.store(file);
+	@PostMapping("/picture")
+	public String handleFileUploadAndCreatePicture(@RequestParam("picture") MultipartFile file, RedirectAttributes redirectAttributes) {
+		String path = storageService.store(file, FileType.PICTURE);
+		Picture picture = new Picture();
+		List<Picture> exists= this.dao.getPictureByPath(path);
+		if(!exists.isEmpty()){
+			Picture existing = exists.get(0);
+			this.dao.deletePicture(existing.getId());
+		}
+		if(path!= null){
+			picture.setPath(path);
+		}
+		this.addNamesAndDescriptions(picture);
 		//System.out.println(path);
+		this.dao.insertPicture(picture);
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		return "redirect:/upload";
+	}
+	
+	private Picture addNamesAndDescriptions(Picture r) {
+		Text t = new Text();
+		if (this.englishName != null) {
+			LocaleName name = new LocaleName(Locale.GERMAN, this.germanName);
+			r.addLocaleName(name);
+			t.addLocaleName(name);
+		}
+		if (this.germanName != null) {
+			LocaleName name = new LocaleName(Locale.ENGLISH, this.englishName);
+			r.addLocaleName(name);
+			t.addLocaleName(name);
+		}
+		if (this.frenchName != null) {
+			LocaleName name = new LocaleName(Locale.FRENCH, this.frenchName);
+			r.addLocaleName(name);
+			t.addLocaleName(name);
+		}
+		if (this.englishDescription != null) {
+			LocaleDescription description = new LocaleDescription(Locale.GERMAN, this.germanDescription);
+			r.addLocaleDescription(description);
+			t.addLocaleDescription(description);
+		}
+		if (this.germanDescription != null) {
+			LocaleDescription description = new LocaleDescription(Locale.ENGLISH, this.englishDescription);
+			r.addLocaleDescription(description);
+			t.addLocaleDescription(description);
+		}
+		if (this.frenchDescription != null) {
+			LocaleDescription description = new LocaleDescription(Locale.FRENCH, this.frenchDescription);
+			r.addLocaleDescription(description);
+			t.addLocaleDescription(description);
+		}
+		r.setText(t);
+		return r;
 	}
 
 	@ExceptionHandler(StorageException.class)
@@ -148,6 +203,32 @@ public class PictureInputController {
 	 */
 	public void setFrenchName(String frenchName) {
 		this.frenchName = frenchName;
+	}
+	
+	
+
+	public String getGermanDescription() {
+		return germanDescription;
+	}
+
+	public void setGermanDescription(String germanDescription) {
+		this.germanDescription = germanDescription;
+	}
+
+	public String getEnglishDescription() {
+		return englishDescription;
+	}
+
+	public void setEnglishDescription(String englishDescription) {
+		this.englishDescription = englishDescription;
+	}
+
+	public String getFrenchDescription() {
+		return frenchDescription;
+	}
+
+	public void setFrenchDescription(String frenchDescription) {
+		this.frenchDescription = frenchDescription;
 	}
 
 	/**

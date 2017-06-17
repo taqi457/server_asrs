@@ -54,5 +54,10 @@ public class HomeController {
     public String uploadkml(){
     	return "/uploadkml";
     }
+    
+    @GetMapping("/routeoverview")
+    public String route(){
+    	return "/routeoverview";
+    }
 
 }
