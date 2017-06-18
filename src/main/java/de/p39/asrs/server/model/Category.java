@@ -28,7 +28,7 @@ public class Category extends NamedObject {
 	 */
 	private static final long serialVersionUID = -5143652688538221831L;
 	
-	
+	String type;
 	public Category(){super();}
 
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.cfg.NotYetImplementedException;
+import javax.persistence.Query;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
@@ -116,5 +117,18 @@ public class MediumDAOImpl implements MediumDAO {
 	public Picture getPictureById(Long id) {
 		// TODO Auto-generated method stub
 		throw new NotYetImplementedException();
+	}
+	
+	public List<Picture> getPictureByPath(String path) {
+		Query q = this.cf.createQuery("SELECT e FROM " + Picture.class.getName() + " e WHERE path = :path");
+		q.setParameter("path", path);
+		return (List<Picture>) q.getResultList();
+	}
+
+	@Override
+	public List<Audio> getAudiosByPath(String path) {
+		Query q = this.cf.createQuery("SELECT e FROM " + Audio.class.getName() + " e WHERE path = :path");
+		q.setParameter("path", path);
+		return (List<Audio>) q.getResultList();
 	}
 }

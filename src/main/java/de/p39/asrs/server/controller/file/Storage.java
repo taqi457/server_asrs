@@ -9,13 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 public interface Storage {
 	void init();
 
-    String store(MultipartFile file);
+    String store(MultipartFile file, FileType type);
 
-    Stream<Path> loadAll();
+    Stream<Path> loadAll(FileType t);
 
-    Path load(String filename);
+    Path load(FileType t, String filename);
 
-    Resource loadAsResource(String filename);
+    Resource loadAsResource(FileType t, String filename);
 
-    void deleteAll();
+    void deleteAll(FileType t);
 }

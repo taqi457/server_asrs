@@ -37,8 +37,13 @@ public class Route extends NamedObject {
 
 	private List<Coordinate> coordinates;
 	private Set<Site> sites;
+	private String pathToKml;
+	/**
+	 * in ms
+	 */
+	private Long durationByFoot;
+	private Long durationByBike;
 
-	private Long duration; // in ms
 	private Category category;
 	private Double amplitude;
 
@@ -116,21 +121,6 @@ public class Route extends NamedObject {
 	}
 
 	/**
-	 * @return the duration
-	 */
-	public Long getDuration() {
-		return duration;
-	}
-
-	/**
-	 * @param duration
-	 *            the duration to set
-	 */
-	public void setDuration(Long duration) {
-		this.duration = duration;
-	}
-
-	/**
 	 * @return the category
 	 */
 	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -185,6 +175,22 @@ public class Route extends NamedObject {
 		this.descriptions = descriptions;
 	}
 
+	public Long getDurationByFoot() {
+		return durationByFoot;
+	}
+
+	public void setDurationByFoot(Long durationByFoot) {
+		this.durationByFoot = durationByFoot;
+	}
+
+	public Long getDurationByBike() {
+		return durationByBike;
+	}
+
+	public void setDurationByBike(Long durationByBike) {
+		this.durationByBike = durationByBike;
+	}
+
 	/**
 	 * @return the amplitude
 	 */
@@ -228,4 +234,11 @@ public class Route extends NamedObject {
 		return distance;
 	}
 
+	public String getPathToKml() {
+		return pathToKml;
+	}
+
+	public void setPathToKml(String pathToKml) {
+		this.pathToKml = pathToKml;
+	}
 }

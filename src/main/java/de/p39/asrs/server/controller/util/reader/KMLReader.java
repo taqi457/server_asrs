@@ -39,7 +39,7 @@ public class KMLReader {
 	
 	public Route parseKml(){
 	    //InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
-		if(path!=null){
+		if(path==null){
 			System.out.println("path is null");
 			return null;
 		}

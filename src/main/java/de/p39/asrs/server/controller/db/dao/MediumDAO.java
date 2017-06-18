@@ -17,6 +17,10 @@ public interface MediumDAO {
 	public List<Video> getAllVideos();
 
 	public List<Picture> getAllPictures();
+	
+	public List<Picture> getPictureByPath(String path);
+	
+	public List<Audio> getAudiosByPath(String path);
 
 	public List<Medium> getAllMedia();
 	

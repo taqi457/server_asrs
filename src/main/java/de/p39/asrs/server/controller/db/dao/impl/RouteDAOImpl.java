@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Query;
+
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.model.Coordinate;
@@ -32,6 +34,13 @@ public class RouteDAOImpl implements RouteDAO {
 	@Override
 	public Route getRouteById(Long id) {
 		return this.cf.find(id, Route.class);
+	}
+	
+	@Override
+	public List<Route> getRouteByPath(String path){
+		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE pathToKml = :path");
+		q.setParameter("path", path);
+		return (List<Route>) q.getResultList();
 	}
 
 	@Override
