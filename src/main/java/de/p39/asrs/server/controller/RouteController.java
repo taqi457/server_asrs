@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.exceptions.BadRequestException;
 import de.p39.asrs.server.controller.exceptions.NotFoundExecption;
+import de.p39.asrs.server.controller.util.reader.KMLReader;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.Route;
 
@@ -26,6 +27,8 @@ public class RouteController {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<Route> routeAll(@RequestParam(value = "kind") String kind) {
+		Route r = new KMLReader("src/main/resources/kml/saarbrucken_tour.kml").parseKml();
+		daoInterface.instertRoute(r);
 		if (!kind.equals("all")) {
 			throw new BadRequestException("Specifiy an ID by /route/{id} or all by /route?kind=all");
 		}
@@ -33,7 +36,7 @@ public class RouteController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Route routeId(@PathVariable Long id) {
+	public Route routeById(@PathVariable Long id) {
 		Route res = daoInterface.getRouteById(id);
 		if (res == null)
 			throw new NotFoundExecption("The routeId you specified was not in the data set");
@@ -41,7 +44,7 @@ public class RouteController {
 	}
 
 	@RequestMapping(value = "/gps", method = RequestMethod.GET)
-	public List<Route> routeGPS(@RequestParam Map<String, String> requestParam) {
+	public List<Route> routeByGps(@RequestParam Map<String, String> requestParam) {
 		Double lat, lon, rad;
 		try {
 			lat = Double.parseDouble(requestParam.get("lat"));

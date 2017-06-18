@@ -19,6 +19,8 @@ public interface MediumDAO {
 	public List<Picture> getAllPictures();
 
 	public List<Medium> getAllMedia();
+	
+	public Picture getPictureById(Long id);
 
 	public void insertAudio(Audio a);
 

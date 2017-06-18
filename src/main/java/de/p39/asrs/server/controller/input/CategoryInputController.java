@@ -3,9 +3,7 @@ package de.p39.asrs.server.controller.input;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
-import de.p39.asrs.server.controller.db.dao.impl.CategoryDAOImpl;
 import de.p39.asrs.server.model.Category;
 /**
  * 

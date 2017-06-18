@@ -33,26 +33,19 @@ public class Route extends NamedObject {
 	 * Stepwidth for distance calculation if performance breaks down
 	 */
 	private static final long serialVersionUID = 2711246951505591683L;
-	
 	private static final int stepwidth = 5;
 
 	private List<Coordinate> coordinates;
-	
-	private String gpx;
 	private Set<Site> sites;
-	/**
-	 * in ms
-	 */
-	private Long duration;
+
+	private Long duration; // in ms
 	private Category category;
 	private Double amplitude;
-	
 
 	public Route() {
 		super();
 		this.init();
 	}
-
 
 	private void init() {
 		this.coordinates = new LinkedList<>();
@@ -62,7 +55,7 @@ public class Route extends NamedObject {
 	/**
 	 * @return the coordinates
 	 */
-	@OneToMany(targetEntity = Coordinate.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Coordinate.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public List<Coordinate> getCoordinates() {
 		return coordinates;
 	}
@@ -71,7 +64,7 @@ public class Route extends NamedObject {
 	 * @param coordinates
 	 *            the coordinates to set
 	 */
-	@OneToMany(targetEntity = Coordinate.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Coordinate.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setCoordinates(List<Coordinate> coordinates) {
 		this.coordinates = coordinates;
 	}
@@ -79,7 +72,7 @@ public class Route extends NamedObject {
 	/**
 	 * @return the sites
 	 */
-	@OneToMany(targetEntity = Site.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Site.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<Site> getSites() {
 		return sites;
 	}
@@ -88,7 +81,7 @@ public class Route extends NamedObject {
 	 * @param sites
 	 *            the sites to set
 	 */
-	@OneToMany(targetEntity = Site.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Site.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setSites(Set<Site> sites) {
 		this.sites = sites;
 	}
@@ -104,7 +97,6 @@ public class Route extends NamedObject {
 	public void setId(Long id) {
 		super.setId(id);
 	}
-
 
 	/**
 	 * @return the timestamp
@@ -124,23 +116,6 @@ public class Route extends NamedObject {
 	}
 
 	/**
-	 * @return the gpx
-	 */
-	public String getGpx() {
-		return gpx;
-	}
-
-	/**
-	 * @param gpx
-	 *            the gpx to set
-	 */
-	public void setGpx(String gpx) {
-		this.gpx = gpx;
-	}
-	
-	
-	
-	/**
 	 * @return the duration
 	 */
 	public Long getDuration() {
@@ -148,7 +123,8 @@ public class Route extends NamedObject {
 	}
 
 	/**
-	 * @param duration the duration to set
+	 * @param duration
+	 *            the duration to set
 	 */
 	public void setDuration(Long duration) {
 		this.duration = duration;
@@ -157,35 +133,34 @@ public class Route extends NamedObject {
 	/**
 	 * @return the category
 	 */
-	@ManyToOne(targetEntity = Category.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Category getCategory() {
 		return category;
 	}
 
 	/**
-	 * @param category the category to set
+	 * @param category
+	 *            the category to set
 	 */
-	@ManyToOne(targetEntity = Category.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setCategory(Category category) {
 		this.category = category;
 	}
 
-	
 	/**
 	 * @return the names
 	 */
-	@OneToMany(targetEntity = LocaleName.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = LocaleName.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	public List<LocaleName> getNames() {
 		return names;
 	}
 
-
-
 	/**
-	 * @param names the names to set
+	 * @param names
+	 *            the names to set
 	 */
-	@OneToMany(targetEntity = LocaleName.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = LocaleName.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	public void setNames(List<LocaleName> names) {
 		this.names = names;
@@ -194,21 +169,22 @@ public class Route extends NamedObject {
 	/**
 	 * @return the descriptions
 	 */
-	@OneToMany(targetEntity = LocaleDescription.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = LocaleDescription.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	public List<LocaleDescription> getDescriptions() {
 		return descriptions;
 	}
 
 	/**
-	 * @param descriptions the descriptions to set
+	 * @param descriptions
+	 *            the descriptions to set
 	 */
-	@OneToMany(targetEntity = LocaleDescription.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = LocaleDescription.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	public void setDescriptions(List<LocaleDescription> descriptions) {
 		this.descriptions = descriptions;
 	}
-	
+
 	/**
 	 * @return the amplitude
 	 */
@@ -217,7 +193,8 @@ public class Route extends NamedObject {
 	}
 
 	/**
-	 * @param amplitude the amplitude to set
+	 * @param amplitude
+	 *            the amplitude to set
 	 */
 	public void setAmplitude(Double amplitude) {
 		this.amplitude = amplitude;
@@ -226,30 +203,29 @@ public class Route extends NamedObject {
 	/**
 	 * add and remove methods
 	 */
-	public void addCoordinate(Coordinate c){
+	public void addCoordinate(Coordinate c) {
 		this.coordinates.add(c);
 	}
-	
-	public void removeCoordinate(Coordinate c){
+
+	public void removeCoordinate(Coordinate c) {
 		this.coordinates.remove(c);
 	}
-	
-	public void addSite(Site s){
+
+	public void addSite(Site s) {
 		this.sites.add(s);
 	}
-	
-	public void removeSite(Site s){
+
+	public void removeSite(Site s) {
 		this.sites.remove(s);
 	}
 
-	public double calculateDist(Coordinate coord){
+	public double calculateDist(Coordinate coord) {
 		double distance = Double.MAX_VALUE;
-		for(int i = 0;i<coordinates.size();i+=stepwidth){
+		for (int i = 0; i < coordinates.size(); i += stepwidth) {
 			Coordinate c = coordinates.get(i);
-			distance = Double.min(c.getDistance(coord),distance);
+			distance = Double.min(c.getDistance(coord), distance);
 		}
 		return distance;
 	}
-	
 
 }

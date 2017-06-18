@@ -1,11 +1,8 @@
 package de.p39.asrs.server.controller.input;
 
-import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.db.dao.impl.MediumDAOImpl;
 import de.p39.asrs.server.model.media.Text;

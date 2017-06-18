@@ -25,7 +25,7 @@ public class SiteController {
 	private SiteDAO daoInterface;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-    public List<Site> routeAll(@RequestParam(value = "kind") String kind){
+    public List<Site> siteAll(@RequestParam(value = "kind") String kind){
 		if(!kind.equals("all")){
     		throw new BadRequestException("Specifiy an ID by /site/{id} or all by /site?kind=all");
     	}
@@ -33,7 +33,7 @@ public class SiteController {
     }
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Site siteId(@PathVariable Long id) {
+	public Site siteById(@PathVariable Long id) {
 		Site res = daoInterface.getSiteById(id);
     	if(res == null)
     		throw new NotFoundExecption("The siteId you specified was not in the data set");
@@ -41,7 +41,7 @@ public class SiteController {
 	}
 
 	@RequestMapping(value="/gps", method=RequestMethod.GET)
-    public List<Site> routeGPS(@RequestParam Map<String,String> requestParam) {
+    public List<Site> siteByGps(@RequestParam Map<String,String> requestParam) {
 		Double lat, lon, rad;
 		try {
 			lat = Double.parseDouble(requestParam.get("lat"));

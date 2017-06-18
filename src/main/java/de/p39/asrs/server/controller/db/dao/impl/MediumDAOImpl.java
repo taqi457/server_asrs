@@ -3,6 +3,8 @@ package de.p39.asrs.server.controller.db.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.cfg.NotYetImplementedException;
+
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.model.media.Audio;
@@ -108,5 +110,11 @@ public class MediumDAOImpl implements MediumDAO {
 	@Override
 	public void deletePicture(Long id) {
 		this.cf.delete(id, Picture.class);
+	}
+
+	@Override
+	public Picture getPictureById(Long id) {
+		// TODO Auto-generated method stub
+		throw new NotYetImplementedException();
 	}
 }

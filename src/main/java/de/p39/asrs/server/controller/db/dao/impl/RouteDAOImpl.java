@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Query;
-
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.model.Coordinate;
-import de.p39.asrs.server.model.LocaleDescription;
-import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 
