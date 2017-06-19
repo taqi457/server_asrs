@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.bind.JAXBException;
+
 import org.junit.Test;
 
 import de.p39.asrs.server.controller.util.reader.KMLReader;
@@ -16,7 +18,14 @@ public class KMLReaderTest {
 
 	@Test
 	public void test() {
-		Route r = new KMLReader("src/main/resources/kml/saarbrucken_tour.kml").parseKml();
+		Route r = null;
+		try {
+			r = new KMLReader().parseKml("src/main/resources/kml/saarbrucken_tour.kml");
+		} catch (JAXBException e) {
+			e.printStackTrace();
+			fail("An error occured when parsing kml");
+		}
+		
 		assertNotNull("Returned route was null",r);
 		//assertEquals("Auf den Spuren der Römer: Radtour Saarbrücken",r.getNameDE());
 		
