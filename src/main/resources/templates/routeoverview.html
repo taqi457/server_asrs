@@ -3,16 +3,13 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-<title>Home - Saarromanus</title>
+<title>Alle Routen - Saarromanus</title>
 <div th:replace="fragments/header :: header-css" />
 
 </head>
 <body class="no-skin">
 	<div th:replace="fragments/header :: header" />
 	<div class="main-container ace-save-state" id="main-container">
-		<script type="text/javascript">
-            try{ace.settings.loadState('main-container')}catch(e){}
-		</script>
 		<div th:replace="fragments/sidebar :: sidebar" />
 		<div class="main-content">
 			<div class="main-content-inner">
@@ -31,11 +28,14 @@
 							<!-- PAGE CONTENT BEGINS -->
 							<div class="row">
 								<div class="col-xs-12">
+									<a href="/newroute"><button class="btn btn-primary">Neue Route erstellen</button></a>
+<br/><br/>
 									<table id="simple-table" class="table  table-bordered table-hover">
 										<thead>
 										<tr>
 
 											<th>ID</th>
+											<th>Name</th>
 
 											<th></th>
 										</tr>
@@ -44,12 +44,11 @@
 										<tbody>
 										<tr th:each="sb : ${allRoutes}">
 											<td th:text="${{sb.id}}">13/01/2011</td>
+											<td th:text="${{sb.getNames().get(0).getString()}}">13/01/2011</td>
 
 											<td>
 												<div class="hidden-sm hidden-xs btn-group">
-													<button class="btn btn-xs btn-success">
-														<i class="ace-icon fa fa-check bigger-120"></i>
-													</button>
+
 
 													<button class="btn btn-xs btn-info">
 														<i class="ace-icon fa fa-pencil bigger-120"></i>
@@ -59,9 +58,6 @@
 														<i class="ace-icon fa fa-trash-o bigger-120"></i>
 													</button>
 
-													<button class="btn btn-xs btn-warning">
-														<i class="ace-icon fa fa-flag bigger-120"></i>
-													</button>
 												</div>
 
 												<div class="hidden-md hidden-lg">

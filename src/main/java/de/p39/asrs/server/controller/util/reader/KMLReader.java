@@ -1,104 +1,152 @@
 package de.p39.asrs.server.controller.util.reader;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-import de.micromata.opengis.kml.v_2_2_0.Document;
-import de.micromata.opengis.kml.v_2_2_0.Feature;
-import de.micromata.opengis.kml.v_2_2_0.Folder;
-import de.micromata.opengis.kml.v_2_2_0.Geometry;
-import de.micromata.opengis.kml.v_2_2_0.Kml;
-import de.micromata.opengis.kml.v_2_2_0.LineString;
-import de.micromata.opengis.kml.v_2_2_0.Placemark;
-import de.micromata.opengis.kml.v_2_2_0.Point;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
+import de.p39.asrs.server.model.Coordinate;
+import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
+import net.opengis.kml._2.AbstractFeatureType;
+import net.opengis.kml._2.DocumentType;
+import net.opengis.kml._2.FolderType;
+import net.opengis.kml._2.KmlType;
+import net.opengis.kml._2.LineStringType;
+import net.opengis.kml._2.PlacemarkType;
+import net.opengis.kml._2.PointType;
 
 /**
  * @author robin
  *
- *	The KMLReader parses a route from a KML file including locations.
+ *         The KMLReader parses a route from a KML file including locations.
  */
 public class KMLReader {
-	
-	private String path;
-	
-	
-	public KMLReader(String path){
-		this.path = path;
+
+	private static final String errorMsg = "Error in Kml content: ";
+
+	private JAXBContext jaxbcontext;
+	private Unmarshaller unmarshaller;
+
+	public KMLReader() {
+		init();
 	}
-	
-	public KMLReader(){}
-	
-	public Route parseKml(File f){
-		Kml kml = Kml.unmarshal(f);
-	    Feature feature = kml.getFeature();
-	    
-	    return parseFeature(feature);
-	}
-	
-	public Route parseKml(){
-	    //InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
-		if(path==null){
-			System.out.println("path is null");
-			return null;
+
+	private void init() {
+		try {
+			jaxbcontext = JAXBContext.newInstance("net.opengis.kml._2");
+			unmarshaller = jaxbcontext.createUnmarshaller();
+		} catch (JAXBException e) {
+			e.printStackTrace();
 		}
-		File f = new File(path);
-	   
-	    Kml kml = Kml.unmarshal(f);
-	    Feature feature = kml.getFeature();
-	    
-	    return parseFeature(feature);
 	}
 
-	private Route parseFeature(Feature feature) {
-		if(feature != null) {
-	        if(feature instanceof Document) {
-	            Document document = (Document) feature;
-	            List<Feature> featureList = document.getFeature();
-	            
-	            Route res = new Route();
-	            
-	            for(Feature documentFeature : featureList) {
-	                if(documentFeature instanceof Folder) {
-	                    Folder folder = (Folder) documentFeature;
-	                    List<Feature> folderList = folder.getFeature();
-	                    for (Feature folderFeature : folderList){
-	                    	if(folderFeature instanceof Placemark){
-	                    		Placemark placemark = (Placemark) folderFeature;
-	                    		parsePlacemark(res, placemark);
-	                    	}
-	                    		
-	                    }
-	                }
-	            }
-	            return res;
-	        }
-	    }
-		return null;
+	/**
+	 * @param path
+	 *            The path to the KML file
+	 * @return The parsed Route from the KML
+	 * @throws JAXBException
+	 *             when the syntax of the kml did not match
+	 */
+	public Route parseKml(String path) throws JAXBException {
+		@SuppressWarnings("unchecked")
+		JAXBElement<KmlType> jaxbelement = (JAXBElement<KmlType>) unmarshaller.unmarshal(new File(path));
+		KmlType kml = jaxbelement.getValue();
+
+		if (kml == null)
+			throw new JAXBException(errorMsg + "Parser could not recognize kml format");
+		DocumentType document = (DocumentType) kml.getAbstractFeatureGroup().getValue();
+		if (document == null)
+			throw new JAXBException(errorMsg + "Missing document value");
+		Route result = new Route();
+		// set name
+		List<LocaleName> names = new ArrayList<>(3);
+		names.add(new LocaleName(Locale.GERMAN, document.getName()));
+		result.setNames(names);
+
+		List<JAXBElement<? extends AbstractFeatureType>> features = document.getAbstractFeatureGroup();
+		if (features == null || features.isEmpty())
+			throw new JAXBException(errorMsg + "Missing features in document");
+
+		parseFolder((FolderType) features.get(0).getValue(), result);
+		return result;
 	}
 
-	private void parsePlacemark(Route r, Placemark placemark) {
-		if(placemark != null) {
-			Geometry geometry = placemark.getGeometry();
-	        if(geometry instanceof LineString) {
-	            LineString lineString = (LineString) geometry;
-	            List<de.micromata.opengis.kml.v_2_2_0.Coordinate> coordinateList = lineString.getCoordinates();
-	            for (de.micromata.opengis.kml.v_2_2_0.Coordinate c : coordinateList){
-	            	r.addCoordinate(transformCoord(c));
-	            }
-	        } else if (geometry instanceof Point){
-	        	Point point = (Point) geometry;
-	        	Site site = new Site(placemark.getName());
-	        	
-	        	site.setCoordinate(transformCoord(point.getCoordinates().get(0)));
-	        	r.addSite(site);
-	        }
-	    }
+	private void parseFolder(FolderType folder, Route result) throws JAXBException {
+		if (folder == null)
+			throw new JAXBException(errorMsg + "Missing folder in document's features");
+		List<JAXBElement<? extends AbstractFeatureType>> placemarks = folder.getAbstractFeatureGroup();
+		if (placemarks == null || placemarks.isEmpty())
+			throw new JAXBException(errorMsg + "Missing placemark list in folder");
+
+		PlacemarkType placemark = (PlacemarkType) placemarks.get(0).getValue();
+		if (placemark == null)
+			throw new JAXBException(errorMsg + "Missing placemark in placemark list");
 		
+		// LineString contains all coordinates
+		LineStringType lineString = (LineStringType) placemark.getAbstractGeometryGroup().getValue();
+		if (lineString == null)
+			throw new JAXBException(errorMsg + "First placemark did not contain a LineString");
+		List<String> coordinates = lineString.getCoordinates();
+		for (String coordinate : coordinates)
+			insertCoordinate(result, coordinate);
+		
+		// Points contain the sites
+		for (int i = 1; i < placemarks.size(); i++) {
+			placemark = (PlacemarkType) placemarks.get(i).getValue();
+			if (placemark == null)
+				throw new JAXBException(errorMsg + "Missing placemark in placemark list");
+			insertSite(result,placemark);
+		}
+
 	}
-	
-	private static de.p39.asrs.server.model.Coordinate transformCoord(de.micromata.opengis.kml.v_2_2_0.Coordinate c) {
-		return new de.p39.asrs.server.model.Coordinate(c.getLatitude(), c.getLongitude());
+
+	private void insertSite(Route result, PlacemarkType placemark) throws JAXBException {
+		Site site = new Site(placemark.getName());
+		
+		PointType point = (PointType) placemark.getAbstractGeometryGroup().getValue();
+		if(point == null)
+			throw new JAXBException(errorMsg + "Placemark did not contain a Point");
+		List<String> coord = point.getCoordinates();
+		if(coord == null || coord.isEmpty())
+			throw new JAXBException(errorMsg + "Coordinate list in Point was missing or empty");
+		insertCoordinate(site, coord.get(0));
+		result.addSite(site);
+	}
+
+	private void insertCoordinate(Site site, String coordString) throws JAXBException{
+		String[] splited = coordString.split(",");
+		if (splited.length != 3)
+			throw new JAXBException(
+					errorMsg + "Format of a coordiante was wrong. Expected longitude,latitude,elevation as float.");
+		double lon, lat;
+		try {
+			lon = Double.parseDouble(splited[0]);
+			lat = Double.parseDouble(splited[1]);
+		} catch (NumberFormatException e) {
+			throw new JAXBException(errorMsg + e.getMessage());
+		}
+		site.setCoordinate(new Coordinate(lat, lon));
+	}
+
+	private void insertCoordinate(Route result, String coordString) throws JAXBException {
+		String[] splited = coordString.split(",");
+		if (splited.length != 3)
+			throw new JAXBException(
+					errorMsg + "Format of a coordiante was wrong. Expected longitude,latitude,elevation as float.");
+		double lon, lat;
+		try {
+			lon = Double.parseDouble(splited[0]);
+			lat = Double.parseDouble(splited[1]);
+		} catch (NumberFormatException e) {
+			throw new JAXBException(errorMsg + e.getMessage());
+		}
+		result.addCoordinate(new Coordinate(lat, lon));
 	}
 }

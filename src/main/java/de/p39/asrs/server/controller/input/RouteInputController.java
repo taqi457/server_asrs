@@ -3,6 +3,9 @@ package de.p39.asrs.server.controller.input;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.Part;
+import javax.xml.bind.JAXBException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.core.io.Resource;
@@ -87,10 +90,14 @@ public class RouteInputController {
 	public String handleFileUploadAndCreateRoute(@RequestParam("kml") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 		String path = storageService.store(file, FileType.KML);
-		KMLReader kmlreader = new KMLReader(path);
-		Route r = kmlreader.parseKml();
-		if (r != null) {
-			r.setPathToKml(path);
+
+		KMLReader kmlreader = new KMLReader();
+		Route r = null;
+		try {
+			r = kmlreader.parseKml(path);
+		} catch (JAXBException e) {
+			// TODO Some feedback that the kml was wrong !
+			e.printStackTrace();
 		}
 		this.route = r;
 		redirectAttributes.addFlashAttribute("message",
