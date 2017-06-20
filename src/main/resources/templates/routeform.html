@@ -29,7 +29,22 @@
                             <div class="widget-body">
                                 <div class="widget-main">
                                     <div id="fuelux-wizard-container">
+                                        <div>
+                                            <ul class="steps">
+                                                <li data-step="1">
+                                                    <span class="step">1</span>
+                                                    <span class="title">Hochladen der KML</span>
+                                                </li>
 
+                                                <li data-step="2" class="active">
+                                                    <span class="step">2</span>
+                                                    <span class="title">Weitere Informationen angeben</span>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+                                        <hr />
                                         <div class="step-content pos-rel">
                                             <div class="step-pane active" data-step="1">
                                                 <h3 class="lighter block green">Bitte füllen Sie die untenstehenden Felder aus</h3>
@@ -161,33 +176,15 @@
                                                             </div>
                                                         </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="widget-box">
-                                                                <div class="widget-header">
-                                                                    <h4 class="widget-title">
-                                                                    Hochladen der .kml-Datei
-                                                                    </h4>
-                                                                </div>
-                                                                <div class="widget-body">
-                                                                    <div class="widget-main">
 
-                                                                        <div class="form-group">
-                                                                            <div class="col-xs-12">
-                                                                                <input type="file" id="id-input-file-3" />
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                     </div>
 
 
-                                                    <div class="form-actions center">
-                                                        <button type="submit" class="btn btn-sm btn-success">
-                                                            Route erstellen
-                                                            <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+                                                    <div class="wizard-actions">
+
+                                                        <button class="btn btn-success btn-next" type="submit" >
+                                                            Abschicken
+                                                            <i class="ace-icon fa fa- icon-on-right"></i>
                                                         </button>
                                                     </div>
                                                 </form>
