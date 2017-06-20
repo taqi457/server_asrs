@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface Storage {
 	void init();
+	
+	boolean check(MultipartFile file, FileType type);
 
     String store(MultipartFile file, FileType type);
 
@@ -18,4 +20,6 @@ public interface Storage {
     Resource loadAsResource(FileType t, String filename);
 
     void deleteAll(FileType t);
+    
+    void delete(FileType t, String filename);
 }
