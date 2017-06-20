@@ -21,11 +21,12 @@ import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.exceptions.StorageException;
 import de.p39.asrs.server.controller.file.FileSystemStorage;
 import de.p39.asrs.server.controller.file.FileType;
-import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.Site;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Medium;
 import de.p39.asrs.server.model.media.Picture;
+import de.p39.asrs.server.model.media.Text;
+import de.p39.asrs.server.model.media.Video;
 /**
  * 
  * @author adrianrebmann
@@ -35,7 +36,10 @@ import de.p39.asrs.server.model.media.Picture;
 public class SiteInputController {
 	
 	
-	private List<Medium> selectedMedia;
+	private List<Picture> selectedPicture;
+	private List<Audio> selectedAudios;
+	private List<Text> selectedTexts;
+	private List<Video> selectedVideos;
 	private Site site;
 	
 	private MediumDAO mediadao;
@@ -49,7 +53,7 @@ public class SiteInputController {
 		this.mediadao=mdao;
 	}
 	
-	@GetMapping("/pictures/{filename:.+}")
+	@GetMapping("site/pictures/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> servePicture(@PathVariable String filename) {
 		Resource file = storageService.loadAsResource(FileType.PICTURE,filename);
@@ -58,7 +62,7 @@ public class SiteInputController {
 				.body(file);
 	}
 
-	@PostMapping("/picture")
+	@PostMapping("/site/picture")
 	public String handleFileUploadAndCreatePicture(@RequestParam("picture") MultipartFile file, RedirectAttributes redirectAttributes) {
 		String path = storageService.store(file, FileType.PICTURE);
 		Picture picture = new Picture();
@@ -71,13 +75,13 @@ public class SiteInputController {
 			picture.setPath(path);
 		}
 		
-		this.mediadao.insertPicture(picture);
+		//this.mediadao.insertPicture(picture);
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		return "redirect:/upload";
 	}
 	
-	@GetMapping("/audios/{filename:.+}")
+	@GetMapping("site/audios/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> serveAudio(@PathVariable String filename) {
 		Resource file = storageService.loadAsResource(FileType.AUDIO,filename);
@@ -86,7 +90,7 @@ public class SiteInputController {
 				.body(file);
 	}
 
-	@PostMapping("/audio")
+	@PostMapping("/site/audio")
 	public String handleFileUploadAndCreateAudio(@RequestParam("picture") MultipartFile file, RedirectAttributes redirectAttributes) {
 		String path = storageService.store(file, FileType.PICTURE);
 		Audio audio = new Audio();
@@ -99,7 +103,7 @@ public class SiteInputController {
 			audio.setPath(path);
 		}
 		
-		this.mediadao.insertAudio(audio);
+		//this.mediadao.insertAudio(audio);
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		return "redirect:/upload";
@@ -111,19 +115,6 @@ public class SiteInputController {
 		return ResponseEntity.notFound().build();
 	}
 
-	/**
-	 * @return the selectedMedia
-	 */
-	public List<Medium> getSelectedMedia() {
-		return selectedMedia;
-	}
-
-	/**
-	 * @param selectedMedia the selectedMedia to set
-	 */
-	public void setSelectedMedia(List<Medium> selectedMedia) {
-		this.selectedMedia = selectedMedia;
-	}
 	
 
 }
