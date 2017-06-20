@@ -93,7 +93,7 @@ public class RouteInputController {
 
 	@PostMapping("/kml")
 	public String handleFileUploadAndCreateRoute(@RequestParam("kml") MultipartFile file,
-			RedirectAttributes redirectAttributes) {
+												 RedirectAttributes redirectAttributes, Model model) {
 		String path = storageService.store(file, FileType.KML);
 
 		KMLReader kmlreader = new KMLReader();
@@ -107,7 +107,7 @@ public class RouteInputController {
 		this.route = r;
 		//redirectAttributes.addFlashAttribute("message",
 		//		"Route successfully created with " + file.getOriginalFilename() + "!");
-
+		model.addAttribute("RouteInfo", new RouteInfo());
 		return "/routeform";
 	}
 
@@ -141,8 +141,8 @@ public class RouteInputController {
 			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
 			r.addLocaleDescription(description);
 		}
-		if (info.getDuratonByFoot() != null) {
-			r.setDurationByFoot(info.getDuratonByFoot());
+		if (info.getDurationByFoot() != null) {
+			r.setDurationByFoot(info.getDurationByFoot());
 		}
 		if (info.getDurationByBike() != null) {
 			r.setDurationByBike(info.getDurationByBike());

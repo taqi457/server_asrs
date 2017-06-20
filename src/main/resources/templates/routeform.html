@@ -31,7 +31,7 @@
                                     <div id="fuelux-wizard-container">
                                         <div>
                                             <ul class="steps">
-                                                <li data-step="1">
+                                                <li data-step="1" class="active">
                                                     <span class="step">1</span>
                                                     <span class="title">Hochladen der KML</span>
                                                 </li>
@@ -49,7 +49,7 @@
                                             <div class="step-pane active" data-step="1">
                                                 <h3 class="lighter block green">Bitte füllen Sie die untenstehenden Felder aus</h3>
 
-                                                <form class="form-horizontal" id="validation-form" th:action="@{/routeinfo}" th:object="@{RouteInfo}" method="post">
+                                                <form class="form-horizontal" id="validation-form" th:action="@{/routeinfo}" th:object="${RouteInfo}" method="post">
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="widget-box">
@@ -184,7 +184,7 @@
 
                                                         <button class="btn btn-success btn-next" type="submit" >
                                                             Abschicken
-                                                            <i class="ace-icon fa fa- icon-on-right"></i>
+                                                            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                                                         </button>
                                                     </div>
                                                 </form>
@@ -245,42 +245,39 @@
         //documentation : http://docs.jquery.com/Plugins/Validation/validate
 
 
-        $('#validation-form').validate({
+        /*$('#validation-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',
             focusInvalid: false,
             ignore: "",
             rules: {
-                name_german: {
+                nameDE: {
                     required: true,
                 },
-                name_english: {
+                nameEN: {
                     required: true
                 },
-                name_french: {
+                nameFR: {
                     required: true
                 },
-                description_german: {
+                descriptionDE: {
                     required: true,
                 },
-                description_english: {
+                descriptionEN: {
                     required: true
                 },
-                description_french: {
+                descriptionFR: {
                     required: true
                 },
-                duration_foot: {
+                durationByFoot: {
                     required: true,
                 },
-                duration_bike: {
+                durationByBike: {
                     required: true
                 },
-                category: {
-                    required: false
-                }
             },
 
-
+*/
 
             highlight: function (e) {
                 $(e).closest('.form-group').removeClass('has-info').addClass('has-error');

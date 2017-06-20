@@ -52,11 +52,11 @@ public class RouteInfo {
 	public void setDescriptionEN(String descriptionEN) {
 		this.descriptionEN = descriptionEN;
 	}
-	public Long getDuratonByFoot() {
+	public Long getDurationByFoot() {
 		return durationByFoot;
 	}
-	public void setDuratonByFoot(Long duratonByFoot) {
-		this.durationByFoot = duratonByFoot;
+	public void setDurationByFoot(Long durationByFoot) {
+		this.durationByFoot = durationByFoot;
 	}
 	public Long getDurationByBike() {
 		return durationByBike;
