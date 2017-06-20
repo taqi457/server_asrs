@@ -3,8 +3,6 @@ package de.p39.asrs.server.controller.input;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.Part;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.core.io.Resource;
@@ -31,6 +29,7 @@ import de.p39.asrs.server.model.LocaleDescription;
 import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
+import de.p39.asrs.server.model.input.RouteInfo;
 
 /**
  * 
@@ -42,34 +41,46 @@ public class RouteInputController {
 
 	private RouteDAO dao;
 
-	private String germanName;
-	private String englishName;
-	private String frenchName;
-
-	private String germanDescription;
-	private String englishDescription;
-	private String frenchDescription;
-
 	private List<Site> selectedSites;
 
 	private Category selectedCategory;
 
-	private Part kmlDocument;
 	private Storage storageService;
+
+	private Route route;
 
 	@Autowired
 	public RouteInputController(RouteDAO dao, Storage storage) {
 		this.dao = dao;
 		this.storageService = storage;
 	}
-	
+
 	@GetMapping("/kml/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-		Resource file = storageService.loadAsResource(FileType.KML,filename);
+		Resource file = storageService.loadAsResource(FileType.KML, filename);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
+	}
+
+	@PostMapping("/routeinfo")
+	public String handleRouteInfo(@ModelAttribute RouteInfo info) {
+		this.create(info);
+		return "/routeoverview";
+	}
+
+	private void create(RouteInfo info) {
+		List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
+		if (!exists.isEmpty() && route != null) {
+			Route existing = exists.get(0);
+			this.dao.deleteRoute(existing.getId());
+		}
+		if (route != null) {
+			this.addInfo(route, info);
+			this.dao.instertRoute(route);
+			route = null;
+		}
 	}
 
 	@PostMapping("/kml")
@@ -78,104 +89,59 @@ public class RouteInputController {
 		String path = storageService.store(file, FileType.KML);
 		KMLReader kmlreader = new KMLReader(path);
 		Route r = kmlreader.parseKml();
-		List<Route> exists= this.dao.getRouteByPath(path);
-		if(!exists.isEmpty()){
-			Route existing = exists.get(0);
-			this.dao.deleteRoute(existing.getId());
-		}
-		if (r != null){
-			this.addNamesAndDescriptions(r);			
+		if (r != null) {
 			r.setPathToKml(path);
-			this.dao.instertRoute(r);
 		}
+		this.route = r;
 		redirectAttributes.addFlashAttribute("message",
 				"Route successfully created with " + file.getOriginalFilename() + "!");
 
 		return "redirect:/uploadkml";
 	}
-	
+
 	@ExceptionHandler(StorageException.class)
 	public ResponseEntity handleStorageFileNotFound(StorageException exc) {
 		return ResponseEntity.notFound().build();
 	}
 
-	private Route addNamesAndDescriptions(Route r) {
-		if (this.englishName != null) {
-			LocaleName name = new LocaleName(Locale.GERMAN, this.germanName);
+	private Route addInfo(Route r, RouteInfo info) {
+		if (info.getNameDE() != null) {
+			LocaleName name = new LocaleName(Locale.GERMAN, info.getNameDE());
 			r.addLocaleName(name);
 		}
-		if (this.germanName != null) {
-			LocaleName name = new LocaleName(Locale.ENGLISH, this.englishName);
+		if (info.getDescriptionEN() != null) {
+			LocaleName name = new LocaleName(Locale.ENGLISH, info.getNameEN());
 			r.addLocaleName(name);
 		}
-		if (this.frenchName != null) {
-			LocaleName name = new LocaleName(Locale.FRENCH, this.frenchName);
+		if (info.getNameFR() != null) {
+			LocaleName name = new LocaleName(Locale.FRENCH, info.getNameFR());
 			r.addLocaleName(name);
 		}
-		if (this.englishDescription != null) {
-			LocaleDescription description = new LocaleDescription(Locale.GERMAN, this.germanDescription);
+		if (info.getDescriptionDE() != null) {
+			LocaleDescription description = new LocaleDescription(Locale.GERMAN, info.getDescriptionDE());
 			r.addLocaleDescription(description);
 		}
-		if (this.germanDescription != null) {
-			LocaleDescription description = new LocaleDescription(Locale.ENGLISH, this.englishDescription);
+		if (info.getDescriptionEN() != null) {
+			LocaleDescription description = new LocaleDescription(Locale.ENGLISH, info.getDescriptionEN());
 			r.addLocaleDescription(description);
 		}
-		if (this.frenchDescription != null) {
-			LocaleDescription description = new LocaleDescription(Locale.FRENCH, this.frenchDescription);
+		if (info.getDescriptionFR() != null) {
+			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
 			r.addLocaleDescription(description);
+		}
+		if (info.getDuratonByFoot() != null) {
+			r.setDurationByFoot(info.getDuratonByFoot());
+		}
+		if (info.getDurationByBike() != null) {
+			r.setDurationByBike(info.getDurationByBike());
 		}
 		return r;
 	}
-	
+
 	@ModelAttribute("allRoutes")
-	public List<Route> allRoutes(){
+	public List<Route> allRoutes() {
 		System.out.println("all routes called");
 		return this.dao.getAllRoutes();
-	}
-
-	/**
-	 * @return the germanName
-	 */
-	public String getGermanName() {
-		return germanName;
-	}
-
-	/**
-	 * @param germanName
-	 *            the germanName to set
-	 */
-	public void setGermanName(String germanName) {
-		this.germanName = germanName;
-	}
-
-	/**
-	 * @return the englishName
-	 */
-	public String getEnglishName() {
-		return englishName;
-	}
-
-	/**
-	 * @param englishName
-	 *            the englishName to set
-	 */
-	public void setEnglishName(String englishName) {
-		this.englishName = englishName;
-	}
-
-	/**
-	 * @return the frenchName
-	 */
-	public String getFrenchName() {
-		return frenchName;
-	}
-
-	/**
-	 * @param frenchName
-	 *            the frenchName to set
-	 */
-	public void setFrenchName(String frenchName) {
-		this.frenchName = frenchName;
 	}
 
 	/**
@@ -206,45 +172,6 @@ public class RouteInputController {
 	 */
 	public void setSelectedCategory(Category selectedCategory) {
 		this.selectedCategory = selectedCategory;
-	}
-
-	public String getGermanDescription() {
-		return germanDescription;
-	}
-
-	public void setGermanDescription(String germanDescription) {
-		this.germanDescription = germanDescription;
-	}
-
-	public String getEnglishDescription() {
-		return englishDescription;
-	}
-
-	public void setEnglishDescription(String englishDescription) {
-		this.englishDescription = englishDescription;
-	}
-
-	public String getFrenchDescription() {
-		return frenchDescription;
-	}
-
-	public void setFrenchDescription(String frenchDescription) {
-		this.frenchDescription = frenchDescription;
-	}
-
-	/**
-	 * @return the kmlDocument
-	 */
-	public Part getKmlDocument() {
-		return kmlDocument;
-	}
-
-	/**
-	 * @param kmlDocument
-	 *            the kmlDocument to set
-	 */
-	public void setKmlDocument(Part kmlDocument) {
-		this.kmlDocument = kmlDocument;
 	}
 
 }

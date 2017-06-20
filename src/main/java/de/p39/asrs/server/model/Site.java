@@ -49,18 +49,19 @@ public class Site extends NamedObject {
 
 	private Set<Picture> pictures;
 
+	private boolean isCompleted;
+
 	private Category category;
 
 	public Site() {
 		super();
 		this.init();
 	}
-	
-	public Site(String name){
+
+	public Site(String name) {
 		super(name);
 		this.init();
 	}
-
 
 	private void init() {
 		this.audios = new HashSet<>();
@@ -72,7 +73,7 @@ public class Site extends NamedObject {
 	/**
 	 * @return the coordinate
 	 */
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	public Coordinate getCoordinate() {
 		return coordinate;
 	}
@@ -81,7 +82,7 @@ public class Site extends NamedObject {
 	 * @param coordinate
 	 *            the coordinate to set
 	 */
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
@@ -89,7 +90,7 @@ public class Site extends NamedObject {
 	/**
 	 * @return the audios
 	 */
-	@OneToMany(targetEntity = Audio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Audio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<Audio> getAudios() {
 		return audios;
 	}
@@ -98,7 +99,7 @@ public class Site extends NamedObject {
 	 * @param audios
 	 *            the audios to set
 	 */
-	@OneToMany(targetEntity = Audio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Audio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setAudios(Set<Audio> audios) {
 		this.audios = audios;
 	}
@@ -106,7 +107,7 @@ public class Site extends NamedObject {
 	/**
 	 * @return the videos
 	 */
-	@OneToMany(targetEntity = Video.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Video.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<Video> getVideos() {
 		return videos;
 	}
@@ -115,7 +116,7 @@ public class Site extends NamedObject {
 	 * @param videos
 	 *            the videos to set
 	 */
-	@OneToMany(targetEntity = Video.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Video.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setVideos(Set<Video> videos) {
 		this.videos = videos;
 	}
@@ -123,7 +124,7 @@ public class Site extends NamedObject {
 	/**
 	 * @return the texts
 	 */
-	@OneToMany(targetEntity = Text.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Text.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<Text> getTexts() {
 		return texts;
 	}
@@ -132,7 +133,7 @@ public class Site extends NamedObject {
 	 * @param texts
 	 *            the texts to set
 	 */
-	@OneToMany(targetEntity = Text.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Text.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setTexts(Set<Text> texts) {
 		this.texts = texts;
 	}
@@ -140,7 +141,7 @@ public class Site extends NamedObject {
 	/**
 	 * @return the pictures
 	 */
-	@OneToMany(targetEntity = Picture.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Picture.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<Picture> getPictures() {
 		return pictures;
 	}
@@ -149,7 +150,7 @@ public class Site extends NamedObject {
 	 * @param pictures
 	 *            the pictures to set
 	 */
-	@OneToMany(targetEntity = Picture.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Picture.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setPictures(Set<Picture> pictures) {
 		this.pictures = pictures;
 	}
@@ -157,7 +158,7 @@ public class Site extends NamedObject {
 	/**
 	 * @return the category
 	 */
-	@ManyToOne(targetEntity = Category.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Category getCategory() {
 		return category;
 	}
@@ -166,7 +167,7 @@ public class Site extends NamedObject {
 	 * @param category
 	 *            the category to set
 	 */
-	@ManyToOne(targetEntity = Category.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setCategory(Category category) {
 		this.category = category;
 	}
@@ -182,7 +183,6 @@ public class Site extends NamedObject {
 	public void setId(Long id) {
 		super.setId(id);
 	}
-
 
 	/**
 	 * @return the timestamp
@@ -200,22 +200,21 @@ public class Site extends NamedObject {
 	public void setTimestamp(Date timestamp) {
 		super.setTimestamp(timestamp);
 	}
-	
+
 	/**
 	 * @return the names
 	 */
-	@OneToMany(targetEntity = LocaleName.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = LocaleName.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	public List<LocaleName> getNames() {
 		return names;
 	}
 
-
-
 	/**
-	 * @param names the names to set
+	 * @param names
+	 *            the names to set
 	 */
-	@OneToMany(targetEntity = LocaleName.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = LocaleName.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	public void setNames(List<LocaleName> names) {
 		this.names = names;
@@ -224,22 +223,61 @@ public class Site extends NamedObject {
 	/**
 	 * @return the descriptions
 	 */
-	@OneToMany(targetEntity = LocaleDescription.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = LocaleDescription.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	public List<LocaleDescription> getDescriptions() {
 		return descriptions;
 	}
 
 	/**
-	 * @param descriptions the descriptions to set
+	 * @param descriptions
+	 *            the descriptions to set
 	 */
-	@OneToMany(targetEntity = LocaleDescription.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = LocaleDescription.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	public void setDescriptions(List<LocaleDescription> descriptions) {
 		this.descriptions = descriptions;
 	}
-	
-	
+
+	/**
+	 * a site is completed if it has the names and descriptions in all the
+	 * required languages and has a category and has a coordinate and has at
+	 * least one medium
+	 * 
+	 * @return
+	 */
+	private boolean checkCompleted() {
+		if(this.descriptions.size()<3)
+			return false;
+		if(this.names.size()<3)
+			return false;
+		for (LocaleDescription ld : this.descriptions) {
+			if (ld == null || ld.getString() == null || ld.getLocale() == null) {
+				return false;
+			}
+		}
+		for (LocaleName ln : this.names) {
+			if (ln == null || ln.getString() == null || ln.getLocale() == null) {
+				return false;
+			}
+		}
+		if (this.category == null)
+			return false;
+		if (this.coordinate == null)
+			return false;
+		if (this.audios.isEmpty() && this.texts.isEmpty() && this.videos.isEmpty() && this.pictures.isEmpty())
+			return true;
+		return false;
+	}
+
+	public boolean isCompleted() {
+		this.setCompleted(this.checkCompleted());
+		return isCompleted;
+	}
+
+	public void setCompleted(boolean isCompleted) {
+		this.isCompleted = isCompleted;
+	}
 
 	/**
 	 * add and remove methods

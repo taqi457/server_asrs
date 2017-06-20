@@ -1,10 +1,14 @@
 package de.p39.asrs.server.controller.input;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.db.dao.impl.MediumDAOImpl;
+import de.p39.asrs.server.model.LocaleDescription;
+import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.media.Text;
 
 /**
@@ -35,7 +39,30 @@ public class TextInputController {
 		if (germanName != null && frenchName != null && englishName != null && germanContent != null
 				&& frenchContent != null && englishContent != null) {
 			Text t = new Text();
-			
+			LocaleDescription gd = new LocaleDescription();
+			gd.setString(germanContent);
+			gd.setLocale(Locale.GERMAN);
+			LocaleDescription fd = new LocaleDescription();
+			fd.setString(frenchContent);
+			fd.setLocale(Locale.FRENCH);
+			LocaleDescription ed = new LocaleDescription();
+			ed.setString(englishContent);
+			ed.setLocale(Locale.ENGLISH);
+			LocaleName gn = new LocaleName();
+			gn.setString(germanName);
+			gn.setLocale(Locale.GERMAN);
+			LocaleName fn = new LocaleName();
+			fn.setString(frenchName);
+			fn.setLocale(Locale.FRENCH);
+			LocaleName en = new LocaleName();
+			en.setString(englishName);
+			en.setLocale(Locale.ENGLISH);
+			t.addLocaleDescription(gd);
+			t.addLocaleDescription(fd);
+			t.addLocaleDescription(ed);
+			t.addLocaleName(gn);
+			t.addLocaleName(fn);
+			t.addLocaleName(en);
 			dao.insertText(t);
 			return t;
 		} else {

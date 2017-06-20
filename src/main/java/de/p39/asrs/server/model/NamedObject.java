@@ -19,7 +19,7 @@ import javax.persistence.OneToMany;
  * @param <K>
  */
 @Inheritance
-public class NamedObject extends ABasicObject<Long> {
+public abstract class NamedObject extends ABasicObject<Long> {
 
 	/**
 	 * 

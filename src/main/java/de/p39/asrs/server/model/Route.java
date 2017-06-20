@@ -46,6 +46,8 @@ public class Route extends NamedObject {
 
 	private Category category;
 	private Double amplitude;
+	
+	private boolean isCompleted;
 
 	public Route() {
 		super();
@@ -204,6 +206,48 @@ public class Route extends NamedObject {
 	 */
 	public void setAmplitude(Double amplitude) {
 		this.amplitude = amplitude;
+	}
+	
+	
+
+	public boolean isCompleted() {
+		this.setCompleted(this.checkCompleted());
+		return isCompleted;
+	}
+	
+	private boolean checkCompleted(){
+		if(this.descriptions.size()<3)
+			return false;
+		if(this.names.size()<3)
+			return false;
+		for(LocaleDescription ld : this.descriptions){
+			if(ld==null||ld.getString()==null||ld.getLocale()==null){
+				return false;
+			}
+		}
+		for(LocaleName ln : this.names){
+			if(ln==null||ln.getString()==null||ln.getLocale()==null){
+				return false;
+			}
+		}
+		if (this.sites.isEmpty())
+			return false;
+		if(this.pathToKml==null)
+			return false;
+		if(this.coordinates.isEmpty())
+			return false;
+		if(this.category==null)
+			return false;
+		for(Site s : this.sites){
+			if(!s.isCompleted()){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void setCompleted(boolean isCompleted) {
+		this.isCompleted = isCompleted;
 	}
 
 	/**
