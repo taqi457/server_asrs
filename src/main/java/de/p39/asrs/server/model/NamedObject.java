@@ -34,12 +34,6 @@ public abstract class NamedObject extends ABasicObject<Long> {
 		this.init();
 	}
 	
-	public NamedObject(String name) {
-		super();
-		this.init();
-	}
-	
-	
 	
 	private void init(){
 		this.names=new ArrayList<>();

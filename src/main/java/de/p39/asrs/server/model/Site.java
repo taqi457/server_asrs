@@ -58,11 +58,6 @@ public class Site extends NamedObject {
 		this.init();
 	}
 
-	public Site(String name) {
-		super(name);
-		this.init();
-	}
-
 	private void init() {
 		this.audios = new HashSet<>();
 		this.videos = new HashSet<>();

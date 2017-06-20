@@ -3,7 +3,6 @@ package de.p39.asrs.server.controller.input;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.Part;
 import javax.xml.bind.JAXBException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,8 +99,8 @@ public class RouteInputController {
 			e.printStackTrace();
 		}
 		this.route = r;
-		redirectAttributes.addFlashAttribute("message",
-				"Route successfully created with " + file.getOriginalFilename() + "!");
+		//redirectAttributes.addFlashAttribute("message",
+		//		"Route successfully created with " + file.getOriginalFilename() + "!");
 
 		return "/routeform";
 	}

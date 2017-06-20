@@ -108,8 +108,10 @@ public class KMLReader {
 	}
 
 	private void insertSite(Route result, PlacemarkType placemark) throws JAXBException {
-		Site site = new Site(placemark.getName());
-		
+		Site site = new Site();
+		LocaleName ln = new LocaleName();
+		ln.setLocale(Locale.GERMAN);
+		ln.setString(placemark.getName());
 		PointType point = (PointType) placemark.getAbstractGeometryGroup().getValue();
 		if(point == null)
 			throw new JAXBException(errorMsg + "Placemark did not contain a Point");
