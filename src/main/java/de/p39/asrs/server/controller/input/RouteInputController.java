@@ -74,12 +74,12 @@ public class RouteInputController {
 	}
 
 	private void create(RouteInfo info) {
-		List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
-		if (!exists.isEmpty() && route != null) {
-			Route existing = exists.get(0);
-			this.dao.deleteRoute(existing.getId());
-		}
 		if (route != null) {
+			List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
+			if (!exists.isEmpty()) {
+				Route existing = exists.get(0);
+				this.dao.deleteRoute(existing.getId());
+			}
 			this.addInfo(route, info);
 			this.dao.instertRoute(route);
 			route = null;
