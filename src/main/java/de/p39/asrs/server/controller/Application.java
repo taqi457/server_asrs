@@ -13,8 +13,6 @@ import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
 import de.p39.asrs.server.controller.db.dao.impl.SiteDAOImpl;
-import de.p39.asrs.server.controller.file.Storage;
-import de.p39.asrs.server.controller.file.FileSystemStorage;
 import de.p39.asrs.server.controller.db.dao.impl.CategoryDAOImpl;
 import de.p39.asrs.server.controller.db.dao.impl.MediumDAOImpl;
 

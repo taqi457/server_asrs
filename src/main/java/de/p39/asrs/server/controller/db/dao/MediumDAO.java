@@ -23,6 +23,8 @@ public interface MediumDAO {
 	public List<Audio> getAudiosByPath(String path);
 
 	public List<Medium> getAllMedia();
+	
+	public Picture getPictureById(Long id);
 
 	public void insertAudio(Audio a);
 

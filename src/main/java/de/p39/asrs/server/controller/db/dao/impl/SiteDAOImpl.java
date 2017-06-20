@@ -2,8 +2,6 @@ package de.p39.asrs.server.controller.db.dao.impl;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.model.Coordinate;

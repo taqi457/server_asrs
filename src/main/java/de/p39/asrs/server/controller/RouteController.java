@@ -33,7 +33,7 @@ public class RouteController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Route routeId(@PathVariable Long id) {
+	public Route routeById(@PathVariable Long id) {
 		Route res = daoInterface.getRouteById(id);
 		if (res == null)
 			throw new NotFoundExecption("The routeId you specified was not in the data set");
@@ -41,7 +41,7 @@ public class RouteController {
 	}
 
 	@RequestMapping(value = "/gps", method = RequestMethod.GET)
-	public List<Route> routeGPS(@RequestParam Map<String, String> requestParam) {
+	public List<Route> routeByGps(@RequestParam Map<String, String> requestParam) {
 		Double lat, lon, rad;
 		try {
 			lat = Double.parseDouble(requestParam.get("lat"));

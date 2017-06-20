@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.Part;
+import javax.xml.bind.JAXBException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,8 +77,14 @@ public class RouteInputController {
 	public String handleFileUploadAndCreateRoute(@RequestParam("kml") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 		String path = storageService.store(file, FileType.KML);
-		KMLReader kmlreader = new KMLReader(path);
-		Route r = kmlreader.parseKml();
+		KMLReader kmlreader = new KMLReader();
+		Route r = null;
+		try {
+			r = kmlreader.parseKml(path);
+		} catch (JAXBException e) {
+			// TODO Some feedback that the kml was wrong !
+			e.printStackTrace();
+		}
 		List<Route> exists= this.dao.getRouteByPath(path);
 		if(!exists.isEmpty()){
 			Route existing = exists.get(0);

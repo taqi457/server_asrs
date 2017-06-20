@@ -3,11 +3,11 @@ package de.p39.asrs.server.controller.db.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.cfg.NotYetImplementedException;
 import javax.persistence.Query;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
-import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Medium;
 import de.p39.asrs.server.model.media.Picture;
@@ -114,6 +114,11 @@ public class MediumDAOImpl implements MediumDAO {
 	}
 
 	@Override
+	public Picture getPictureById(Long id) {
+		// TODO Auto-generated method stub
+		throw new NotYetImplementedException();
+	}
+	
 	public List<Picture> getPictureByPath(String path) {
 		Query q = this.cf.createQuery("SELECT e FROM " + Picture.class.getName() + " e WHERE path = :path");
 		q.setParameter("path", path);
