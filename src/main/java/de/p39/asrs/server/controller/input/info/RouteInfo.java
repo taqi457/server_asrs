@@ -1,4 +1,4 @@
-package de.p39.asrs.server.model.input;
+package de.p39.asrs.server.controller.input.info;
 
 public class RouteInfo {
 	

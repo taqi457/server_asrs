@@ -26,13 +26,13 @@ import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.exceptions.StorageException;
 import de.p39.asrs.server.controller.file.FileType;
 import de.p39.asrs.server.controller.file.Storage;
+import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.util.reader.KMLReader;
 import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.LocaleDescription;
 import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
-import de.p39.asrs.server.model.input.RouteInfo;
 
 /**
  * 
@@ -74,12 +74,12 @@ public class RouteInputController {
 	}
 
 	private void create(RouteInfo info) {
-		List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
-		if (!exists.isEmpty() && route != null) {
-			Route existing = exists.get(0);
-			this.dao.deleteRoute(existing.getId());
-		}
 		if (route != null) {
+			List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
+			if (!exists.isEmpty()) {
+				Route existing = exists.get(0);
+				this.dao.deleteRoute(existing.getId());
+			}
 			this.addInfo(route, info);
 			this.dao.instertRoute(route);
 			route = null;
@@ -103,7 +103,7 @@ public class RouteInputController {
 		redirectAttributes.addFlashAttribute("message",
 				"Route successfully created with " + file.getOriginalFilename() + "!");
 
-		return "redirect:/uploadkml";
+		return "/routeform";
 	}
 
 	@ExceptionHandler(StorageException.class)
