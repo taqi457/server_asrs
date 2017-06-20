@@ -72,11 +72,6 @@ public class RouteInputController {
 		this.create(info);
 		return "/routeoverview";
 	}
-	
-	@PostMapping("/editroute")	
-	public String editRoute(Model model){
-		return "/routoverview";
-	}
 
 	private void create(RouteInfo info) {
 		if (route != null) {

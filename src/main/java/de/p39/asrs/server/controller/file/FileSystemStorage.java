@@ -1,5 +1,6 @@
 package de.p39.asrs.server.controller.file;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -80,6 +81,16 @@ public class FileSystemStorage implements Storage {
 			throw new StorageException("Could not read file: " + filename);
 		}
 	}
+	
+	public void delete(FileType t, String filename){
+		Path file = load(t, filename);
+		try{
+			File f = file.toFile();
+			f.delete();
+		}catch(UnsupportedOperationException | SecurityException e){
+			//TODO log this
+		}
+	}
 
 	public void deleteAll(FileType t) {
 		FileSystemUtils.deleteRecursively(rootLocations.get(t).toFile());
@@ -93,6 +104,12 @@ public class FileSystemStorage implements Storage {
 		} catch (IOException e) {
 			throw new StorageException("Could not initialize storage");
 		}
+	}
+
+	@Override
+	public boolean check(MultipartFile file, FileType type) {
+		Path p = this.rootLocations.get(type).resolve(file.getOriginalFilename());
+		return p.toFile().exists();
 	}
 
 }
