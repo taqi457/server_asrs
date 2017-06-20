@@ -112,6 +112,7 @@ public class KMLReader {
 		LocaleName ln = new LocaleName();
 		ln.setLocale(Locale.GERMAN);
 		ln.setString(placemark.getName());
+		site.addLocaleName(ln);
 		PointType point = (PointType) placemark.getAbstractGeometryGroup().getValue();
 		if(point == null)
 			throw new JAXBException(errorMsg + "Placemark did not contain a Point");

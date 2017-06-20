@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -70,6 +71,11 @@ public class RouteInputController {
 	public String handleRouteInfo(@ModelAttribute RouteInfo info) {
 		this.create(info);
 		return "/routeoverview";
+	}
+	
+	@PostMapping("/editroute")	
+	public String editRoute(Model model){
+		return "/routoverview";
 	}
 
 	private void create(RouteInfo info) {
