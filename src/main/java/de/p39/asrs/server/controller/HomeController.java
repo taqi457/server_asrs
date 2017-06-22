@@ -85,7 +85,7 @@ public class HomeController {
     @GetMapping("/newroute")
     public String createroute(Model model){
 
-        return "/routeform";
+        return "/kmlupload";
     }
 
 }

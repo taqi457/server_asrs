@@ -19,7 +19,7 @@ import javax.persistence.OneToMany;
  * @param <K>
  */
 @Inheritance
-public class NamedObject extends ABasicObject<Long> {
+public abstract class NamedObject extends ABasicObject<Long> {
 
 	/**
 	 * 
@@ -33,12 +33,6 @@ public class NamedObject extends ABasicObject<Long> {
 		super();
 		this.init();
 	}
-	
-	public NamedObject(String name) {
-		super();
-		this.init();
-	}
-	
 	
 	
 	private void init(){
