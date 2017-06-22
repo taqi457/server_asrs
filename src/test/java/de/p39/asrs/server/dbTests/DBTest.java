@@ -1,4 +1,4 @@
-package de.p39.asrs.server.control.db;
+package de.p39.asrs.server.dbTests;
 
 import static org.junit.Assert.*;
 

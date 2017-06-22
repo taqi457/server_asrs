@@ -23,8 +23,8 @@ public class MediaController {
 	@Autowired
 	private MediumDAO dao;
 	
-	@RequestMapping(value = "/img", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public byte[] imageID(@RequestParam(value = "id") String kind) {
+	@RequestMapping(value = "/img/example", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] imageID() {
 	    Path path = Paths.get("media/images/example.jpg");
 	    try {
 			return Files.readAllBytes(path);
