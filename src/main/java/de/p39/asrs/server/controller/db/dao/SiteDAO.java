@@ -22,7 +22,7 @@ public interface SiteDAO {
 	
 	public void updateSite(Site s);
 	
-	//public List<Site> getSitesByName(String s);
+	public List<Site> getSitesByName(String s);
 	
 	public void addMedium(Site s, Medium m);
 	
