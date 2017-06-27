@@ -3,6 +3,8 @@ package de.p39.asrs.server.controller;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
+import de.p39.asrs.server.controller.input.info.RouteInfo;
+import de.p39.asrs.server.controller.input.info.SiteInfo;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +87,13 @@ public class HomeController {
     @GetMapping("/newroute")
     public String createroute(Model model){
 
-        return "/kmlupload";
+        return "/routeform";
+    }
+
+    @GetMapping("/newsite")
+    public String createsite(Model model){
+        model.addAttribute("SiteInfo", new SiteInfo());
+        return "/siteform";
     }
 
 }

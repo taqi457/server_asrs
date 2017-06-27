@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import de.p39.asrs.server.controller.input.info.AudioInfo;
+import de.p39.asrs.server.controller.input.info.PictureInfo;
+import de.p39.asrs.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,10 +25,6 @@ import de.p39.asrs.server.controller.file.FileSystemStorage;
 import de.p39.asrs.server.controller.file.FileType;
 import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.input.info.SiteInfo;
-import de.p39.asrs.server.model.LocaleDescription;
-import de.p39.asrs.server.model.LocaleName;
-import de.p39.asrs.server.model.Route;
-import de.p39.asrs.server.model.Site;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Medium;
 import de.p39.asrs.server.model.media.Picture;
@@ -71,25 +65,33 @@ public class SiteInputController {
 		this.selectedVideos=new ArrayList<>();
 	}
 	
-	@PostMapping("/siteinfo")
-	public String handleSiteInfo(@ModelAttribute SiteInfo info) {
-		this.create(info);
-		return "/routeoverview";
+	@PostMapping("/newsite")
+	public String handleSiteInfo(@ModelAttribute SiteInfo info, @RequestParam("audios") MultipartFile[] audios,
+								 @RequestParam("pictures") MultipartFile[] pictures, Model model) {
+		this.create(info, audios, pictures);
+		model.addAttribute("siteInfo", new SiteInfo());
+		return "/siteoverview";
 	}
 	
-	private void create(SiteInfo info) {
+	private void create(SiteInfo info, MultipartFile[] audios, MultipartFile[] pictures) {
 		this.site=new Site();
-		for(Audio a : this.selectedAudios){
-			this.site.addMedium(a);
+		for(MultipartFile a : audios){
+			String path = storageService.store(a, FileType.AUDIO);
+			Audio audio = new Audio();
+			audio.setPath(path);
+			ArrayList<LocaleName> names = new ArrayList<>();
+			names.add(new LocaleName(Locale.GERMAN, a.getOriginalFilename()));
+			audio.setNames(names);
+			site.addMedium(audio);
 		}
-		for(Picture p : this.selectedPictures){
-			this.site.addMedium(p);
-		}
-		for(Text t : this.selectedTexts){
-			this.site.addMedium(t);
-		}
-		for(Video v : this.selectedVideos){
-			this.site.addMedium(v);
+		for(MultipartFile p : pictures){
+			String path = storageService.store(p, FileType.PICTURE);
+			Picture picture = new Picture();
+			picture.setPath(path);
+			ArrayList<LocaleName> names = new ArrayList<>();
+			names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
+			picture.setNames(names);
+			site.addMedium(picture);
 		}
 		this.addInfo(site, info);
 	}
@@ -118,6 +120,10 @@ public class SiteInputController {
 		if (info.getDescriptionFR() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
 			s.addLocaleDescription(description);
+		}
+		if (info.getLatitude() != null && info.getLongitude() != null) {
+			//Coordinate coordinate = new Coordinate(info.getLatitude(), info.getLongitude());
+			//s.setCoordinate(coordinate);
 		}
 		
 		return s;

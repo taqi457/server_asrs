@@ -1,0 +1,435 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Neue Sehenswürdigkeit erstellen - Saarromanus</title>
+    <div th:replace="fragments/header :: header-css" />
+
+</head>
+<body class="no-skin">
+<div th:replace="fragments/header :: header" />
+<div class="main-container ace-save-state" id="main-container">
+    <div th:replace="fragments/sidebar :: sidebar" />
+    <div class="main-content">
+        <div class="main-content-inner">
+
+            <div class="page-content">
+
+                <div class="page-header">
+                    <h1>
+                        Neue Sehenswürdigkeit erstellen
+                    </h1>
+                </div><!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div id="fuelux-wizard-container">
+                                    <div class="step-content pos-rel">
+                                        <div class="step-pane active" data-step="1">
+                                            <h3 class="lighter block green">Bitte füllen Sie die untenstehenden Felder aus</h3>
+
+                                            <form class="form-horizontal" id="validation-form" th:action="@{/newsite}" th:object="${SiteInfo}" method="post">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">
+                                                                    Namen
+                                                                </h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nameDE">Deutsch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="nameDE" id="nameDE" th:field="*{nameDE}" class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nameEN">Englisch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="nameEN" id="nameEN" th:field="*{nameEN}" class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="nameFR">Französisch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="nameFR" id="nameFR" th:field="*{nameFR}" class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">
+                                                                    Routenparameter
+                                                                </h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="category">Art der Route</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <select name="category" id="category" class="col-xs-12 col-sm-6">
+                                                                                    <option th:each="category : ${categories}" th:text="${category.getNames().get(0).getString()}" th:value="${category.id}">test</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="longitude">Breitengrad</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="longitude" id="longitude" th:field="*{longitude}" class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="latitude">Längengrad</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="latitude" id="latitude" th:field="*{latitude}" class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">
+                                                                    Beschreibung
+                                                                </h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="descriptionDE">Deutsch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <textarea name="descriptionDE" id="descriptionDE" th:field="*{descriptionDE}" class="col-xs-12 col-sm-6" ></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="descriptionEN">Englisch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <textarea name="descriptionEN" id="descriptionEN" th:field="*{descriptionEN}" class="col-xs-12 col-sm-6" ></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="descriptionFR">Französisch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <textarea name="descriptionFR" id="descriptionFR" th:field="*{descriptionFR}" class="col-xs-12 col-sm-6" ></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">
+                                                                    Upload von Medien
+                                                                </h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="audios">Audiodateien</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="file" name="audios" id="id-input-audio" th:field="*{audios}" multiple="" class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="pictures">Bilder</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="file" name="pictures" id="id-input-picture" th:field="*{pictures}" multiple="" class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="wizard-actions">
+
+                                                    <button class="btn btn-success btn-next" type="submit" >
+                                                        Abschicken
+                                                        <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div><!-- /.widget-main -->
+                        </div><!-- /.widget-body -->
+
+
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <div th:replace="fragments/footer :: footer" />
+</div>
+<div th:replace="fragments/footer :: js " />
+
+<script th:src="@{/js/wizard.min.js}"
+        src="../../js/wizard.min.js"></script>
+<script th:src="@{/js/jquery.validate.min.js}"
+        src="../../js/jquery.validate.min.js"></script>
+<script th:src="@{js/jquery-additional-methods.min.js}"
+        src="../../js/jquery-additional-methods.min.js"></script>
+<script th:src="@{/js/bootbox.js}"
+        src="../../js/bootbox.js"></script>
+<script type="text/javascript">
+    jQuery.extend(jQuery.validator.messages, {
+        required: "Dieses Feld muss ausgefüllt werden",
+        remote: "Please fix this field.",
+        email: "Please enter a valid email address.",
+        url: "Please enter a valid URL.",
+        date: "Please enter a valid date.",
+        dateISO: "Please enter a valid date (ISO).",
+        number: "Please enter a valid number.",
+        digits: "Please enter only digits.",
+        creditcard: "Please enter a valid credit card number.",
+        equalTo: "Please enter the same value again.",
+        accept: "Please enter a value with a valid extension.",
+        maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
+        minlength: jQuery.validator.format("Please enter at least {0} characters."),
+        rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
+        range: jQuery.validator.format("Please enter a value between {0} and {1}."),
+        max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
+        min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+    });
+</script>
+<script type="text/javascript">
+    jQuery(function($) {
+
+        $('[data-rel=tooltip]').tooltip();
+        //documentation : http://docs.jquery.com/Plugins/Validation/validate
+
+
+        $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                nameDE: {
+                    required: true
+                },
+                nameEN: {
+                    required: true
+                },
+                nameFR: {
+                    required: true
+                },
+                descriptionDE: {
+                    required: true
+                },
+                descriptionEN: {
+                    required: true
+                },
+                descriptionFR: {
+                    required: true
+                },
+                longitude: {
+                    required: true
+                },
+                latitude: {
+                    required: true
+                }
+            },
+
+
+
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                $(e).remove();
+            },
+
+            errorPlacement: function (error, element) {
+                if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if(element.is('.select2')) {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+                else if(element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                }
+                else error.insertAfter(element.parent());
+            },
+
+            submitHandler: function (form) {
+                form.submit();
+            },
+            invalidHandler: function (form) {
+            }
+        });
+
+
+
+
+        $('#modal-wizard-container').ace_wizard();
+        $('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
+
+
+        /**
+         $('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
+					$(this).closest('form').validate().element($(this));
+				});
+
+         $('#mychosen').chosen().on('change', function(ev) {
+					$(this).closest('form').validate().element($(this));
+				});
+         */
+
+
+        $(document).one('ajaxloadstart.page', function(e) {
+            //in ajax mode, remove remaining elements before leaving page
+            $('[class*=select2]').remove();
+        });
+
+        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
+            no_file:'No File ...',
+            btn_choose:'Choose',
+            btn_change:'Change',
+            droppable:false,
+            onchange:null,
+            thumbnail:false //| true | large
+            //whitelist:'gif|png|jpg|jpeg'
+            //blacklist:'exe|php'
+            //onchange:''
+            //
+        });
+        //pre-show a file name, for example a previously selected file
+        //$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
+
+
+        $('#id-input-audio').ace_file_input({
+            style: 'well',
+            btn_choose: 'Audio-Dateien hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist:'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+            /**,before_remove : function() {
+						return true;
+					}*/
+            ,
+            preview_error : function(filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
+
+        }).on('change', function(){
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-picture').ace_file_input({
+            style: 'well',
+            btn_choose: '.Bilder hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist:'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+            /**,before_remove : function() {
+						return true;
+					}*/
+            ,
+            preview_error : function(filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
+
+        }).on('change', function(){
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+
+    })
+</script>
+
+
+</body>
+<!-- /.container -->
+</html>
