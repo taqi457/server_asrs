@@ -181,7 +181,7 @@ public class SiteInputController {
 	
 	
 	@ExceptionHandler(StorageException.class)
-	public ResponseEntity handleStorageFileNotFound(StorageException exc) {
+	public ResponseEntity<Object> handleStorageFileNotFound(StorageException exc) {
 		return ResponseEntity.notFound().build();
 	}
 

@@ -36,8 +36,8 @@ public abstract class NamedObject extends ABasicObject<Long> {
 	
 	
 	private void init(){
-		this.names=new ArrayList<>();
-		this.descriptions=new ArrayList<>();
+		this.names=new ArrayList<>(3);
+		this.descriptions=new ArrayList<>(3);
 	}
 
 	/**

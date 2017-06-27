@@ -1,4 +1,4 @@
-package de.p39.asrs.server.controller.util.reader;
+package de.p39.asrs.server.controller.util.parser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

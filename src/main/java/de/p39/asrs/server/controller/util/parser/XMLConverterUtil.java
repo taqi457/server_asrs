@@ -1,4 +1,4 @@
-package de.p39.asrs.server.controller.util.xml;
+package de.p39.asrs.server.controller.util.parser;
 
 import java.io.StringReader;
 import java.io.StringWriter;

@@ -10,10 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
+import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.file.FileType;
 import de.p39.asrs.server.controller.file.Storage;
 import de.p39.asrs.server.controller.input.info.RouteInfo;
-import de.p39.asrs.server.controller.util.reader.KMLReader;
+import de.p39.asrs.server.controller.util.parser.KMLParser;
 import de.p39.asrs.server.model.Route;
 
 import java.util.Locale;
@@ -24,11 +25,13 @@ public class RouteEditController {
 	private RouteDAO dao;
 	private Storage storageService;
 	private Route route;
+	private KMLParser parser;
 
 	@Autowired
-	public RouteEditController(RouteDAO dao, Storage storage) {
-		this.dao = dao;
+	public RouteEditController(SiteDAO siteDAO, RouteDAO routeDAO, Storage storage) {
+		this.dao = routeDAO;
 		this.storageService = storage;
+		parser = new KMLParser(siteDAO);
 	}
 	
 	@GetMapping("/editroute/{id}")
@@ -52,11 +55,10 @@ public class RouteEditController {
 		if(storageService.check(file, FileType.KML))
 			storageService.delete(FileType.KML, file.getOriginalFilename());
 		String path = storageService.store(file, FileType.KML);
-		KMLReader kmlreader = new KMLReader();
-		Route r = null;
+		Route r = new Route();
 		//TODO different method for update should be called
 		try {
-			r = kmlreader.parseKml(path);
+			parser.parseKml(path,r);
 		} catch (JAXBException e) {
 			// TODO Some feedback that the kml was wrong !
 			e.printStackTrace();

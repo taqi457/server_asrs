@@ -23,11 +23,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
+import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.exceptions.StorageException;
 import de.p39.asrs.server.controller.file.FileType;
 import de.p39.asrs.server.controller.file.Storage;
 import de.p39.asrs.server.controller.input.info.RouteInfo;
-import de.p39.asrs.server.controller.util.reader.KMLReader;
+import de.p39.asrs.server.controller.util.parser.KMLParser;
 import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.LocaleDescription;
 import de.p39.asrs.server.model.LocaleName;
@@ -50,12 +51,15 @@ public class RouteInputController {
 
 	private Storage storageService;
 
+	private KMLParser parser;
+
 	private Route route;
 
 	@Autowired
-	public RouteInputController(RouteDAO dao, Storage storage) {
-		this.dao = dao;
+	public RouteInputController(SiteDAO siteDAO ,RouteDAO routeDAO, Storage storage) {
+		this.dao = routeDAO;
 		this.storageService = storage;
+		parser = new KMLParser(siteDAO);
 	}
 
 	@GetMapping("/kml/{filename:.+}")
@@ -72,9 +76,9 @@ public class RouteInputController {
 		this.create(info);
 		return "/routeoverview";
 	}
-	
-	@PostMapping("/editroute")	
-	public String editRoute(@ModelAttribute RouteInfo info){
+
+	@PostMapping("/editroute")
+	public String editRoute(@ModelAttribute RouteInfo info) {
 		this.create(info);
 		return "/editroute";
 	}
@@ -94,26 +98,25 @@ public class RouteInputController {
 
 	@PostMapping("/kml")
 	public String handleFileUploadAndCreateRoute(@RequestParam("kml") MultipartFile file,
-												 RedirectAttributes redirectAttributes, Model model) {
+			RedirectAttributes redirectAttributes, Model model) {
 		String path = storageService.store(file, FileType.KML);
-
-		KMLReader kmlreader = new KMLReader();
-		Route r = null;
+		Route r = new Route();
 		try {
-			r = kmlreader.parseKml(path);
+			parser.parseKml(path,r);
 		} catch (JAXBException e) {
 			// TODO Some feedback that the kml was wrong !
 			e.printStackTrace();
 		}
 		this.route = r;
-		//redirectAttributes.addFlashAttribute("message",
-		//		"Route successfully created with " + file.getOriginalFilename() + "!");
+		// redirectAttributes.addFlashAttribute("message",
+		// "Route successfully created with " + file.getOriginalFilename() +
+		// "!");
 		model.addAttribute("RouteInfo", new RouteInfo());
 		return "/routeform";
 	}
 
 	@ExceptionHandler(StorageException.class)
-	public ResponseEntity handleStorageFileNotFound(StorageException exc) {
+	public ResponseEntity<Object> handleStorageFileNotFound(StorageException exc) {
 		return ResponseEntity.notFound().build();
 	}
 

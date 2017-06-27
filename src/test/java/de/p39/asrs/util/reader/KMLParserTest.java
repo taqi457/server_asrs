@@ -10,19 +10,19 @@ import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 
-import de.p39.asrs.server.controller.util.reader.KMLReader;
+import de.p39.asrs.server.controller.util.parser.KMLParser;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 
-public class KMLReaderTest {
+public class KMLParserTest {
 
 	@Test
 	public void test() {
-		Route r = null;
+		Route r = new Route();
 		try {
-			r = new KMLReader().parseKml("src/main/resources/kml/saarbrucken_tour.kml");
+			new KMLParser(null).parseKml("src/main/resources/kml/saarbrucken_tour.kml",r);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 			fail("An error occured when parsing kml");
