@@ -57,7 +57,7 @@ public class SiteDAOImpl implements SiteDAO {
 		for(Site site : all){
 			List<LocaleName> names = site.getNames();
 			for(LocaleName name : names){
-				if(name.getString().equals(s))
+				if(name.getString().equals(s)&&!result.contains(site))
 					result.add(site);
 			}
 		}
