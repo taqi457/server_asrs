@@ -12,7 +12,7 @@ import de.p39.asrs.server.model.media.Medium;
  */
 public interface SiteDAO {
 	
-	public void insertSite(Site s);
+	public Site insertSite(Site s);
 	
 	public Site getSiteById(Long id);
 	

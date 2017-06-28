@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Alle Locations - Saarromanus</title>
+    <title>Alle Kategorien - Saarromanus</title>
     <div th:replace="fragments/header :: header-css" />
 
 </head>
@@ -18,7 +18,7 @@
 
                 <div class="page-header">
                     <h1>
-                        Locations
+                        Alle Kategorien
 
                     </h1>
                 </div><!-- /.page-header -->
@@ -28,7 +28,7 @@
                         <!-- PAGE CONTENT BEGINS -->
                         <div class="row">
                             <div class="col-xs-12">
-                                <a href="/newsite"><button class="btn btn-primary">Neue Seite erstellen</button></a>
+                                <a href="/newcategory"><button class="btn btn-primary">Neue Kategorie erstellen</button></a>
                                 <br/><br/>
                                 <table id="simple-table" class="table  table-bordered table-hover">
                                     <thead>
@@ -36,21 +36,21 @@
 
                                         <th>ID</th>
                                         <th>Name</th>
-
+                                        <th>Typ</th>
                                         <th></th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
-                                    <tr th:each="sb : ${allSites}">
+                                    <tr th:each="sb : ${categories}">
                                         <td th:text="${{sb.id}}">13/01/2011</td>
                                         <td th:text="${{sb.getNames().get(0).getString()}}">13/01/2011</td>
-
+                                        <td th:text="${sb.getType()}"></td>
                                         <td>
                                             <div class="hidden-sm hidden-xs btn-group">
 
 
-                                                <a th:href='${"/siteedit/"+sb.id}'><button class="btn btn-xs btn-info">
+                                                <a th:href='${"/categoryedit/"+sb.id}'><button class="btn btn-xs btn-info">
                                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                                 </button></a>
 

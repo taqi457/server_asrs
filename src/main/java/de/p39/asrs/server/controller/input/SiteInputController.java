@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.input.info.AudioInfo;
 import de.p39.asrs.server.controller.input.info.PictureInfo;
 import de.p39.asrs.server.model.*;
@@ -44,6 +45,7 @@ public class SiteInputController {
 	private List<Text> selectedTexts;
 	private List<Video> selectedVideos;
 	private Site site;
+	private CategoryDAO categoryDAO;
 	
 	private MediumDAO mediadao;
 	private SiteDAO sitedao;
@@ -51,10 +53,12 @@ public class SiteInputController {
 	
 
 	@Autowired
-	public SiteInputController(SiteDAO sdao, MediumDAO mdao, FileSystemStorage storage) {
+	public SiteInputController(SiteDAO sdao, MediumDAO mdao, CategoryDAO cdao, FileSystemStorage storage) {
 		super();
 		this.sitedao=sdao;
 		this.mediadao=mdao;
+		this.storageService = storage;
+		this.categoryDAO = cdao;
 		this.init();
 	}
 	
@@ -69,63 +73,99 @@ public class SiteInputController {
 	public String handleSiteInfo(@ModelAttribute SiteInfo info, @RequestParam("audios") MultipartFile[] audios,
 								 @RequestParam("pictures") MultipartFile[] pictures, Model model) {
 		this.create(info, audios, pictures);
-		model.addAttribute("siteInfo", new SiteInfo());
-		return "/siteoverview";
+		Site new_site = sitedao.insertSite(site);
+		model.addAttribute("allSites", sitedao.getAllSites());
+		return "redirect:siteedit/" + new_site.getId();
+	}
+	@PostMapping("editsite")
+	public String handleSiteEdit(@ModelAttribute SiteInfo info, @RequestParam("audios") MultipartFile[] audios,
+								 @RequestParam("pictures") MultipartFile[] pictures, Model model, @RequestParam("id")
+								 Long id, @RequestParam("category") Long category){
+		this.edit(info,id, audios, pictures, category);
+		sitedao.updateSite(site);
+		model.addAttribute("site", sitedao.getSiteById(id));
+		return "redirect:siteedit/" + id;
 	}
 	
 	private void create(SiteInfo info, MultipartFile[] audios, MultipartFile[] pictures) {
 		this.site=new Site();
+		this.uploadMedia(audios, pictures);
+		this.addInfo(site, info);
+
+	}
+
+	private void edit(SiteInfo info, Long id, MultipartFile[] audios, MultipartFile[] pictures, Long category) {
+		site = sitedao.getSiteById(id);
+		this.uploadMedia(audios, pictures);
+		this.addInfo(site, info);
+		site.setCategory(categoryDAO.getCategoryById(category));
+	}
+
+	private void uploadMedia(MultipartFile[] audios, MultipartFile[] pictures){
 		for(MultipartFile a : audios){
+			if (a.isEmpty())
+				continue;
 			String path = storageService.store(a, FileType.AUDIO);
 			Audio audio = new Audio();
 			audio.setPath(path);
 			ArrayList<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, a.getOriginalFilename()));
 			audio.setNames(names);
+			mediadao.insertAudio(audio);
 			site.addMedium(audio);
 		}
 		for(MultipartFile p : pictures){
+			if (p.isEmpty())
+				continue;
 			String path = storageService.store(p, FileType.PICTURE);
 			Picture picture = new Picture();
 			picture.setPath(path);
 			ArrayList<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
 			picture.setNames(names);
+			mediadao.insertPicture(picture);
 			site.addMedium(picture);
 		}
-		this.addInfo(site, info);
 	}
 	
 	private Site addInfo(Site s, SiteInfo info) {
+		ArrayList<LocaleName> names = new ArrayList<LocaleName>();
+		ArrayList<LocaleDescription> descriptions = new ArrayList<LocaleDescription>();
 		if (info.getNameDE() != null) {
 			LocaleName name = new LocaleName(Locale.GERMAN, info.getNameDE());
-			s.addLocaleName(name);
+			names.add(name);
 		}
 		if (info.getDescriptionEN() != null) {
 			LocaleName name = new LocaleName(Locale.ENGLISH, info.getNameEN());
-			s.addLocaleName(name);
+			names.add(name);
+
 		}
 		if (info.getNameFR() != null) {
 			LocaleName name = new LocaleName(Locale.FRENCH, info.getNameFR());
-			s.addLocaleName(name);
+			names.add(name);
+
 		}
 		if (info.getDescriptionDE() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.GERMAN, info.getDescriptionDE());
-			s.addLocaleDescription(description);
+			descriptions.add(description);
 		}
 		if (info.getDescriptionEN() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.ENGLISH, info.getDescriptionEN());
-			s.addLocaleDescription(description);
+			descriptions.add(description);
 		}
 		if (info.getDescriptionFR() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
-			s.addLocaleDescription(description);
+			descriptions.add(description);
 		}
 		if (info.getLatitude() != null && info.getLongitude() != null) {
-			//Coordinate coordinate = new Coordinate(info.getLatitude(), info.getLongitude());
-			//s.setCoordinate(coordinate);
+			Coordinate coordinate = new Coordinate(info.getLatitude(), info.getLongitude());
+			s.setCoordinate(coordinate);
 		}
-		
+		if (info.getCategory() != null) {
+			s.setCategory(categoryDAO.getCategoryById(info.getCategory()));
+		}
+		s.setDescriptions(descriptions);
+		s.setNames(names);
 		return s;
 	}
 

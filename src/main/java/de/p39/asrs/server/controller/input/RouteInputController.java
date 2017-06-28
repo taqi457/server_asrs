@@ -1,10 +1,12 @@
 package de.p39.asrs.server.controller.input;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.xml.bind.JAXBException;
 
+import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.core.io.Resource;
@@ -45,6 +47,8 @@ public class RouteInputController {
 
 	private RouteDAO dao;
 
+	private CategoryDAO CategoryDaoInterface;
+
 	private List<Site> selectedSites;
 
 	private Category selectedCategory;
@@ -56,8 +60,9 @@ public class RouteInputController {
 	private Route route;
 
 	@Autowired
-	public RouteInputController(SiteDAO siteDAO ,RouteDAO routeDAO, Storage storage) {
+	public RouteInputController(SiteDAO siteDAO ,RouteDAO routeDAO, CategoryDAO cdao, Storage storage) {
 		this.dao = routeDAO;
+		this.CategoryDaoInterface = cdao;
 		this.storageService = storage;
 		parser = new KMLParser(siteDAO);
 	}
@@ -74,13 +79,28 @@ public class RouteInputController {
 	@PostMapping("/routeinfo")
 	public String handleRouteInfo(@ModelAttribute RouteInfo info) {
 		this.create(info);
-		return "/routeoverview";
+		return "redirect:editroute/" + route.getId();
 	}
 
 	@PostMapping("/editroute")
-	public String editRoute(@ModelAttribute RouteInfo info) {
-		this.create(info);
-		return "/editroute";
+	public String editRoute(@ModelAttribute RouteInfo info, @RequestParam("id") Long id, @RequestParam("category") Long category) {
+		this.edit(info, id, category);
+		return "redirect:editroute/" + id;
+	}
+
+	private void edit(RouteInfo info, Long id, Long category) {
+		route = dao.getRouteById(id);
+		if (route != null) {
+			List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
+			if (!exists.isEmpty()) {
+				Route existing = exists.get(0);
+				this.dao.deleteRoute(existing.getId());
+			}
+			this.addInfo(route, info);
+			route.setCategory(CategoryDaoInterface.getCategoryById(category));
+			this.dao.updateRoute(route);
+			route = null;
+		}
 	}
 
 	private void create(RouteInfo info) {
@@ -91,7 +111,8 @@ public class RouteInputController {
 				this.dao.deleteRoute(existing.getId());
 			}
 			this.addInfo(route, info);
-			this.dao.instertRoute(route);
+			Route new_route = this.dao.instertRoute(route);
+			route.setId(new_route.getId());
 			route = null;
 		}
 	}
@@ -112,6 +133,8 @@ public class RouteInputController {
 		// "Route successfully created with " + file.getOriginalFilename() +
 		// "!");
 		model.addAttribute("RouteInfo", new RouteInfo());
+		model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("route"));
+
 		return "/routeform";
 	}
 
@@ -121,29 +144,33 @@ public class RouteInputController {
 	}
 
 	private Route addInfo(Route r, RouteInfo info) {
+		ArrayList<LocaleName> names = new ArrayList<LocaleName>();
+		ArrayList<LocaleDescription> descriptions = new ArrayList<LocaleDescription>();
+
 		if (info.getNameDE() != null) {
 			LocaleName name = new LocaleName(Locale.GERMAN, info.getNameDE());
-			r.addLocaleName(name);
+			names.add(name);
 		}
 		if (info.getDescriptionEN() != null) {
 			LocaleName name = new LocaleName(Locale.ENGLISH, info.getNameEN());
-			r.addLocaleName(name);
+			names.add(name);
+
 		}
 		if (info.getNameFR() != null) {
 			LocaleName name = new LocaleName(Locale.FRENCH, info.getNameFR());
-			r.addLocaleName(name);
+			names.add(name);
 		}
 		if (info.getDescriptionDE() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.GERMAN, info.getDescriptionDE());
-			r.addLocaleDescription(description);
+			descriptions.add(description);
 		}
 		if (info.getDescriptionEN() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.ENGLISH, info.getDescriptionEN());
-			r.addLocaleDescription(description);
+			descriptions.add(description);
 		}
 		if (info.getDescriptionFR() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
-			r.addLocaleDescription(description);
+			descriptions.add(description);
 		}
 		if (info.getDurationByFoot() != null) {
 			r.setDurationByFoot(info.getDurationByFoot());
@@ -151,6 +178,11 @@ public class RouteInputController {
 		if (info.getDurationByBike() != null) {
 			r.setDurationByBike(info.getDurationByBike());
 		}
+		if (info.getCategory() != null) {
+			r.setCategory(CategoryDaoInterface.getCategoryById(info.getCategory()));
+		}
+		r.setDescriptions(descriptions);
+		r.setNames(names);
 		return r;
 	}
 

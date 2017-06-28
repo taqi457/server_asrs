@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.model.Category;
+import de.p39.asrs.server.model.Route;
 
 public class CategoryDAOImpl implements CategoryDAO {
 
@@ -28,8 +29,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public void insertCategory(Category c) {
-		this.cf.create(c);
+	public Category insertCategory(Category c) {
+		return this.cf.create(c);
 	}
 
 	@Override
@@ -42,4 +43,19 @@ public class CategoryDAOImpl implements CategoryDAO {
 		this.cf.delete(id, Category.class);
 	}
 
+	@Override
+	public List<Category> getAllCategories(){
+		return this.cf.findAll(Category.class);
+	}
+	@Override
+	public Category getCategoryById(Long id) {
+		return this.cf.find(id, Category.class);
+	}
+
+	@Override
+	public List<Category> getCategoriesByType(String type){
+		Query q = this.cf.createQuery("SELECT e FROM " + Category.class.getName() + " e WHERE type = :type");
+		q.setParameter("type", type);
+		return (List<Category>) q.getResultList();
+	}
 }

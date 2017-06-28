@@ -27,11 +27,13 @@ public class Category extends NamedObject {
 	 * 
 	 */
 	private static final long serialVersionUID = -5143652688538221831L;
-	
+
+
+
 	String type;
 	public Category(){super();}
 
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId(){
@@ -100,6 +102,12 @@ public class Category extends NamedObject {
 		this.descriptions = descriptions;
 	}
 
-	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 }

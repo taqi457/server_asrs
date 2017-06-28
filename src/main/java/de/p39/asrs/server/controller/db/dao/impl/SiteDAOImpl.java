@@ -21,8 +21,8 @@ public class SiteDAOImpl implements SiteDAO {
 	}
 
 	@Override
-	public void insertSite(Site s) {
-		this.cf.create(s);
+	public Site insertSite(Site s) {
+		return this.cf.create(s);
 	}
 
 	@Override
