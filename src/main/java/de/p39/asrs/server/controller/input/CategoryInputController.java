@@ -26,7 +26,6 @@ import de.p39.asrs.server.controller.file.FileType;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Medium;
 import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Text;
 import de.p39.asrs.server.model.media.Video;
 /**
  *

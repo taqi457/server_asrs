@@ -23,7 +23,6 @@ import org.hibernate.annotations.FetchMode;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Medium;
 import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Text;
 import de.p39.asrs.server.model.media.Video;
 
 /**
@@ -44,8 +43,6 @@ public class Site extends NamedEntity {
 	private Set<Audio> audios=new HashSet<>();
 
 	private Set<Video> videos=new HashSet<>();
-
-	private Set<Text> texts=new HashSet<>();;
 
 	private Set<Picture> pictures=new HashSet<>();
 
@@ -106,23 +103,6 @@ public class Site extends NamedEntity {
 	@OneToMany(targetEntity = Video.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setVideos(Set<Video> videos) {
 		this.videos = videos;
-	}
-
-	/**
-	 * @return the texts
-	 */
-	@OneToMany(targetEntity = Text.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public Set<Text> getTexts() {
-		return texts;
-	}
-
-	/**
-	 * @param texts
-	 *            the texts to set
-	 */
-	@OneToMany(targetEntity = Text.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public void setTexts(Set<Text> texts) {
-		this.texts = texts;
 	}
 
 	/**
@@ -252,7 +232,7 @@ public class Site extends NamedEntity {
 			return false;
 		if (this.coordinate == null)
 			return false;
-		if (this.audios.isEmpty() && this.texts.isEmpty() && this.videos.isEmpty() && this.pictures.isEmpty())
+		if (this.audios.isEmpty() && this.videos.isEmpty() && this.pictures.isEmpty())
 			return true;
 		return false;
 	}
@@ -270,9 +250,7 @@ public class Site extends NamedEntity {
 	 * add and remove methods
 	 */
 	public void addMedium(Medium m) {
-		if (m instanceof Text) {
-			this.texts.add((Text) m);
-		} else if (m instanceof Audio) {
+		if (m instanceof Audio) {
 			this.audios.add((Audio) m);
 		} else if (m instanceof Video) {
 			this.videos.add((Video) m);
@@ -282,9 +260,7 @@ public class Site extends NamedEntity {
 	}
 
 	public void removeMedium(Medium m) {
-		if (m instanceof Text) {
-			this.texts.remove((Text) m);
-		} else if (m instanceof Audio) {
+		if (m instanceof Audio) {
 			this.audios.remove((Audio) m);
 		} else if (m instanceof Video) {
 			this.videos.remove((Video) m);

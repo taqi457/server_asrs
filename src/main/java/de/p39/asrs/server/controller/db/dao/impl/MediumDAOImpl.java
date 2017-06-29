@@ -11,7 +11,6 @@ import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Medium;
 import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Text;
 import de.p39.asrs.server.model.media.Video;
 
 public class MediumDAOImpl implements MediumDAO {
@@ -27,12 +26,7 @@ public class MediumDAOImpl implements MediumDAO {
 	public List<Audio> getAllAudios() {
 		return this.cf.findAll(Audio.class);
 	}
-
-	@Override
-	public List<Text> getAllTexts() {
-		return this.cf.findAll(Text.class);
-	}
-
+	
 	@Override
 	public List<Video> getAllVideos() {
 		return this.cf.findAll(Video.class);
@@ -48,7 +42,6 @@ public class MediumDAOImpl implements MediumDAO {
 		List<Medium> res = new ArrayList<>();
 		res.addAll(this.getAllAudios());
 		res.addAll(this.getAllPictures());
-		res.addAll(this.getAllTexts());
 		res.addAll(this.getAllVideos());
 		return res;
 	}
@@ -56,11 +49,6 @@ public class MediumDAOImpl implements MediumDAO {
 	@Override
 	public void insertAudio(Audio a) {
 		this.cf.create(a);
-	}
-
-	@Override
-	public void insertText(Text t) {
-		this.cf.create(t);
 	}
 
 	@Override
@@ -79,11 +67,6 @@ public class MediumDAOImpl implements MediumDAO {
 	}
 
 	@Override
-	public void updateText(Text t) {
-		this.cf.update(t);
-	}
-
-	@Override
 	public void updateVideo(Video v) {
 		this.cf.update(v);
 	}
@@ -96,11 +79,6 @@ public class MediumDAOImpl implements MediumDAO {
 	@Override
 	public void deleteAudio(Long id) {
 		this.cf.delete(id, Audio.class);
-	}
-
-	@Override
-	public void deleteText(Long id) {
-		this.cf.delete(id, Text.class);
 	}
 
 	@Override

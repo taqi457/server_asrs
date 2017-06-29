@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.model.Category;
-import de.p39.asrs.server.model.Route;
+import de.p39.asrs.server.model.CategoryType;
 
 public class CategoryDAOImpl implements CategoryDAO {
 
@@ -22,9 +22,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Category> getCategoriesByName(String s) {
-		Query q = this.cf.createQuery("SELECT e FROM " + Category.class.getName() + " e WHERE name = :name");
-		q.setParameter("name", s);
+	public List<Category> getCategoriesByType(CategoryType s) {
+		Query q = this.cf.createQuery("SELECT e FROM " + Category.class.getName() + " e WHERE type = :type");
+		q.setParameter("type", s);
 		return (List<Category>) q.getResultList();
 	}
 

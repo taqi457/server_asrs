@@ -3,6 +3,7 @@ package de.p39.asrs.server.controller.db.dao;
 import java.util.List;
 
 import de.p39.asrs.server.model.Category;
+import de.p39.asrs.server.model.CategoryType;
 /**
  * 
  * @author adrianrebmann
@@ -10,7 +11,7 @@ import de.p39.asrs.server.model.Category;
  */
 public interface CategoryDAO {
 	
-	public List<Category> getCategoriesByName(String s);
+	public List<Category> getCategoriesByType(CategoryType s);
 	
 	public Category insertCategory(Category c);
 	

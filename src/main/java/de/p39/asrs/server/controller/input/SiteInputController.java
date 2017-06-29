@@ -5,14 +5,11 @@ import java.util.List;
 import java.util.Locale;
 
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
-import de.p39.asrs.server.controller.input.info.AudioInfo;
-import de.p39.asrs.server.controller.input.info.PictureInfo;
 import de.p39.asrs.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +21,10 @@ import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.exceptions.StorageException;
 import de.p39.asrs.server.controller.file.FileSystemStorage;
 import de.p39.asrs.server.controller.file.FileType;
-import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.input.info.SiteInfo;
 import de.p39.asrs.server.model.media.Audio;
-import de.p39.asrs.server.model.media.Medium;
 import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Text;
+import de.p39.asrs.server.model.media.Size;
 import de.p39.asrs.server.model.media.Video;
 /**
  * 
@@ -40,10 +35,9 @@ import de.p39.asrs.server.model.media.Video;
 public class SiteInputController {
 	
 	
-	private List<Picture> selectedPictures;
-	private List<Audio> selectedAudios;
-	private List<Text> selectedTexts;
-	private List<Video> selectedVideos;
+	private List<Picture> selectedPictures= new ArrayList<>();;
+	private List<Audio> selectedAudios = new ArrayList<>();;
+	private List<Video> selectedVideos= new ArrayList<>();;
 	private Site site;
 	private CategoryDAO categoryDAO;
 	
@@ -59,15 +53,8 @@ public class SiteInputController {
 		this.mediadao=mdao;
 		this.storageService = storage;
 		this.categoryDAO = cdao;
-		this.init();
 	}
 	
-	private void init(){
-		this.selectedAudios=new ArrayList<>();
-		this.selectedPictures=new ArrayList<>();
-		this.selectedTexts=new ArrayList<>();
-		this.selectedVideos=new ArrayList<>();
-	}
 	@GetMapping("/deletesite/{id}")
 	public String handleSiteDelete(@PathVariable("id") Long id){
 		sitedao.deleteSite(id);
@@ -136,7 +123,8 @@ public class SiteInputController {
 				continue;
 			String path = storageService.store(p, FileType.PICTURE);
 			Picture picture = new Picture();
-			picture.setPath(path);
+			//TODO create different sizes and add paths like this:
+			picture.addPath(Size.LARGE,path);
 			ArrayList<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
 			picture.setNames(names);
@@ -205,7 +193,7 @@ public class SiteInputController {
 			this.mediadao.deletePicture(existing.getId());
 		}
 		if(path!= null){
-			picture.setPath(path);
+			picture.addPath(Size.LARGE,path);
 		}
 		this.selectedPictures.add(picture);
 		//this.mediadao.insertPicture(picture);
