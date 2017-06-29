@@ -85,7 +85,7 @@ public class MediumDAO {
 		return this.cf.find(id, Audio.class);
 	}
 	
-	public Video getCideoById(Long id){
+	public Video getVideoById(Long id){
 		return this.cf.find(id, Video.class);
 	}
 	
