@@ -5,6 +5,7 @@ import javax.xml.bind.JAXBException;
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.input.info.CategoryInfo;
 import de.p39.asrs.server.model.Category;
+import de.p39.asrs.server.model.CategoryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +52,7 @@ public class RouteEditController {
 		RouteInfo r_info = new RouteInfo();
 		r_info.setCategory(id);
 		model.addAttribute("RouteInfo", r_info);
-		model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("route"));
+		model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType(CategoryType.ROUTE));
 		model.addAttribute("CategoryDAO", CategoryDaoInterface);
 
 		return "/routedit";

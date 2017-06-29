@@ -7,6 +7,7 @@ import de.p39.asrs.server.controller.input.info.CategoryInfo;
 import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.input.info.SiteInfo;
 import de.p39.asrs.server.model.Category;
+import de.p39.asrs.server.model.CategoryType;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,13 +93,13 @@ public class HomeController {
     @GetMapping("/newroute")
     public String createroute(Model model){
 
-        return "/routeform";
+        return "/kmlupload";
     }
 
     @GetMapping("/newsite")
     public String createsite(Model model){
         model.addAttribute("SiteInfo", new SiteInfo());
-        model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("site"));
+        model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType(CategoryType.SITE));
 
         return "/siteform";
     }
@@ -107,7 +108,7 @@ public class HomeController {
     public String editsite(Model model, @PathVariable Long id){
         model.addAttribute("site", SiteDaoInterface.getSiteById(id));
         model.addAttribute("SiteInfo", new SiteInfo());
-        model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("site"));
+        model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType(CategoryType.SITE));
         return "siteedit";
     }
 

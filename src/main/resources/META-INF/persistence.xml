@@ -6,13 +6,11 @@
 		<class>de.p39.asrs.server.model.media.Audio</class>
 		<class>de.p39.asrs.server.model.media.Picture</class>
 		<class>de.p39.asrs.server.model.media.Video</class>
-		<class>de.p39.asrs.server.model.media.Text</class>
 		<class>de.p39.asrs.server.model.media.Picture</class>
 		<class>de.p39.asrs.server.model.Route</class>
 		<class>de.p39.asrs.server.model.LocaleName</class>
 		<class>de.p39.asrs.server.model.LocaleDescription</class>
 		<class>de.p39.asrs.server.model.Site</class>
-		<class>de.p39.asrs.server.model.media.Text</class>
 		<class>de.p39.asrs.server.model.media.Video</class>
 		<class>de.p39.asrs.server.model.Category</class>
 		<class>de.p39.asrs.server.model.media.Video</class>
@@ -29,7 +27,7 @@
 
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
 	</persistence-unit>
 </persistence>

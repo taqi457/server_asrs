@@ -30,8 +30,9 @@ public class CategoryInputController {
 	}
 
 	@PostMapping("/newcategory")
-	public String handleCategoryInfo(@ModelAttribute CategoryInfo info, Model model) {
+	public String handleCategoryInfo(@ModelAttribute CategoryInfo info, Model model, @RequestParam("type") String type) {
 		this.create(info);
+		addType(type);
 		Category new_Category = categoryDAO.insertCategory(category);
 		model.addAttribute("allCategorys", categoryDAO.getAllCategories());
 		return "redirect:categoryedit/" + new_Category.getId();
@@ -40,21 +41,39 @@ public class CategoryInputController {
 	public String handleSiteEdit(@ModelAttribute CategoryInfo info, Model model, @RequestParam("id")
 										 Long id, @RequestParam("type") String type){
 		this.edit(info,id);
+		addType(type);
 		categoryDAO.updateCategory(category);
 		category.setType(CategoryType.SITE);
 		model.addAttribute("category", categoryDAO.getCategoryById(id));
 		return "redirect:categoryedit/" + id;
 	}
 
+	private void addType(String type){
+		if (type != null) {
+			switch (type) {
+				case "route":
+					category.setType(CategoryType.ROUTE);
+					break;
+				case "site":
+					category.setType(CategoryType.SITE);
+					break;
+				default:
+					break;
+			}
+		}
+	}
 	private void create(CategoryInfo info) {
 		this.category=new Category();
 		this.addInfo(category, info);
+
 
 	}
 
 	private void edit(CategoryInfo info, Long id) {
 		category = categoryDAO.getCategoryById(id);
 		this.addInfo(category, info);
+
+
 	}
 
 
@@ -87,9 +106,7 @@ public class CategoryInputController {
 			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
 			descriptions.add(description);
 		}
-		if (info.getType() != null) {
-			category.setType(info.getType());
-		}
+
 		c.setDescriptions(descriptions);
 		c.setNames(names);
 		return c;
