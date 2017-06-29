@@ -75,6 +75,12 @@ public abstract class NamedObject extends ABasicObject<Long> {
 	}
 	
 	public void addLocaleName(LocaleName l){
+		for(LocaleName name : this.getNames()) {
+			if (l.getLocale().equals(name.getLocale())) {
+
+				this.names.remove(name);
+			}
+		}
 		this.names.add(l);
 	}
 	

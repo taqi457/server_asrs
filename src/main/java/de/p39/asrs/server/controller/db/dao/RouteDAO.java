@@ -8,7 +8,7 @@ import de.p39.asrs.server.model.Site;
 
 public interface RouteDAO {
 	
-	public void instertRoute(Route r);
+	public Route instertRoute(Route r);
 	
 	public Route getRouteById(Long id);
 	

@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Route editieren - Saarromanus</title>
+    <title>Sehenswürdigkeit editieren - Saarromanus</title>
     <div th:replace="fragments/header :: header-css" />
 
 </head>
@@ -18,22 +18,20 @@
 
                 <div class="page-header">
                     <h1>
-Route editieren                    </h1>
+                        Kategorie editieren                    </h1>
                 </div><!-- /.page-header -->
 
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
                         <div class="widget-box">
-
-                            <div class="widget-main">
-                                <div>
-                                    <div class="step-content pos-rel">
-                                        <div class="step-pane active" data-step="1">
-                                            <h3 class="lighter block green">Bitte füllen Sie die untenstehenden Felder aus</h3>
-
-                                            <form class="form-horizontal" id="validation-form" th:action="@{/editroute}" th:object="${RouteInfo}" method="post">
-                                                <input type="hidden" th:value="${route.getId()}" name="id" />
+                            <form class="form-horizontal" id="validation-form" th:action="@{/editcategory}" th:object="${CategoryInfo}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" th:value="${category.getId()}" name="id" />
+                                <div class="widget-main">
+                                    <div>
+                                        <div class="step-content pos-rel">
+                                            <div class="step-pane active" data-step="1">
+                                                <h3 class="lighter block green">Bitte füllen Sie die untenstehenden Felder aus</h3>
 
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -50,7 +48,7 @@ Route editieren                    </h1>
 
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
-                                                                                <input type="text" name="nameDE" id="nameDE" th:value="${route.getNameByLocale(new java.util.Locale('de'))}" class="col-xs-12 col-sm-6" />
+                                                                                <input type="text" name="nameDE" id="nameDE" th:value="${category.getNameByLocale(new java.util.Locale('de'))}" class="col-xs-12 col-sm-6" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -59,7 +57,7 @@ Route editieren                    </h1>
 
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
-                                                                                <input type="text" name="nameEN" id="nameEN" th:value="${route.getNameByLocale(new java.util.Locale('en'))}" class="col-xs-12 col-sm-6" />
+                                                                                <input type="text" name="nameEN" id="nameEN" th:value="${category.getNameByLocale(new java.util.Locale('en'))}" class="col-xs-12 col-sm-6" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -68,7 +66,7 @@ Route editieren                    </h1>
 
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
-                                                                                <input type="text" name="nameFR" id="nameFR" th:value="${route.getNameByLocale(new java.util.Locale('fr'))}" class="col-xs-12 col-sm-6" />
+                                                                                <input type="text" name="nameFR" id="nameFR" th:value="${category.getNameByLocale(new java.util.Locale('fr'))}" class="col-xs-12 col-sm-6" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -87,31 +85,15 @@ Route editieren                    </h1>
                                                                 <div class="widget-main">
 
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="category">Art der Route</label>
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="category">Typ</label>
 
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
                                                                                 <select name="category" id="category" class="col-xs-12 col-sm-6">
-                                                                                    <option th:each="category : ${categories}" th:text="${category.getNames().get(0).getString()}" th:value="${category.getId()}" th:selected='${route.getCategory() != null ? category.getId()==route.getCategory().getId() : ""}'>test</option>
+                                                                                    <option value="site" th:selected="${category.getType().equals('site')}">Sehenswürdigkeit</option>
+                                                                                    <option value="route" th:selected="${category.getType().equals('route')}">Route</option>
+
                                                                                 </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="durationByFoot">Dauer zu Fuß(in Minuten)</label>
-
-                                                                        <div class="col-xs-12 col-sm-9">
-                                                                            <div class="clearfix">
-                                                                                <input type="text" name="durationByFoot" id="durationByFoot" th:value="${route.getDurationByFoot()}" class="col-xs-12 col-sm-6" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="durationByBike">Dauer mit Fahrrad (in Minuten)</label>
-
-                                                                        <div class="col-xs-12 col-sm-9">
-                                                                            <div class="clearfix">
-                                                                                <input type="text" name="durationByBike" id="durationByBike" th:value="${route.getDurationByBike()}" class="col-xs-12 col-sm-6" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -135,7 +117,7 @@ Route editieren                    </h1>
 
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
-                                                                                <textarea name="descriptionDE" id="descriptionDE" th:text="${route.getDescriptionByLocale(new java.util.Locale('de'))}" class="col-xs-12 col-sm-6" ></textarea>
+                                                                                <textarea name="descriptionDE" id="descriptionDE" th:text="${category.getDescriptionByLocale(new java.util.Locale('de'))}" class="col-xs-12 col-sm-6" ></textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -144,7 +126,7 @@ Route editieren                    </h1>
 
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
-                                                                                <textarea name="descriptionEN" id="descriptionEN" th:text="${route.getDescriptionByLocale(new java.util.Locale('en'))}" class="col-xs-12 col-sm-6" ></textarea>
+                                                                                <textarea name="descriptionEN" id="descriptionEN" th:text="${category.getDescriptionByLocale(new java.util.Locale('en'))}" class="col-xs-12 col-sm-6" ></textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -153,7 +135,7 @@ Route editieren                    </h1>
 
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
-                                                                                <textarea name="descriptionFR" id="descriptionFR" th:text="${route.getDescriptionByLocale(new java.util.Locale('fr'))}" class="col-xs-12 col-sm-6" ></textarea>
+                                                                                <textarea name="descriptionFR" id="descriptionFR" th:text="${category.getDescriptionByLocale(new java.util.Locale('fr'))}" class="col-xs-12 col-sm-6" ></textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -161,96 +143,9 @@ Route editieren                    </h1>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="widget-box">
-                                                            <div class="widget-header">
-                                                                <h4 class="widget-title">
-                                                                    Locations
-                                                                </h4>
-                                                            </div>
-                                                            <div class="widget-body">
-                                                                <div class="widget-main">
-                                                                    <div class="row">
-                                                                        <div class="col-xs-12">
-                                                                            <table id="simple-table" class="table  table-bordered table-hover">
-                                                                                <thead>
-                                                                                <tr>
-
-                                                                                    <th>ID</th>
-                                                                                    <th>Name</th>
-                                                                                    <th>Status</th>
-
-                                                                                    <th></th>
-                                                                                </tr>
-                                                                                </thead>
-
-                                                                                <tbody>
-                                                                                <tr th:each="sb : ${route.getSites()}">
-                                                                                    <td th:text="${{sb.id}}">13/01/2011</td>
-                                                                                    <td th:text="${{sb.getNames().get(0).getString()}}">13/01/2011</td>
-                                                                                    <td th:if="${sb.isCompleted()}"><span class="label label-sm label-success">Vollständig</span></td>
-                                                                                    <td th:if="${!sb.isCompleted()}"><span class="label label-sm label-warning">Unvollständig</span></td>
-
-                                                                                    <td>
-                                                                                        <div class="hidden-sm hidden-xs btn-group">
-
-
-                                                                                            <a th:href='${"/siteedit/"+sb.id}'><button class="btn btn-xs btn-info">
-                                                                                                <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                                                                            </button></a>
-
-                                                                                            <a th:href='${"/deletesite/"+sb.id}'><button class="btn btn-xs btn-danger">
-                                                                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                                                                            </button></a>
-
-                                                                                        </div>
-
-                                                                                        <div class="hidden-md hidden-lg">
-                                                                                            <div class="inline pos-rel">
-                                                                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-                                                                                                </button>
-
-                                                                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                                                                    <li>
-                                                                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																			<span class="blue">
-																				<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																			</span>
-                                                                                                        </a>
-                                                                                                    </li>
-
-                                                                                                    <li>
-                                                                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																			<span class="green">
-																				<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																			</span>
-                                                                                                        </a>
-                                                                                                    </li>
-
-                                                                                                    <li>
-                                                                                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																			<span class="red">
-																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																			</span>
-                                                                                                        </a>
-                                                                                                    </li>
-                                                                                                </ul>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div><!-- /.span -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
 
-
+                                                <br/>
                                                 <div class="wizard-actions">
                                                     <div class="text-center">
                                                         <button class="btn btn-success btn-next" type="submit" >
@@ -260,70 +155,15 @@ Route editieren                    </h1>
                                                     </div>
 
                                                 </div>
-                                            </form>
-                                        </div>
-
-                                    </div>
-
-                            </div><!-- /.widget-main -->
-                        </div>
-                    </div><!-- /.widget-body -->
-                        <br/>
-                        <div class="widget-box">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <div id="fuelux-wizard-container">
-
-
-
-                                        <div class="step-content pos-rel">
-                                            <div class="step-pane active" data-step="1">
-
-                                                <form class="form-horizontal" action="/kml" enctype="multipart/form-data" method="POST">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="widget-box">
-                                                                <div class="widget-header">
-                                                                    <h4 class="widget-title">
-                                                                        Hochladen der .kml-Datei
-                                                                    </h4>
-                                                                </div>
-                                                                <div class="widget-body">
-                                                                    <div class="widget-main">
-
-                                                                        <div class="form-group">
-                                                                            <div class="col-xs-12">
-                                                                                <input type="file" id="id-input-file-3" name="kml"/>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-<br/>
-                                                    <div class="wizard-actions">
-                                                        <div class="text-center">
-                                                            <button class="btn btn-success btn-next" type="submit" >
-                                                                Abschicken
-                                                                <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-                                                            </button>
-                                                        </div>
-
-                                                    </div>
-
-                                                </form>
                                             </div>
 
-
                                         </div>
-                                    </div>
 
-                                </div><!-- /.widget-main -->
-                            </div><!-- /.widget-body -->
-                        </div>
+                                    </div><!-- /.widget-main -->
+                                </div>
+                            </form>
+
+                        </div><!-- /.widget-body -->
 
                         <!-- PAGE CONTENT ENDS -->
                     </div><!-- /.col -->
@@ -396,10 +236,10 @@ Route editieren                    </h1>
                 descriptionFR: {
                     required: true
                 },
-                durationByFoot: {
+                longitude: {
                     required: true
                 },
-                durationByBike: {
+                latitude: {
                     required: true
                 }
             },
@@ -476,9 +316,40 @@ Route editieren                    </h1>
         //$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
 
 
-        $('#id-input-file-3').ace_file_input({
+        $('#id-input-audio').ace_file_input({
             style: 'well',
-            btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_choose: 'Audio-Dateien hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist:'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+            /**,before_remove : function() {
+						return true;
+					}*/
+            ,
+            preview_error : function(filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
+
+        }).on('change', function(){
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-picture').ace_file_input({
+            style: 'well',
+            btn_choose: '.Bilder hier rein ziehen oder klicken um sie auszuwählen',
             btn_change: null,
             no_icon: 'ace-icon fa fa-cloud-upload',
             droppable: true,

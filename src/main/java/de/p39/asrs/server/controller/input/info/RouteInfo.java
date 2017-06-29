@@ -1,5 +1,7 @@
 package de.p39.asrs.server.controller.input.info;
 
+import de.p39.asrs.server.model.Category;
+
 public class RouteInfo {
 	
 	private String nameDE;
@@ -13,9 +15,17 @@ public class RouteInfo {
 	private Long durationByFoot;
 	private Long durationByBike;
 	private Double amplitude;
-	
-	
-	
+
+	private Long category;
+
+	public Long getCategory() {
+		return category;
+	}
+
+	public void setCategory(Long category) {
+		this.category = category;
+	}
+
 	public String getNameDE() {
 		return nameDE;
 	}

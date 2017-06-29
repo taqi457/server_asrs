@@ -1,8 +1,13 @@
 package de.p39.asrs.server.controller;
 
+import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
+import de.p39.asrs.server.controller.input.info.CategoryInfo;
+import de.p39.asrs.server.controller.input.info.RouteInfo;
+import de.p39.asrs.server.controller.input.info.SiteInfo;
+import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +27,8 @@ public class HomeController {
     private RouteDAO RoutedaoInterface;
     @Autowired
     private SiteDAO SiteDaoInterface;
+    @Autowired
+    private CategoryDAO CategoryDaoInterface;
 
     @GetMapping("/")
     public String home1() {
@@ -85,7 +93,42 @@ public class HomeController {
     @GetMapping("/newroute")
     public String createroute(Model model){
 
-        return "/kmlupload";
+        return "/routeform";
+    }
+
+    @GetMapping("/newsite")
+    public String createsite(Model model){
+        model.addAttribute("SiteInfo", new SiteInfo());
+        model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("site"));
+
+        return "/siteform";
+    }
+
+    @GetMapping("/siteedit/{id}")
+    public String editsite(Model model, @PathVariable Long id){
+        model.addAttribute("site", SiteDaoInterface.getSiteById(id));
+        model.addAttribute("SiteInfo", new SiteInfo());
+        model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("site"));
+        return "siteedit";
+    }
+
+    @GetMapping("/newcategory")
+    public String createcategory(Model model){
+        model.addAttribute("CategoryInfo", new CategoryInfo());
+        return "/newcategory";
+    }
+
+    @GetMapping("/categoryedit/{id}")
+    public String editcategory(Model model, @PathVariable Long id){
+        model.addAttribute("category", CategoryDaoInterface.getCategoryById(id));
+        model.addAttribute("CategoryInfo", new CategoryInfo());
+        return "categoryedit";
+    }
+
+    @GetMapping("/categoriesoverview")
+    public String categoriesoverview(Model model){
+        model.addAttribute("categories", CategoryDaoInterface.getAllCategories());
+        return "categoriesoverview";
     }
 
 }

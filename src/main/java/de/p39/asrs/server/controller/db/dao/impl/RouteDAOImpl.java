@@ -21,14 +21,14 @@ public class RouteDAOImpl implements RouteDAO {
 	}
 
 	@Override
-	public void instertRoute(Route r) {
+	public Route instertRoute(Route r) {
 		/*for(LocaleDescription s :r.getDescriptions()){
 			this.cf.create(s);
 		}
 		for(LocaleName s:r.getNames()){
 			this.cf.create(s);
 		}*/
-		this.cf.create(r);
+		return this.cf.create(r);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class RouteDAOImpl implements RouteDAO {
 
 	@Override
 	public List<Route> getAllRoutes() {
-		return this.cf.findAll(Route.class);
+				return this.cf.findAll(Route.class);
 	}
 
 	@Override

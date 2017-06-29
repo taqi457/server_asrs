@@ -36,7 +36,7 @@
 
 											<th>ID</th>
 											<th>Name</th>
-
+											<th>Status</th>
 											<th></th>
 										</tr>
 										</thead>
@@ -45,7 +45,8 @@
 										<tr th:each="sb : ${allRoutes}">
 											<td th:text="${{sb.id}}">13/01/2011</td>
 											<td th:text="${{sb.getNames().get(0).getString()}}">13/01/2011</td>
-
+											<td th:if="${sb.isCompleted()}"><span class="label label-sm label-success">Vollständig</span></td>
+											<td th:if="${!sb.isCompleted()}"><span class="label label-sm label-warning">Unvollständig</span></td>
 											<td>
 												<div class="hidden-sm hidden-xs btn-group">
 
@@ -54,9 +55,9 @@
 														<i class="ace-icon fa fa-pencil bigger-120"></i>
 													</button></a>
 
-													<button class="btn btn-xs btn-danger">
+													<a th:href='${"/deleteroute/"+sb.id}'><button class="btn btn-xs btn-danger">
 														<i class="ace-icon fa fa-trash-o bigger-120"></i>
-													</button>
+													</button></a>
 
 												</div>
 

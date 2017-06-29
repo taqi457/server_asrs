@@ -2,6 +2,9 @@ package de.p39.asrs.server.controller.input;
 
 import javax.xml.bind.JAXBException;
 
+import de.p39.asrs.server.controller.db.dao.CategoryDAO;
+import de.p39.asrs.server.controller.input.info.CategoryInfo;
+import de.p39.asrs.server.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.util.parser.KMLParser;
 import de.p39.asrs.server.model.Route;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 @Controller
@@ -26,12 +30,16 @@ public class RouteEditController {
 	private Storage storageService;
 	private Route route;
 	private KMLParser parser;
+	private CategoryDAO CategoryDaoInterface;
+
 
 	@Autowired
-	public RouteEditController(SiteDAO siteDAO, RouteDAO routeDAO, Storage storage) {
+	public RouteEditController(SiteDAO siteDAO, RouteDAO routeDAO, Storage storage, CategoryDAO cdao) {
 		this.dao = routeDAO;
 		this.storageService = storage;
 		parser = new KMLParser(siteDAO);
+		this.CategoryDaoInterface = cdao;
+
 	}
 	
 	@GetMapping("/editroute/{id}")
@@ -40,9 +48,21 @@ public class RouteEditController {
 		model.addAttribute("route", route);
 		model.addAttribute("RouteInfo", new RouteInfo());
 		Locale test = new Locale("german");
+		RouteInfo r_info = new RouteInfo();
+		r_info.setCategory(id);
+		model.addAttribute("RouteInfo", r_info);
+		model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("route"));
+		model.addAttribute("CategoryDAO", CategoryDaoInterface);
+
 		return "/routedit";
 	}
-	
+
+	@GetMapping("/deleteroute/{id}")
+	public String handleRouteDelete(@PathVariable("id") Long id){
+		dao.deleteRoute(id);
+		return "redirect:/routeoverview";
+	}
+
 	@PostMapping("/editroute/routeinfo")
 	public String handleRouteInfo(@ModelAttribute RouteInfo info) {
 		//this.create(info);
