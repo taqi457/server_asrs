@@ -78,8 +78,15 @@ public class MediumDAO {
 	}
 
 	public Picture getPictureById(Long id) {
-		// TODO Auto-generated method stub
-		throw new NotYetImplementedException();
+		return this.cf.find(id, Picture.class);
+	}
+	
+	public Audio getAudioById(long id){
+		return this.cf.find(id, Audio.class);
+	}
+	
+	public Video getCideoById(Long id){
+		return this.cf.find(id, Video.class);
 	}
 	
 	public List<Picture> getPictureByPath(String path) {
