@@ -33,7 +33,11 @@ public class SiteController {
     }
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Site siteById(@PathVariable Long id) {
+	public Site siteById(@PathVariable Long id, @RequestParam(value = "size") String size) {
+    	switch (size){
+    	    case "small":
+
+        }
 		Site res = daoInterface.getSiteById(id);
     	if(res == null)
     		throw new NotFoundExecption("The siteId you specified was not in the data set");

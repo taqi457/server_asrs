@@ -5,6 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import de.p39.asrs.server.controller.exceptions.BadRequestException;
+import de.p39.asrs.server.model.media.Picture;
+import de.p39.asrs.server.model.media.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,8 +39,22 @@ public class MediaController {
 	}
 	
 	@RequestMapping(value = "/img/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public byte[] imageByID(@PathVariable Long id) {
-	    Path path = Paths.get(dao.getPictureById(id).getPath());
+	public byte[] imageByID(@PathVariable Long id, @RequestParam(value = "size") String size) {
+        Size pictureSize;
+        switch(size){
+            case "thumb":
+                pictureSize = Size.SMALL;
+                break;
+            case "medium":
+                pictureSize = Size.MEDIUM;
+                break;
+            case "large":
+                pictureSize = Size.LARGE;
+                break;
+            default:
+                throw new BadRequestException("Provide size as thumb, medium or large!");
+        }
+	    Path path = Paths.get(dao.getPictureById(id).getPath(pictureSize));
 	    try {
 			return Files.readAllBytes(path);
 		} catch (IOException e) {

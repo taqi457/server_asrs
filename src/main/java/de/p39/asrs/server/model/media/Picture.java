@@ -34,27 +34,11 @@ public class Picture extends Medium {
 	 * 
 	 */
 	private static final long serialVersionUID = 2524529774881275743L;
-	
-	private String path;
+
 	private Text text;
 	private Map<Size,String> paths = new HashMap<>();
 	
 	public Picture(){super();}
-	
-
-	/**
-	 * @return the path
-	 */
-	public String getPath() {
-		return path;
-	}
-
-	/**
-	 * @param path the path to set
-	 */
-	public void setPath(String path) {
-		this.path = path;
-	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
