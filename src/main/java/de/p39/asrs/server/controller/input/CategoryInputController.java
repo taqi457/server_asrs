@@ -1,32 +1,17 @@
 package de.p39.asrs.server.controller.input;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.input.info.*;
 import de.p39.asrs.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import de.p39.asrs.server.controller.db.dao.MediumDAO;
-import de.p39.asrs.server.controller.db.dao.SiteDAO;
+import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.exceptions.StorageException;
-import de.p39.asrs.server.controller.file.FileSystemStorage;
-import de.p39.asrs.server.controller.file.FileType;
-import de.p39.asrs.server.model.media.Audio;
-import de.p39.asrs.server.model.media.Medium;
-import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Video;
 /**
  *
  * @author adrianrebmann
