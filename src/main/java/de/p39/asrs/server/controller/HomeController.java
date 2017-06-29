@@ -3,7 +3,6 @@ package de.p39.asrs.server.controller;
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
-import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
 import de.p39.asrs.server.controller.input.info.CategoryInfo;
 import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.input.info.SiteInfo;

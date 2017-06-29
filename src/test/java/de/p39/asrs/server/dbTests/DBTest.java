@@ -16,8 +16,6 @@ import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.JPACrudService;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
-import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
-import de.p39.asrs.server.controller.db.dao.impl.SiteDAOImpl;
 import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.LocaleDescription;
@@ -26,7 +24,6 @@ import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Text;
 import de.p39.asrs.server.model.media.Video;
 
 /**
@@ -49,7 +46,7 @@ public class DBTest {
 	@Ignore
 	public void routeCreationThenFindingTest(){
 		CrudFacade cf = new JPACrudService("server");
-		RouteDAO dao= new RouteDAOImpl(cf);
+		RouteDAO dao= new RouteDAO(cf);
 		Route r = this.createDummyData();
 		dao.instertRoute(r);
 		List<Route> routes = dao.getAllRoutes();
@@ -59,7 +56,6 @@ public class DBTest {
 		for(Site s : r.getSites()){
 			assertTrue(s.getAudios().size()==1);
 			assertTrue(s.getPictures().size()==1);
-			assertTrue(s.getTexts().size()==1);
 			assertTrue(s.getVideos().size()==1);
 		}
 	}
@@ -77,8 +73,8 @@ public class DBTest {
 	@Ignore
 	public void routeCreationThenFindingThenUpdateingTest(){
 		CrudFacade cf = new JPACrudService("server");
-		RouteDAO dao= new RouteDAOImpl(cf);
-		SiteDAO doa = new SiteDAOImpl(cf);
+		RouteDAO dao= new RouteDAO(cf);
+		SiteDAO doa = new SiteDAO(cf);
 		Route r = this.createDummyData();
 		dao.instertRoute(r);
 		List<Site> sites = doa.getSitesByName("test_german");
@@ -95,7 +91,6 @@ public class DBTest {
 	private Route createDummyData(){
 		Audio a1 = new Audio();
 		Video v1 = new Video();
-		Text t1 = new Text();
 		Picture p1 = new Picture();
 		
 		Category c1 = new Category();
@@ -108,12 +103,10 @@ public class DBTest {
 		s1.setCoordinate(co1);
 		s1.addMedium(a1);
 		s1.addMedium(v1);
-		s1.addMedium(t1);
 		s1.addMedium(p1);
 		
 		Audio a2 = new Audio();
 		Video v2 = new Video( );
-		Text t2 = new Text();
 		Picture p2 = new Picture();
 		
 		Category c2 = new Category();
@@ -126,7 +119,6 @@ public class DBTest {
 		s2.setCoordinate(co2);
 		s2.addMedium(a2);
 		s2.addMedium(v2);
-		s2.addMedium(t2);
 		s2.addMedium(p2);
 		LocaleName n1 = new LocaleName(Locale.GERMAN, "test_german");
 		LocaleName n2 = new LocaleName(Locale.FRENCH, "test_french");
