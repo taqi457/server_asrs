@@ -91,11 +91,11 @@ public class RouteInputController {
 	private void edit(RouteInfo info, Long id, Long category) {
 		route = dao.getRouteById(id);
 		if (route != null) {
-			List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
+			/*List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
 			if (!exists.isEmpty()) {
 				Route existing = exists.get(0);
 				this.dao.deleteRoute(existing.getId());
-			}
+			}*/
 			this.addInfo(route, info);
 			route.setCategory(CategoryDaoInterface.getCategoryById(category));
 			this.dao.updateRoute(route);
@@ -105,11 +105,11 @@ public class RouteInputController {
 
 	private void create(RouteInfo info) {
 		if (route != null) {
-			List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
+			/*List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
 			if (!exists.isEmpty()) {
 				Route existing = exists.get(0);
 				this.dao.deleteRoute(existing.getId());
-			}
+			}*/
 			this.addInfo(route, info);
 			Route new_route = this.dao.instertRoute(route);
 			route.setId(new_route.getId());

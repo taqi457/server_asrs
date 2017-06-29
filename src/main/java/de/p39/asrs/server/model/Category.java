@@ -21,7 +21,7 @@ import org.hibernate.annotations.FetchMode;
  *
  */
 @Entity
-public class Category extends NamedObject {
+public class Category extends NamedEntity {
 
 	/**
 	 * 
@@ -30,8 +30,16 @@ public class Category extends NamedObject {
 
 
 
-	String type;
+	CategoryType type;
 	public Category(){super();}
+	
+	public Category(CategoryType type){
+		super();
+		this.type=type;
+	}
+	
+	
+	
 
 
 	@Id
@@ -102,11 +110,11 @@ public class Category extends NamedObject {
 		this.descriptions = descriptions;
 	}
 
-	public String getType() {
+	public CategoryType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(CategoryType type) {
 		this.type = type;
 	}
 

@@ -57,7 +57,7 @@ public class CategoryInputController {
 										 Long id, @RequestParam("type") String type){
 		this.edit(info,id);
 		categoryDAO.updateCategory(category);
-		category.setType(type);
+		category.setType(CategoryType.SITE);
 		model.addAttribute("category", categoryDAO.getCategoryById(id));
 		return "redirect:categoryedit/" + id;
 	}

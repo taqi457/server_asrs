@@ -6,7 +6,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public abstract class ABasicObject<K extends Serializable> implements Serializable {
+public abstract class BaseEntity<K extends Serializable> implements Serializable {
 
 	/**
 	 * 
@@ -15,12 +15,12 @@ public abstract class ABasicObject<K extends Serializable> implements Serializab
 	private K id;
 	private Date timestamp;
 
-	public ABasicObject(K id) {
+	public BaseEntity(K id) {
 		this.setId(id);
 		this.timestamp = new Date();
 	}
 	
-	public ABasicObject(){
+	public BaseEntity(){
 		this.timestamp=new Date();
 	}
 	
@@ -74,7 +74,7 @@ public abstract class ABasicObject<K extends Serializable> implements Serializab
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ABasicObject<K> other = (ABasicObject<K>) obj;
+		BaseEntity<K> other = (BaseEntity<K>) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

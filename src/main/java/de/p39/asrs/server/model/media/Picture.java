@@ -1,9 +1,12 @@
 package de.p39.asrs.server.model.media;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,6 +37,7 @@ public class Picture extends Medium {
 	
 	private String path;
 	private Text text;
+	private Map<Size,String> paths = new HashMap<>();
 	
 	public Picture(){super();}
 	
@@ -130,5 +134,29 @@ public class Picture extends Medium {
 	@Fetch(value = FetchMode.SUBSELECT)
 	public void setDescriptions(List<LocaleDescription> descriptions) {
 		this.descriptions = descriptions;
+	}
+	
+	public void addPath(Size s, String p){
+		this.paths.put(s, p);
+	}
+	
+	public void removeSize(Size s){
+		this.paths.remove(s);
+	}
+	
+	public String getPath(Size s){
+		return this.paths.get(s);
+	}
+
+
+	@ElementCollection
+	public Map<Size,String> getPaths() {
+		return paths;
+	}
+
+
+	@ElementCollection
+	public void setPaths(Map<Size,String> paths) {
+		this.paths = paths;
 	}
 }

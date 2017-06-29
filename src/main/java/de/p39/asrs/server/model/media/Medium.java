@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.OneToMany;
 
-import de.p39.asrs.server.model.NamedObject;
+import de.p39.asrs.server.model.NamedEntity;
 import de.p39.asrs.server.model.LocaleDescription;
 import de.p39.asrs.server.model.LocaleName;
 /**
@@ -19,7 +19,7 @@ import de.p39.asrs.server.model.LocaleName;
  *
  */
 @Inheritance
-public class Medium extends NamedObject {
+public class Medium extends NamedEntity {
 
 	/**
 	 * 

@@ -1,5 +1,7 @@
 package de.p39.asrs.server.controller.input.info;
 
+import de.p39.asrs.server.model.CategoryType;
+
 public class CategoryInfo {
 	private String nameDE;
 	private String nameFR;
@@ -9,7 +11,7 @@ public class CategoryInfo {
 	private String descriptionFR;
 	private String descriptionEN;
 
-	private String type;
+	private CategoryType type;
 
 	public String getNameDE() {
 		return nameDE;
@@ -59,11 +61,11 @@ public class CategoryInfo {
 		this.descriptionEN = descriptionEN;
 	}
 
-	public String getType() {
+	public CategoryType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(CategoryType type) {
 		this.type = type;
 	}
 }

@@ -21,7 +21,7 @@ import javax.persistence.criteria.Root;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import de.p39.asrs.server.model.ABasicObject;
+import de.p39.asrs.server.model.BaseEntity;
 
 /**
  * @author Adrian Rebmann <adrianrebmann@gmail.com>
@@ -58,7 +58,7 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#find(java.io.Serializable, java.lang.Class)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> T find(K id, Class<T> clazz) {
+	public <K extends Serializable, T extends BaseEntity<K>> T find(K id, Class<T> clazz) {
 		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction transaction = null;
 		T t = null;
@@ -83,7 +83,7 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#create(de.p39.asrs.server.model.ABasicObject)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> T create(T o) {
+	public <K extends Serializable, T extends BaseEntity<K>> T create(T o) {
 		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction transaction = null;
 		T t = null;
@@ -112,7 +112,7 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#delete(de.p39.asrs.server.model.ABasicObject)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> void delete(K id,  Class<T> clazz) {
+	public <K extends Serializable, T extends BaseEntity<K>> void delete(K id,  Class<T> clazz) {
 		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction transaction = null;
 		T t = null;
@@ -138,7 +138,7 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#update(de.p39.asrs.server.model.ABasicObject)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> T update(T o) {
+	public <K extends Serializable, T extends BaseEntity<K>> T update(T o) {
 		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction transaction = null;
 		T t = null;
@@ -163,7 +163,7 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#findOrCreate(de.p39.asrs.server.model.ABasicObject, java.io.Serializable)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> T findOrCreate(T object, K key) {
+	public <K extends Serializable, T extends BaseEntity<K>> T findOrCreate(T object, K key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -172,7 +172,7 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#findAll(java.lang.Class)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> List<T> findAll(Class<T> clazz) {
+	public <K extends Serializable, T extends BaseEntity<K>> List<T> findAll(Class<T> clazz) {
 		EntityManager em = this.emf.createEntityManager();
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<T> criteria = builder.createQuery(clazz);
@@ -187,7 +187,7 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#updateAll(java.util.Collection)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> Collection<T> updateAll(Collection<T> objects) {
+	public <K extends Serializable, T extends BaseEntity<K>> Collection<T> updateAll(Collection<T> objects) {
 		List<T> objs = new ArrayList<>();
 		for (T obj : objects) {
 			T managedRef = update(obj);
@@ -200,7 +200,7 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#deleteAll(java.util.Collection, java.lang.Class)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> void deleteAll(Collection<K> objects, Class<T> clazz) {
+	public <K extends Serializable, T extends BaseEntity<K>> void deleteAll(Collection<K> objects, Class<T> clazz) {
 		for (K obj : objects) {
 			delete(obj,clazz);
 		}
@@ -210,14 +210,14 @@ public class JPACrudService implements CrudFacade {
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#createAll(java.util.Collection)
 	 */
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> void createAll(Collection<T> o) {
+	public <K extends Serializable, T extends BaseEntity<K>> void createAll(Collection<T> o) {
 		for (T obj : o) {
 			create(obj);
 		}
 	}
 
 	@Override
-	public <K extends Serializable, T extends ABasicObject<K>> int count(Class<T> clazz) {
+	public <K extends Serializable, T extends BaseEntity<K>> int count(Class<T> clazz) {
 		return this.findAll(clazz).size();
 	}
 

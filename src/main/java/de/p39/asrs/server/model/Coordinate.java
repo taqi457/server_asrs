@@ -10,7 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Coordinate extends ABasicObject<Long> {
+public class Coordinate extends BaseEntity<Long> {
 
 	/**
 	 * The earth radius in meters.

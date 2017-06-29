@@ -11,7 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class LocaleDescription extends ABasicObject<Long> {
+public class LocaleDescription extends BaseEntity<Long> {
 
 
 	/**
