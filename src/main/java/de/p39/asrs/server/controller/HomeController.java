@@ -108,7 +108,7 @@ public class HomeController {
     public String editsite(Model model, @PathVariable Long id){
         model.addAttribute("site", SiteDaoInterface.getSiteById(id));
         model.addAttribute("SiteInfo", new SiteInfo());
-        model.addAttribute("categories", CategoryDaoInterface.getAllCategories());
+        model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("site"));
         return "siteedit";
     }
 

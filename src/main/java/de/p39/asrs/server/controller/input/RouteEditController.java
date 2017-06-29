@@ -51,12 +51,18 @@ public class RouteEditController {
 		RouteInfo r_info = new RouteInfo();
 		r_info.setCategory(id);
 		model.addAttribute("RouteInfo", r_info);
-		model.addAttribute("categories", CategoryDaoInterface.getAllCategories());
+		model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("route"));
 		model.addAttribute("CategoryDAO", CategoryDaoInterface);
 
 		return "/routedit";
 	}
-	
+
+	@GetMapping("/deleteroute/{id}")
+	public String handleRouteDelete(@PathVariable("id") Long id){
+		dao.deleteRoute(id);
+		return "redirect:/routeoverview";
+	}
+
 	@PostMapping("/editroute/routeinfo")
 	public String handleRouteInfo(@ModelAttribute RouteInfo info) {
 		//this.create(info);

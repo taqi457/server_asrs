@@ -68,7 +68,24 @@ public class SiteInputController {
 		this.selectedTexts=new ArrayList<>();
 		this.selectedVideos=new ArrayList<>();
 	}
-	
+	@GetMapping("/deletesite/{id}")
+	public String handleSiteDelete(@PathVariable("id") Long id){
+		sitedao.deleteSite(id);
+		return "redirect:/siteoverview";
+	}
+
+	@GetMapping("/deleteaudio/{id}")
+	public String handleAudioDelete(@PathVariable("id") Long id){
+		mediadao.deleteAudio(id);
+		return "redirect:/siteoverview";
+	}
+	@GetMapping("/deletepicture/{id}")
+	public String handlePictureDelete(@PathVariable("id") Long id){
+		mediadao.deletePicture(id);
+		return "redirect:/siteoverview";
+	}
+
+
 	@PostMapping("/newsite")
 	public String handleSiteInfo(@ModelAttribute SiteInfo info, @RequestParam("audios") MultipartFile[] audios,
 								 @RequestParam("pictures") MultipartFile[] pictures, Model model) {
