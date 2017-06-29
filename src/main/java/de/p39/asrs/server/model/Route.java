@@ -27,7 +27,7 @@ import org.hibernate.annotations.FetchMode;
  *
  */
 @Entity
-public class Route extends NamedObject {
+public class Route extends NamedEntity {
 
 	/**
 	 * Stepwidth for distance calculation if performance breaks down
@@ -35,9 +35,8 @@ public class Route extends NamedObject {
 	private static final long serialVersionUID = 2711246951505591683L;
 	private static final int stepwidth = 5;
 
-	private List<Coordinate> coordinates;
-	private Set<Site> sites;
-	private String pathToKml;
+	private List<Coordinate> coordinates = new LinkedList<>();
+	private Set<Site> sites = new HashSet<>();
 	/**
 	 * in ms
 	 */
@@ -51,12 +50,6 @@ public class Route extends NamedObject {
 
 	public Route() {
 		super();
-		this.init();
-	}
-
-	private void init() {
-		this.coordinates = new LinkedList<>();
-		this.sites = new HashSet<>();
 	}
 
 	/**
@@ -232,8 +225,6 @@ public class Route extends NamedObject {
 		}
 		if (this.sites.isEmpty())
 			return false;
-		if(this.pathToKml==null)
-			return false;
 		if(this.coordinates.isEmpty())
 			return false;
 		if(this.category==null)
@@ -278,11 +269,4 @@ public class Route extends NamedObject {
 		return distance;
 	}
 
-	public String getPathToKml() {
-		return pathToKml;
-	}
-
-	public void setPathToKml(String pathToKml) {
-		this.pathToKml = pathToKml;
-	}
 }

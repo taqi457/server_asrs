@@ -19,25 +19,18 @@ import javax.persistence.OneToMany;
  * @param <K>
  */
 @Inheritance
-public abstract class NamedObject extends ABasicObject<Long> {
+public abstract class NamedEntity extends BaseEntity<Long> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5313396633041880809L;
 
-	protected List<LocaleName> names;
-	protected List<LocaleDescription> descriptions;
+	protected List<LocaleName> names = new ArrayList<>();
+	protected List<LocaleDescription> descriptions = new ArrayList<>();
 
-	public NamedObject() {
+	public NamedEntity() {
 		super();
-		this.init();
-	}
-	
-	
-	private void init(){
-		this.names=new ArrayList<>(3);
-		this.descriptions=new ArrayList<>(3);
 	}
 
 	/**

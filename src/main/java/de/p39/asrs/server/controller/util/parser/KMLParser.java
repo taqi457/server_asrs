@@ -137,8 +137,7 @@ public class KMLParser {
         List<Site> sites = null;
         Site site = null;
         if (dao != null)
-            //sites = dao.getSiteByName(placemark.getName());
-            ;
+            sites = dao.getSitesByName(placemark.getName());
         if (sites == null || sites.isEmpty()) {
             site = new Site();
             LocaleName ln = new LocaleName();

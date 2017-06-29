@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import de.p39.asrs.server.model.ABasicObject;
+import de.p39.asrs.server.model.BaseEntity;
 
 /**
  * This interface provides signatures for creating, reading, updating and
@@ -23,7 +23,7 @@ public interface CrudFacade {
 	 * @param clazz
 	 * @return the element having this given id and type
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> T find(K id, Class<T> clazz);
+	public <K extends Serializable, T extends BaseEntity<K>> T find(K id, Class<T> clazz);
 
 	/**
 	 * creates a persistent object
@@ -31,14 +31,14 @@ public interface CrudFacade {
 	 * @param o
 	 * @return the newly created object
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> T create(T o);
+	public <K extends Serializable, T extends BaseEntity<K>> T create(T o);
 
 	/**
 	 * deletes an object
 	 * @param id
 	 * @param clazz
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> void delete(K id,  Class<T> clazz);
+	public <K extends Serializable, T extends BaseEntity<K>> void delete(K id,  Class<T> clazz);
 
 	/**
 	 * updates an object
@@ -46,7 +46,7 @@ public interface CrudFacade {
 	 * @param o
 	 * @return the updated object
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> T update(T o);
+	public <K extends Serializable, T extends BaseEntity<K>> T update(T o);
 
 	/**
 	 * tries to find an object, if it is not found it is created
@@ -56,7 +56,7 @@ public interface CrudFacade {
 	 * @return the found object or a newly created object in case it was
 	 *         non-existent
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> T findOrCreate(T object, K key);
+	public <K extends Serializable, T extends BaseEntity<K>> T findOrCreate(T object, K key);
 
 	/**
 	 * finds all elements of a specified type
@@ -64,7 +64,7 @@ public interface CrudFacade {
 	 * @param clazz
 	 * @return a list of all found objects having the specified type
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> List<T> findAll(Class<T> clazz);
+	public <K extends Serializable, T extends BaseEntity<K>> List<T> findAll(Class<T> clazz);
 
 	/**
 	 * updates a collection of objects
@@ -72,7 +72,7 @@ public interface CrudFacade {
 	 * @param objects
 	 * @return a collection of the updated objects
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> Collection<T> updateAll(Collection<T> objects);
+	public <K extends Serializable, T extends BaseEntity<K>> Collection<T> updateAll(Collection<T> objects);
 
 	/**
 	 * deletes a collection of objects
@@ -80,21 +80,21 @@ public interface CrudFacade {
 	 * @param objects
 	 * @param clazz
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> void deleteAll(Collection<K> objects, Class<T> clazz);
+	public <K extends Serializable, T extends BaseEntity<K>> void deleteAll(Collection<K> objects, Class<T> clazz);
 
 	/**
 	 * persists a series of objects
 	 * 
 	 * @param o
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> void createAll(Collection<T> o);
+	public <K extends Serializable, T extends BaseEntity<K>> void createAll(Collection<T> o);
 	
 	/**
 	 * 
 	 * @param clazz
 	 * @return the number of objects with the specified type
 	 */
-	public <K extends Serializable, T extends ABasicObject<K>> int count(Class<T> clazz);
+	public <K extends Serializable, T extends BaseEntity<K>> int count(Class<T> clazz);
 	
 	/*********************************************************************
 	 * below there are more specific methods to access persistent objects

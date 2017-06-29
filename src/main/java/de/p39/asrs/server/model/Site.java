@@ -32,7 +32,7 @@ import de.p39.asrs.server.model.media.Video;
  *
  */
 @Entity
-public class Site extends NamedObject {
+public class Site extends NamedEntity {
 
 	/**
 	 * 
@@ -41,13 +41,13 @@ public class Site extends NamedObject {
 
 	private Coordinate coordinate;
 
-	private Set<Audio> audios;
+	private Set<Audio> audios=new HashSet<>();
 
-	private Set<Video> videos;
+	private Set<Video> videos=new HashSet<>();
 
-	private Set<Text> texts;
+	private Set<Text> texts=new HashSet<>();;
 
-	private Set<Picture> pictures;
+	private Set<Picture> pictures=new HashSet<>();
 
 	private boolean isCompleted;
 
@@ -55,14 +55,6 @@ public class Site extends NamedObject {
 
 	public Site() {
 		super();
-		this.init();
-	}
-
-	private void init() {
-		this.audios = new HashSet<>();
-		this.videos = new HashSet<>();
-		this.pictures = new HashSet<>();
-		this.texts = new HashSet<>();
 	}
 
 	/**
