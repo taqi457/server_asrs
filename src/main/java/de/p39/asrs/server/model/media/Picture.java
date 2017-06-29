@@ -121,13 +121,13 @@ public class Picture extends Medium {
 	}
 
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	public Map<Size,String> getPaths() {
 		return paths;
 	}
 
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	public void setPaths(Map<Size,String> paths) {
 		this.paths = paths;
 	}

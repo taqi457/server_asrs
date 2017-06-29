@@ -114,10 +114,10 @@ public class CategoryInputController {
 
 
 
-	@ExceptionHandler(StorageException.class)
+	/*@ExceptionHandler(StorageException.class)
 	public ResponseEntity<Object> handleStorageFileNotFound(StorageException exc) {
 		return ResponseEntity.notFound().build();
-	}
+	}*/
 
 
 

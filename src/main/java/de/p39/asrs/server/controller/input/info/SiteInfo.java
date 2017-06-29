@@ -7,6 +7,7 @@ public class SiteInfo {
 	
 	private Double latitude;
 	private Double longitude;
+	private String website;
 	
 	private String nameDE;
 	private String nameFR;
@@ -77,6 +78,16 @@ public class SiteInfo {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+	
+	
 	/*public MultipartFile[] getAudios(){return audios;};
 	public void setAudios(MultipartFile[] audios){this.audios = audios; }
 	public MultipartFile[] getPictures(){return pictures;};
