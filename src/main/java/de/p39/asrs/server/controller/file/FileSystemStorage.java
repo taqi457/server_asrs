@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import de.p39.asrs.server.controller.ApplicationConstants;
 import de.p39.asrs.server.controller.exceptions.StorageException;
 
 /**
@@ -33,9 +32,9 @@ public class FileSystemStorage implements Storage {
 
 	public FileSystemStorage() {
 		this.rootLocations = new HashMap<>();
-		this.rootLocations.put(FileType.AUDIO, Paths.get(ApplicationConstants.PATH_TO_AUDIOS));
-		this.rootLocations.put(FileType.KML, Paths.get(ApplicationConstants.PATH_TO_KLMS));
-		this.rootLocations.put(FileType.PICTURE, Paths.get(ApplicationConstants.PATH_TO_PICTURES));
+		this.rootLocations.put(FileType.AUDIO, Paths.get("~/server-asrs/resources/media/audio"));
+		this.rootLocations.put(FileType.KML, Paths.get("~/server-asrs/resources/kml"));
+		this.rootLocations.put(FileType.PICTURE, Paths.get("~/server-asrs/resources/media/pictures"));
 	}
 
 	@Override
