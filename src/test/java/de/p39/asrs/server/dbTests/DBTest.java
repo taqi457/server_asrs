@@ -16,8 +16,6 @@ import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.JPACrudService;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
-import de.p39.asrs.server.controller.db.dao.impl.RouteDAOImpl;
-import de.p39.asrs.server.controller.db.dao.impl.SiteDAOImpl;
 import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.LocaleDescription;
@@ -48,7 +46,7 @@ public class DBTest {
 	@Ignore
 	public void routeCreationThenFindingTest(){
 		CrudFacade cf = new JPACrudService("server");
-		RouteDAO dao= new RouteDAOImpl(cf);
+		RouteDAO dao= new RouteDAO(cf);
 		Route r = this.createDummyData();
 		dao.instertRoute(r);
 		List<Route> routes = dao.getAllRoutes();
@@ -75,8 +73,8 @@ public class DBTest {
 	@Ignore
 	public void routeCreationThenFindingThenUpdateingTest(){
 		CrudFacade cf = new JPACrudService("server");
-		RouteDAO dao= new RouteDAOImpl(cf);
-		SiteDAO doa = new SiteDAOImpl(cf);
+		RouteDAO dao= new RouteDAO(cf);
+		SiteDAO doa = new SiteDAO(cf);
 		Route r = this.createDummyData();
 		dao.instertRoute(r);
 		List<Site> sites = doa.getSitesByName("test_german");

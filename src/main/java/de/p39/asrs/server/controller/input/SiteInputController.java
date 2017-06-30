@@ -169,6 +169,9 @@ public class SiteInputController {
 		if (info.getCategory() != null) {
 			s.setCategory(categoryDAO.getCategoryById(info.getCategory()));
 		}
+		if(info.getWebsite()!=null){
+			s.addMetaData("website", info.getWebsite());
+		}
 		s.setDescriptions(descriptions);
 		s.setNames(names);
 		return s;

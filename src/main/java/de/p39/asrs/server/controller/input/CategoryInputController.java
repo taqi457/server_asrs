@@ -1,32 +1,17 @@
 package de.p39.asrs.server.controller.input;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.input.info.*;
 import de.p39.asrs.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import de.p39.asrs.server.controller.db.dao.MediumDAO;
-import de.p39.asrs.server.controller.db.dao.SiteDAO;
+import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.exceptions.StorageException;
-import de.p39.asrs.server.controller.file.FileSystemStorage;
-import de.p39.asrs.server.controller.file.FileType;
-import de.p39.asrs.server.model.media.Audio;
-import de.p39.asrs.server.model.media.Medium;
-import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Video;
 /**
  *
  * @author adrianrebmann
@@ -45,8 +30,9 @@ public class CategoryInputController {
 	}
 
 	@PostMapping("/newcategory")
-	public String handleCategoryInfo(@ModelAttribute CategoryInfo info, Model model) {
+	public String handleCategoryInfo(@ModelAttribute CategoryInfo info, Model model, @RequestParam("type") String type) {
 		this.create(info);
+		addType(type);
 		Category new_Category = categoryDAO.insertCategory(category);
 		model.addAttribute("allCategorys", categoryDAO.getAllCategories());
 		return "redirect:categoryedit/" + new_Category.getId();
@@ -55,21 +41,39 @@ public class CategoryInputController {
 	public String handleSiteEdit(@ModelAttribute CategoryInfo info, Model model, @RequestParam("id")
 										 Long id, @RequestParam("type") String type){
 		this.edit(info,id);
+		addType(type);
 		categoryDAO.updateCategory(category);
 		category.setType(CategoryType.SITE);
 		model.addAttribute("category", categoryDAO.getCategoryById(id));
 		return "redirect:categoryedit/" + id;
 	}
 
+	private void addType(String type){
+		if (type != null) {
+			switch (type) {
+				case "route":
+					category.setType(CategoryType.ROUTE);
+					break;
+				case "site":
+					category.setType(CategoryType.SITE);
+					break;
+				default:
+					break;
+			}
+		}
+	}
 	private void create(CategoryInfo info) {
 		this.category=new Category();
 		this.addInfo(category, info);
+
 
 	}
 
 	private void edit(CategoryInfo info, Long id) {
 		category = categoryDAO.getCategoryById(id);
 		this.addInfo(category, info);
+
+
 	}
 
 
@@ -102,9 +106,7 @@ public class CategoryInputController {
 			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
 			descriptions.add(description);
 		}
-		if (info.getType() != null) {
-			category.setType(info.getType());
-		}
+
 		c.setDescriptions(descriptions);
 		c.setNames(names);
 		return c;
@@ -112,10 +114,10 @@ public class CategoryInputController {
 
 
 
-	@ExceptionHandler(StorageException.class)
+	/*@ExceptionHandler(StorageException.class)
 	public ResponseEntity<Object> handleStorageFileNotFound(StorageException exc) {
 		return ResponseEntity.notFound().build();
-	}
+	}*/
 
 
 

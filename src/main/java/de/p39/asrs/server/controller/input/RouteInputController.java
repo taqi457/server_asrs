@@ -7,6 +7,7 @@ import java.util.Locale;
 import javax.xml.bind.JAXBException;
 
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
+import de.p39.asrs.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.core.io.Resource;
@@ -31,11 +32,6 @@ import de.p39.asrs.server.controller.file.FileType;
 import de.p39.asrs.server.controller.file.Storage;
 import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.util.parser.KMLParser;
-import de.p39.asrs.server.model.Category;
-import de.p39.asrs.server.model.LocaleDescription;
-import de.p39.asrs.server.model.LocaleName;
-import de.p39.asrs.server.model.Route;
-import de.p39.asrs.server.model.Site;
 
 /**
  * 
@@ -78,13 +74,17 @@ public class RouteInputController {
 
 	@PostMapping("/routeinfo")
 	public String handleRouteInfo(@ModelAttribute RouteInfo info) {
-		this.create(info);
-		return "redirect:editroute/" + route.getId();
+		Long id = this.create(info);
+		if (id != 0)
+		return "redirect:editroute/" + id;
+		else
+			return "redirect:routeoverview";
 	}
 
 	@PostMapping("/editroute")
 	public String editRoute(@ModelAttribute RouteInfo info, @RequestParam("id") Long id, @RequestParam("category") Long category) {
 		this.edit(info, id, category);
+
 		return "redirect:editroute/" + id;
 	}
 
@@ -103,7 +103,7 @@ public class RouteInputController {
 		}
 	}
 
-	private void create(RouteInfo info) {
+	private long create(RouteInfo info) {
 		if (route != null) {
 			/*List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
 			if (!exists.isEmpty()) {
@@ -112,9 +112,11 @@ public class RouteInputController {
 			}*/
 			this.addInfo(route, info);
 			Route new_route = this.dao.instertRoute(route);
-			route.setId(new_route.getId());
 			route = null;
+			return new_route.getId();
+
 		}
+		return 0;
 	}
 
 	@PostMapping("/kml")
@@ -133,7 +135,7 @@ public class RouteInputController {
 		// "Route successfully created with " + file.getOriginalFilename() +
 		// "!");
 		model.addAttribute("RouteInfo", new RouteInfo());
-		model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType("route"));
+		model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType(CategoryType.ROUTE));
 
 		return "/routeform";
 	}

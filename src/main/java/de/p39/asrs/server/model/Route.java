@@ -37,11 +37,9 @@ public class Route extends NamedEntity {
 
 	private List<Coordinate> coordinates = new LinkedList<>();
 	private Set<Site> sites = new HashSet<>();
-	/**
-	 * in ms
-	 */
 	private Long durationByFoot;
 	private Long durationByBike;
+	private Long distanceInMeters;
 
 	private Category category;
 	private Double amplitude;
@@ -267,6 +265,14 @@ public class Route extends NamedEntity {
 			distance = Double.min(c.getDistance(coord), distance);
 		}
 		return distance;
+	}
+
+	public Long getDistanceInMeters() {
+		return distanceInMeters;
+	}
+
+	public void setDistanceInMeters(Long distanceInMeters) {
+		this.distanceInMeters = distanceInMeters;
 	}
 
 }

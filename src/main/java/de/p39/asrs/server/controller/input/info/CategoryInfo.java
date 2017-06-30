@@ -11,8 +11,6 @@ public class CategoryInfo {
 	private String descriptionFR;
 	private String descriptionEN;
 
-	private CategoryType type;
-
 	public String getNameDE() {
 		return nameDE;
 	}
@@ -61,11 +59,5 @@ public class CategoryInfo {
 		this.descriptionEN = descriptionEN;
 	}
 
-	public CategoryType getType() {
-		return type;
-	}
 
-	public void setType(CategoryType type) {
-		this.type = type;
-	}
 }

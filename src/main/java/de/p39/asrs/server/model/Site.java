@@ -1,11 +1,14 @@
 package de.p39.asrs.server.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -49,6 +52,8 @@ public class Site extends NamedEntity {
 	private boolean isCompleted;
 
 	private Category category;
+	
+	private Map<String, String> meta = new HashMap<>();
 
 	public Site() {
 		super();
@@ -303,4 +308,30 @@ public class Site extends NamedEntity {
 	public Double calculateDist(Coordinate coord) {
 		return coordinate.getDistance(coord);
 	}
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	public Map<String, String> getMeta() {
+		return meta;
+	}
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	public void setMeta(Map<String, String> meta) {
+		this.meta = meta;
+	}
+	
+	public void addMetaData(String title, String content){
+		this.meta.put(title, content);
+	}
+	
+	public String getMetaData(String title){
+		if(this.meta.get(title)==null)
+			return "";
+		else return this.meta.get(title);
+	}
+	
+	public void removeMeta(String title){
+		this.meta.remove(title);
+	}
+	
+	
 }
