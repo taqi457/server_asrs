@@ -27,7 +27,7 @@ public class MediaController {
 	private MediumDAO dao;
 	
 	@RequestMapping(value = "/img/example", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public byte[] imageID() {
+	public byte[] imageExample() {
 	    Path path = Paths.get("media/images/example.jpg");
 	    try {
 			return Files.readAllBytes(path);
@@ -63,7 +63,7 @@ public class MediaController {
 	}
 
 	@RequestMapping(value = "/audio", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public byte[] testaudio() {
+	public byte[] audioExample() {
 		Path path = Paths.get("media/audio/example.mp3");
 	    try {
 			return Files.readAllBytes(path);
@@ -75,7 +75,7 @@ public class MediaController {
 	}
 	
 	@RequestMapping(value = "/video", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public byte[] testvideo() {
+	public byte[] videoExample() {
 		Path path = Paths.get("media/video/example.mp4");
 	    try {
 			return Files.readAllBytes(path);
