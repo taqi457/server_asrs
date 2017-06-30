@@ -83,9 +83,9 @@ public class KMLParserTest {
 		assertTrue(sites.contains(site));
 
 		//distance
-        assertEquals(30656,r.getDistanceInMeters());
-        assertEquals(123,r.getDurationByBike());
-        assertEquals(368,r.getDurationByFoot());
+        assertEquals(30656,(int)r.getDistanceInMeters());
+        assertEquals(123,(int)r.getDurationByBike());
+        assertEquals(368,(int)r.getDurationByFoot());
 	}
 
 }
