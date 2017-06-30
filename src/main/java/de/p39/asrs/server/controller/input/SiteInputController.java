@@ -75,10 +75,9 @@ public class SiteInputController {
 
 	@PostMapping("/newsite")
 	public String handleSiteInfo(@ModelAttribute SiteInfo info, @RequestParam("audios") MultipartFile[] audios,
-								 @RequestParam("pictures") MultipartFile[] pictures, Model model) {
+								 @RequestParam("pictures") MultipartFile[] pictures) {
 		this.create(info, audios, pictures);
 		Site new_site = sitedao.insertSite(site);
-		model.addAttribute("allSites", sitedao.getAllSites());
 		return "redirect:siteedit/" + new_site.getId();
 	}
 	@PostMapping("editsite")
