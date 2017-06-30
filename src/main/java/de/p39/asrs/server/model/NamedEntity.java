@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.OneToMany;
 
+import de.p39.asrs.server.model.media.Audio;
+
 /**
  * 
  * @author adrianrebmann
@@ -28,6 +30,7 @@ public abstract class NamedEntity extends BaseEntity<Long> {
 
 	protected List<LocaleName> names = new ArrayList<>();
 	protected List<LocaleDescription> descriptions = new ArrayList<>();
+	protected List<LocaleAudio> audios = new ArrayList<>();
 
 	public NamedEntity() {
 		super();
@@ -67,26 +70,56 @@ public abstract class NamedEntity extends BaseEntity<Long> {
 		this.descriptions = descriptions;
 	}
 	
+	@OneToMany(targetEntity = LocaleDescription.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public List<LocaleAudio> getAudios() {
+		return audios;
+	}
+	@OneToMany(targetEntity = LocaleDescription.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public void setAudios(List<LocaleAudio> audios) {
+		this.audios = audios;
+	}
+
 	public void addLocaleName(LocaleName l){
 		for(LocaleName name : this.getNames()) {
 			if (l.getLocale().equals(name.getLocale())) {
-
 				this.names.remove(name);
 			}
 		}
 		this.names.add(l);
 	}
 	
+	public void addLocaleAudio(LocaleAudio a){
+		for(LocaleAudio audio : this.getAudios()) {
+			if (a.getLocale().equals(audio.getLocale())) {
+				this.names.remove(audio);
+			}
+		}
+		this.audios.add(a);
+	}
+	
 	public void addLocaleDescription(LocaleDescription l){
+		for(LocaleDescription description : this.getDescriptions()) {
+			if (l.getLocale().equals(description.getLocale())) {
+				this.names.remove(description);
+			}
+		}
 		this.descriptions.add(l);
 	}
 	
 	public void removeLocaleName(LocaleName l){
-		this.names.remove(l);
+		if(this.names.contains(l))
+			this.names.remove(l);
 	}
 	
 	public void removeLocaleDescription(LocaleName l){
-		this.descriptions.remove(l);
+		if(this.descriptions.contains(l))
+			this.descriptions.remove(l);
+	}
+	
+	public void removeLocaleAudio(LocaleAudio a){
+		if(this.audios.contains(a)){
+			this.audios.remove(a);
+		}
 	}
 	
 	public String getNameByLocale(Locale l){
@@ -101,6 +134,14 @@ public abstract class NamedEntity extends BaseEntity<Long> {
 		for(LocaleDescription description : this.descriptions){
 			if(description.getLocale().equals(l))
 				return description.getString();
+		}
+		return null;
+	}
+	
+	public Audio getAudioByLocale(Locale l){
+		for(LocaleAudio audio : this.audios){
+			if(audio.getLocale().equals(l))
+				return audio.getAudio();
 		}
 		return null;
 	}

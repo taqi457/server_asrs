@@ -18,13 +18,14 @@ import org.hibernate.annotations.FetchMode;
 
 import de.p39.asrs.server.model.LocaleDescription;
 import de.p39.asrs.server.model.LocaleName;
+import de.p39.asrs.server.model.NamedEntity;
 /**
  * 
  * @author adrianrebmann
  *
  */
 @Entity
-public class Audio extends Medium {
+public class Audio extends NamedEntity {
 
 	/**
 	 * 

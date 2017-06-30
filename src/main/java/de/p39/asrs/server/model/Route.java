@@ -168,6 +168,17 @@ public class Route extends NamedEntity {
 	public void setDescriptions(List<LocaleDescription> descriptions) {
 		this.descriptions = descriptions;
 	}
+	
+	@OneToMany(targetEntity = LocaleAudio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public List<LocaleAudio> getAudios() {
+		return audios;
+	}
+	@OneToMany(targetEntity = LocaleAudio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public void setAudios(List<LocaleAudio> audios) {
+		this.audios = audios;
+	}
 
 	public Integer getDurationByFoot() {
 		return durationByFoot;

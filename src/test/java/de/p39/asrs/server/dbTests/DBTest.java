@@ -24,7 +24,6 @@ import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Video;
 
 /**
  * this pollutes your database if you don't change update to create in persistence.xml
@@ -56,7 +55,6 @@ public class DBTest {
 		for(Site s : r.getSites()){
 			assertTrue(s.getAudios().size()==1);
 			assertTrue(s.getPictures().size()==1);
-			assertTrue(s.getVideos().size()==1);
 		}
 	}
 	
@@ -90,7 +88,6 @@ public class DBTest {
 	
 	private Route createDummyData(){
 		Audio a1 = new Audio();
-		Video v1 = new Video();
 		Picture p1 = new Picture();
 		
 		Category c1 = new Category();
@@ -101,12 +98,8 @@ public class DBTest {
 		Site s1 = new Site();
 		s1.setCategory(c1);
 		s1.setCoordinate(co1);
-		s1.addMedium(a1);
-		s1.addMedium(v1);
-		s1.addMedium(p1);
 		
 		Audio a2 = new Audio();
-		Video v2 = new Video( );
 		Picture p2 = new Picture();
 		
 		Category c2 = new Category();
@@ -117,9 +110,6 @@ public class DBTest {
 		Site s2 = new Site();
 		s2.setCategory(c2);
 		s2.setCoordinate(co2);
-		s2.addMedium(a2);
-		s2.addMedium(v2);
-		s2.addMedium(p2);
 		LocaleName n1 = new LocaleName(Locale.GERMAN, "test_german");
 		LocaleName n2 = new LocaleName(Locale.FRENCH, "test_french");
 		LocaleName n3 = new LocaleName(Locale.ENGLISH, "test_english");

@@ -25,7 +25,6 @@ import de.p39.asrs.server.controller.input.info.SiteInfo;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Picture;
 import de.p39.asrs.server.model.media.Size;
-import de.p39.asrs.server.model.media.Video;
 /**
  * 
  * @author adrianrebmann
@@ -35,9 +34,8 @@ import de.p39.asrs.server.model.media.Video;
 public class SiteInputController {
 	
 	
-	private List<Picture> selectedPictures= new ArrayList<>();;
-	private List<Audio> selectedAudios = new ArrayList<>();;
-	private List<Video> selectedVideos= new ArrayList<>();;
+	private List<Picture> selectedPictures= new ArrayList<>();
+	private List<Audio> selectedAudios = new ArrayList<>();
 	private Site site;
 	private CategoryDAO categoryDAO;
 	
@@ -114,8 +112,8 @@ public class SiteInputController {
 			ArrayList<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, a.getOriginalFilename()));
 			audio.setNames(names);
-			mediadao.insertAudio(audio);
-			site.addMedium(audio);
+			//mediadao.insertAudio(audio);
+			site.addLocaleAudio(new LocaleAudio(Locale.GERMAN,audio));
 		}
 		for(MultipartFile p : pictures){
 			if (p.isEmpty())
@@ -127,8 +125,8 @@ public class SiteInputController {
 			ArrayList<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
 			picture.setNames(names);
-			mediadao.insertPicture(picture);
-			site.addMedium(picture);
+			//mediadao.insertPicture(picture);
+			site.addPicture(picture);
 		}
 	}
 	

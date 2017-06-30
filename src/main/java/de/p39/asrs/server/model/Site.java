@@ -1,12 +1,10 @@
 package de.p39.asrs.server.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -23,10 +21,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import de.p39.asrs.server.model.media.Audio;
-import de.p39.asrs.server.model.media.Medium;
 import de.p39.asrs.server.model.media.Picture;
-import de.p39.asrs.server.model.media.Video;
 
 /**
  * 
@@ -43,11 +38,7 @@ public class Site extends NamedEntity {
 
 	private Coordinate coordinate;
 
-	private Set<Audio> audios=new HashSet<>();
-
-	private Set<Video> videos=new HashSet<>();
-
-	private Set<Picture> pictures=new HashSet<>();
+	private List<Picture> pictures=new ArrayList<>();
 
 	private boolean isCompleted;
 
@@ -77,44 +68,10 @@ public class Site extends NamedEntity {
 	}
 
 	/**
-	 * @return the audios
-	 */
-	@OneToMany(targetEntity = Audio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public Set<Audio> getAudios() {
-		return audios;
-	}
-
-	/**
-	 * @param audios
-	 *            the audios to set
-	 */
-	@OneToMany(targetEntity = Audio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public void setAudios(Set<Audio> audios) {
-		this.audios = audios;
-	}
-
-	/**
-	 * @return the videos
-	 */
-	@OneToMany(targetEntity = Video.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public Set<Video> getVideos() {
-		return videos;
-	}
-
-	/**
-	 * @param videos
-	 *            the videos to set
-	 */
-	@OneToMany(targetEntity = Video.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public void setVideos(Set<Video> videos) {
-		this.videos = videos;
-	}
-
-	/**
 	 * @return the pictures
 	 */
 	@OneToMany(targetEntity = Picture.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public Set<Picture> getPictures() {
+	public List<Picture> getPictures() {
 		return pictures;
 	}
 
@@ -123,7 +80,7 @@ public class Site extends NamedEntity {
 	 *            the pictures to set
 	 */
 	@OneToMany(targetEntity = Picture.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public void setPictures(Set<Picture> pictures) {
+	public void setPictures(List<Picture> pictures) {
 		this.pictures = pictures;
 	}
 
@@ -210,6 +167,17 @@ public class Site extends NamedEntity {
 	public void setDescriptions(List<LocaleDescription> descriptions) {
 		this.descriptions = descriptions;
 	}
+	
+	@OneToMany(targetEntity = LocaleAudio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public List<LocaleAudio> getAudios() {
+		return audios;
+	}
+	@OneToMany(targetEntity = LocaleAudio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public void setAudios(List<LocaleAudio> audios) {
+		this.audios = audios;
+	}
 
 	/**
 	 * a site is completed if it has the names and descriptions in all the
@@ -237,9 +205,9 @@ public class Site extends NamedEntity {
 			return false;
 		if (this.coordinate == null)
 			return false;
-		if (this.audios.isEmpty() && this.videos.isEmpty() && this.pictures.isEmpty())
-			return true;
-		return false;
+		if (this.pictures.isEmpty())
+			return false;
+		return true;
 	}
 
 	public boolean isCompleted() {
@@ -251,28 +219,6 @@ public class Site extends NamedEntity {
 		this.isCompleted = isCompleted;
 	}
 
-	/**
-	 * add and remove methods
-	 */
-	public void addMedium(Medium m) {
-		if (m instanceof Audio) {
-			this.audios.add((Audio) m);
-		} else if (m instanceof Video) {
-			this.videos.add((Video) m);
-		} else if (m instanceof Picture) {
-			this.pictures.add((Picture) m);
-		}
-	}
-
-	public void removeMedium(Medium m) {
-		if (m instanceof Audio) {
-			this.audios.remove((Audio) m);
-		} else if (m instanceof Video) {
-			this.videos.remove((Video) m);
-		} else if (m instanceof Picture) {
-			this.pictures.remove((Picture) m);
-		}
-	}
 
 	@Override
 	public int hashCode() {
@@ -331,6 +277,10 @@ public class Site extends NamedEntity {
 	
 	public void removeMeta(String title){
 		this.meta.remove(title);
+	}
+
+	public void addPicture(Picture picture) {
+		this.pictures.add(picture);
 	}
 	
 	
