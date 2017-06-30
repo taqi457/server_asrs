@@ -29,7 +29,7 @@ public class KMLParserTest {
 		}
 		
 		assertNotNull("Returned route was null",r);
-		//assertEquals("Auf den Spuren der Römer: Radtour Saarbrücken",r.getNameDE());
+		assertEquals("Auf den Spuren der Römer: Radtour Saarbrücken",r.getNameByLocale(Locale.GERMAN));
 		
 		//check first and last koordinate
 		List<Coordinate> coordList = r.getCoordinates();
@@ -81,6 +81,11 @@ public class KMLParserTest {
 		site.addLocaleName(ln);
 		site.setCoordinate(new Coordinate(49.2225203,7.0283524));
 		assertTrue(sites.contains(site));
+
+		//distance
+        assertEquals(30656,r.getDistanceInMeters());
+        assertEquals(123,r.getDurationByBike());
+        assertEquals(368,r.getDurationByFoot());
 	}
 
 }
