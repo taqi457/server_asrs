@@ -112,7 +112,7 @@ public class SiteInputController {
 			ArrayList<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, a.getOriginalFilename()));
 			audio.setNames(names);
-			mediadao.insertAudio(audio);
+			//mediadao.insertAudio(audio);
 			site.addLocaleAudio(new LocaleAudio(Locale.GERMAN,audio));
 		}
 		for(MultipartFile p : pictures){
@@ -125,7 +125,7 @@ public class SiteInputController {
 			ArrayList<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
 			picture.setNames(names);
-			mediadao.insertPicture(picture);
+			//mediadao.insertPicture(picture);
 			site.addPicture(picture);
 		}
 	}
