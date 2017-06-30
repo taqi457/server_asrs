@@ -34,6 +34,8 @@ import net.opengis.kml._2.PointType;
 public class KMLParser {
 
     private static final String errorMsg = "Error in Kml content: ";
+    private static final float speedByFoot = 83.3333333f; // in meters per minute (= 5 km/h)
+    private static final float speedByBike = 250.0f; // in meters per minute (= 15 km/h)
 
     private Unmarshaller unmarshaller;
     private SiteDAO dao;
@@ -77,6 +79,10 @@ public class KMLParser {
             throw new JAXBException(errorMsg + "Missing features in document");
 
         parseFolder((FolderType) features.get(0).getValue(), route);
+
+        //calculate other data from coords
+        calculateLength(route);
+        calculateDurations(route);
     }
 
     private DocumentType openDocument(String path) throws JAXBException {
@@ -190,5 +196,22 @@ public class KMLParser {
             throw new JAXBException(errorMsg + e.getMessage());
         }
         result.addCoordinate(new Coordinate(lat, lon));
+    }
+
+    private void calculateLength(Route r){
+        double length = 0.0;
+        List<Coordinate> coordinates = r.getCoordinates();
+        for(int i = 0; i < coordinates.size()-1; i++) {
+            length += coordinates.get(i).getDistance(coordinates.get(i + 1));
+        }
+
+        r.setDistanceInMeters((int)Math.ceil(length));
+    }
+
+    private void calculateDurations(Route r){
+        int length = r.getDistanceInMeters();
+
+        r.setDurationByFoot((int)Math.ceil(length/speedByFoot));
+        r.setDurationByBike((int)Math.ceil(length/speedByBike));
     }
 }

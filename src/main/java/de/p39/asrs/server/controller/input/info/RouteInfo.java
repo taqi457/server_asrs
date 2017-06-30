@@ -12,8 +12,8 @@ public class RouteInfo {
 	private String descriptionFR;
 	private String descriptionEN;
 	
-	private Long durationByFoot;
-	private Long durationByBike;
+	private Integer durationByFoot;
+	private Integer durationByBike;
 	private Double amplitude;
 
 	private Long category;
@@ -62,19 +62,19 @@ public class RouteInfo {
 	public void setDescriptionEN(String descriptionEN) {
 		this.descriptionEN = descriptionEN;
 	}
-	public Long getDurationByFoot() {
+	public Integer getDurationByFoot() {
 		return durationByFoot;
 	}
-	public void setDurationByFoot(Long durationByFoot) {
+	public void setDurationByFoot(int durationByFoot) {
 		this.durationByFoot = durationByFoot;
 	}
-	public Long getDurationByBike() {
+	public Integer getDurationByBike() {
 		return durationByBike;
 	}
-	public void setDurationByBike(Long durationByBike) {
+	public void setDurationByBike(int durationByBike) {
 		this.durationByBike = durationByBike;
 	}
-	public Double getAmplitude() {
+	public double getAmplitude() {
 		return amplitude;
 	}
 	public void setAmplitude(Double amplitude) {
