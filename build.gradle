@@ -1,9 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
     }
 }
 
@@ -11,10 +13,12 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 jar {
-    baseName = 'asrs-server-aplication'
+    baseName = 'asrs-server-application'
     version =  '0.1.0'
+    manifest { attributes 'Main-Class': 'de.p39.asrs.server.controller.Application' }
 }
 
 springBoot {
@@ -37,7 +41,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile ('org.apache.tomcat.embed:tomcat-embed-jasper')
-    
+
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4'
     compile 'org.webjars:bootstrap:3.3.7'
 
@@ -45,4 +49,3 @@ dependencies {
     runtime('mysql:mysql-connector-java')
     testCompile('com.jayway.jsonpath:json-path')
 }
-
