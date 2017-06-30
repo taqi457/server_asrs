@@ -40,6 +40,7 @@ public class Route extends NamedEntity {
 	private Long durationByFoot;
 	private Long durationByBike;
 	private Long distanceInMeters;
+	private String path;
 
 	private Category category;
 	private Double amplitude;
@@ -274,5 +275,15 @@ public class Route extends NamedEntity {
 	public void setDistanceInMeters(Long distanceInMeters) {
 		this.distanceInMeters = distanceInMeters;
 	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	
 
 }

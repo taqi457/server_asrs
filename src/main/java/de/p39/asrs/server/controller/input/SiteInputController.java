@@ -172,6 +172,18 @@ public class SiteInputController {
 		if(info.getWebsite()!=null){
 			s.addMetaData("website", info.getWebsite());
 		}
+		if(info.getStreet()!=null){
+			s.addMetaData("street", info.getStreet());
+		}
+		if(info.getZip()!=null){
+			s.addMetaData("zip", info.getZip());
+		}
+		if(info.getCity()!=null){
+			s.addMetaData("city", info.getCity());
+		}
+		if(info.getCountry()!=null){
+			s.addMetaData("country", info.getCountry());
+		}
 		s.setDescriptions(descriptions);
 		s.setNames(names);
 		return s;

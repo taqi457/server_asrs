@@ -60,6 +60,9 @@ public class RouteEditController {
 
 	@GetMapping("/deleteroute/{id}")
 	public String handleRouteDelete(@PathVariable("id") Long id){
+		Route r = dao.getRouteById(id);
+		String path = r.getPath();
+		this.storageService.delete(path);
 		dao.deleteRoute(id);
 		return "redirect:/routeoverview";
 	}

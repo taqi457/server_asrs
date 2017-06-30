@@ -22,4 +22,6 @@ public interface Storage {
     void deleteAll(FileType t);
     
     void delete(FileType t, String filename);
+    
+    public void delete(String path);
 }

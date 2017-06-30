@@ -131,6 +131,7 @@ public class RouteInputController {
 			e.printStackTrace();
 		}
 		this.route = r;
+		r.setPath(path);
 		// redirectAttributes.addFlashAttribute("message",
 		// "Route successfully created with " + file.getOriginalFilename() +
 		// "!");
