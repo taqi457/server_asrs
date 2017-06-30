@@ -75,10 +75,9 @@ public class SiteInputController {
 
 	@PostMapping("/newsite")
 	public String handleSiteInfo(@ModelAttribute SiteInfo info, @RequestParam("audios") MultipartFile[] audios,
-								 @RequestParam("pictures") MultipartFile[] pictures, Model model) {
+								 @RequestParam("pictures") MultipartFile[] pictures) {
 		this.create(info, audios, pictures);
 		Site new_site = sitedao.insertSite(site);
-		model.addAttribute("allSites", sitedao.getAllSites());
 		return "redirect:siteedit/" + new_site.getId();
 	}
 	@PostMapping("editsite")
@@ -171,6 +170,18 @@ public class SiteInputController {
 		}
 		if(info.getWebsite()!=null){
 			s.addMetaData("website", info.getWebsite());
+		}
+		if(info.getStreet()!=null){
+			s.addMetaData("street", info.getStreet());
+		}
+		if(info.getZip()!=null){
+			s.addMetaData("zip", info.getZip());
+		}
+		if(info.getCity()!=null){
+			s.addMetaData("city", info.getCity());
+		}
+		if(info.getCountry()!=null){
+			s.addMetaData("country", info.getCountry());
 		}
 		s.setDescriptions(descriptions);
 		s.setNames(names);

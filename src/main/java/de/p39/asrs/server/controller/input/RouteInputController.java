@@ -131,6 +131,7 @@ public class RouteInputController {
 			e.printStackTrace();
 		}
 		this.route = r;
+		r.setPath(path);
 		// redirectAttributes.addFlashAttribute("message",
 		// "Route successfully created with " + file.getOriginalFilename() +
 		// "!");
@@ -151,28 +152,28 @@ public class RouteInputController {
 
 		if (info.getNameDE() != null) {
 			LocaleName name = new LocaleName(Locale.GERMAN, info.getNameDE());
-			names.add(name);
+			names.set(0, name);
 		}
 		if (info.getDescriptionEN() != null) {
 			LocaleName name = new LocaleName(Locale.ENGLISH, info.getNameEN());
-			names.add(name);
+			names.set(2, name);
 
 		}
 		if (info.getNameFR() != null) {
 			LocaleName name = new LocaleName(Locale.FRENCH, info.getNameFR());
-			names.add(name);
+			names.set(1, name);
 		}
 		if (info.getDescriptionDE() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.GERMAN, info.getDescriptionDE());
-			descriptions.add(description);
+			descriptions.set(0, description);
 		}
 		if (info.getDescriptionEN() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.ENGLISH, info.getDescriptionEN());
-			descriptions.add(description);
+			descriptions.set(2, description);
 		}
 		if (info.getDescriptionFR() != null) {
 			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
-			descriptions.add(description);
+			descriptions.set(1, description);
 		}
 		if (info.getDurationByFoot() != null) {
 			r.setDurationByFoot(info.getDurationByFoot());

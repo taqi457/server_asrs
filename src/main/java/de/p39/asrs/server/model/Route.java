@@ -37,9 +37,10 @@ public class Route extends NamedEntity {
 
 	private List<Coordinate> coordinates = new LinkedList<>();
 	private Set<Site> sites = new HashSet<>();
-	private int durationByFoot;
-	private int durationByBike;
-	private int distanceInMeters;
+	private String path;
+	private Integer durationByFoot;
+	private Integer durationByBike;
+	private Integer distanceInMeters;
 
 	private Category category;
 	private double amplitude;
@@ -168,19 +169,19 @@ public class Route extends NamedEntity {
 		this.descriptions = descriptions;
 	}
 
-	public int getDurationByFoot() {
+	public Integer getDurationByFoot() {
 		return durationByFoot;
 	}
 
-	public void setDurationByFoot(int durationByFoot) {
+	public void setDurationByFoot(Integer durationByFoot) {
 		this.durationByFoot = durationByFoot;
 	}
 
-	public int getDurationByBike() {
+	public Integer getDurationByBike() {
 		return durationByBike;
 	}
 
-	public void setDurationByBike(int durationByBike) {
+	public void setDurationByBike(Integer durationByBike) {
 		this.durationByBike = durationByBike;
 	}
 
@@ -267,12 +268,22 @@ public class Route extends NamedEntity {
 		return distance;
 	}
 
-	public int getDistanceInMeters() {
+	public Integer getDistanceInMeters() {
 		return distanceInMeters;
 	}
 
-	public void setDistanceInMeters(int distanceInMeters) {
+	public void setDistanceInMeters(Integer distanceInMeters) {
 		this.distanceInMeters = distanceInMeters;
 	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	
 
 }
