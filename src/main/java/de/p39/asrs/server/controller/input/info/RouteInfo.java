@@ -1,7 +1,5 @@
 package de.p39.asrs.server.controller.input.info;
 
-import de.p39.asrs.server.model.Category;
-
 public class RouteInfo {
 	
 	private String nameDE;

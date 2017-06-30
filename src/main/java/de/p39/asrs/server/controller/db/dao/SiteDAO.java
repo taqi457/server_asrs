@@ -3,13 +3,11 @@ package de.p39.asrs.server.controller.db.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Site;
-import de.p39.asrs.server.model.media.Medium;
+import de.p39.asrs.server.model.media.Picture;
 
 public class SiteDAO{
 
@@ -56,8 +54,8 @@ public class SiteDAO{
 		return result;
 	}
 
-	public void addMedium(Site s, Medium m) {
-		s.addMedium(m);
+	public void addMedium(Site s, Picture m) {
+		s.addPicture(m);
 	}
 
 	public void setCoordinate(Site s, Coordinate c) {

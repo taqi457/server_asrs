@@ -5,15 +5,12 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>de.p39.asrs.server.model.media.Audio</class>
 		<class>de.p39.asrs.server.model.media.Picture</class>
-		<class>de.p39.asrs.server.model.media.Video</class>
-		<class>de.p39.asrs.server.model.media.Picture</class>
 		<class>de.p39.asrs.server.model.Route</class>
 		<class>de.p39.asrs.server.model.LocaleName</class>
 		<class>de.p39.asrs.server.model.LocaleDescription</class>
+		<class>de.p39.asrs.server.model.LocaleAudio</class>
 		<class>de.p39.asrs.server.model.Site</class>
-		<class>de.p39.asrs.server.model.media.Video</class>
 		<class>de.p39.asrs.server.model.Category</class>
-		<class>de.p39.asrs.server.model.media.Video</class>
 		<class>de.p39.asrs.server.model.Coordinate</class>
 
 

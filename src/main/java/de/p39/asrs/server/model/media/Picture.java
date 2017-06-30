@@ -13,22 +13,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import de.p39.asrs.server.model.LocaleAudio;
 import de.p39.asrs.server.model.LocaleDescription;
 import de.p39.asrs.server.model.LocaleName;
+import de.p39.asrs.server.model.NamedEntity;
 /**
  * 
  * @author adrianrebmann
  *
  */
 @Entity
-public class Picture extends Medium {
+public class Picture extends NamedEntity {
 
 	/**
 	 * 
@@ -130,5 +131,14 @@ public class Picture extends Medium {
 	@ElementCollection(fetch = FetchType.EAGER)
 	public void setPaths(Map<Size,String> paths) {
 		this.paths = paths;
+	}
+	
+	@OneToMany(targetEntity = LocaleAudio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public List<LocaleAudio> getAudios() {
+		return audios;
+	}
+	@OneToMany(targetEntity = LocaleAudio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public void setAudios(List<LocaleAudio> audios) {
+		this.audios = audios;
 	}
 }

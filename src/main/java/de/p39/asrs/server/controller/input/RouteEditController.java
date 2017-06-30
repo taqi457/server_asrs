@@ -3,8 +3,6 @@ package de.p39.asrs.server.controller.input;
 import javax.xml.bind.JAXBException;
 
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
-import de.p39.asrs.server.controller.input.info.CategoryInfo;
-import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.CategoryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +19,6 @@ import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.util.parser.KMLParser;
 import de.p39.asrs.server.model.Route;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 @Controller
