@@ -39,11 +39,11 @@ public class LocaleAudio extends BaseEntity<Long> {
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
-	@OneToOne(targetEntity = Audio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = Audio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	public Audio getAudio() {
 		return audio;
 	}
-	@OneToOne(targetEntity = Audio.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = Audio.class,cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setAudio(Audio audio) {
 		this.audio = audio;
 	}

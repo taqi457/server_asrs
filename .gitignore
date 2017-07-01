@@ -18,4 +18,5 @@ README.html
 src/main/java/de/p39/asrs/server/controller/ApplicationConstants.java
 /out
 DataModel.ucls
+CreateRoute.useq
 .DS_Store

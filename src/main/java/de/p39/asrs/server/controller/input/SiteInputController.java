@@ -14,9 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.exceptions.StorageException;
 import de.p39.asrs.server.controller.file.FileSystemStorage;
@@ -32,23 +29,16 @@ import de.p39.asrs.server.model.media.Size;
  */
 @Controller
 public class SiteInputController {
-	
-	
-	private List<Picture> selectedPictures= new ArrayList<>();
-	private List<Audio> selectedAudios = new ArrayList<>();
-	private Site site;
 	private CategoryDAO categoryDAO;
 	
-	private MediumDAO mediadao;
 	private SiteDAO sitedao;
 	private FileSystemStorage storageService;
 	
 
 	@Autowired
-	public SiteInputController(SiteDAO sdao, MediumDAO mdao, CategoryDAO cdao, FileSystemStorage storage) {
+	public SiteInputController(SiteDAO sdao, CategoryDAO cdao, FileSystemStorage storage) {
 		super();
 		this.sitedao=sdao;
-		this.mediadao=mdao;
 		this.storageService = storage;
 		this.categoryDAO = cdao;
 	}
@@ -61,20 +51,29 @@ public class SiteInputController {
 
 	@GetMapping("/deleteaudio/{id}")
 	public String handleAudioDelete(@PathVariable("id") Long id){
-		mediadao.deleteAudio(id);
-		return "redirect:/siteoverview";
+		//TODO do this differently->so this option is only possible for pictures
+		return "redirect:/site";
 	}
-	@GetMapping("/deletepicture/{id}")
-	public String handlePictureDelete(@PathVariable("id") Long id){
-		mediadao.deletePicture(id);
-		return "redirect:/siteoverview";
+	@GetMapping("/deletepicture/{site}/{id}")
+	public String handlePictureDelete(@PathVariable("site") Long site, @PathVariable("id") Long id){
+		Site s = this.sitedao.getSiteById(site);
+		System.out.println(s.getPictures().size());
+		for(Picture p : s.getPictures()){
+			if(p.getId().equals(id)){
+				this.sitedao.removePicture(s, p);
+				this.storageService.delete(p.getPath(Size.LARGE));
+				break;
+			}
+		}
+		System.out.println(s.getPictures().size());
+		return "redirect:/siteedit/"+site+"/";
 	}
 
 
 	@PostMapping("/newsite")
 	public String handleSiteInfo(@ModelAttribute SiteInfo info, @RequestParam("audios") MultipartFile[] audios,
 								 @RequestParam("pictures") MultipartFile[] pictures) {
-		this.create(info, audios, pictures);
+		Site site = this.create(info, audios, pictures);
 		Site new_site = sitedao.insertSite(site);
 		return "redirect:siteedit/" + new_site.getId();
 	}
@@ -82,37 +81,39 @@ public class SiteInputController {
 	public String handleSiteEdit(@ModelAttribute SiteInfo info, @RequestParam("audios") MultipartFile[] audios,
 								 @RequestParam("pictures") MultipartFile[] pictures, Model model, @RequestParam("id")
 								 Long id, @RequestParam("category") Long category){
-		this.edit(info,id, audios, pictures, category);
-		sitedao.updateSite(site);
-		model.addAttribute("site", sitedao.getSiteById(id));
-		return "redirect:siteedit/" + id;
+		Site site = this.edit(info,id, audios, pictures, category);
+		site = sitedao.updateSite(site);
+		model.addAttribute("site", site);
+		return "redirect:siteedit/" + site.getId();
 	}
 	
-	private void create(SiteInfo info, MultipartFile[] audios, MultipartFile[] pictures) {
-		this.site=new Site();
-		this.uploadMedia(audios, pictures);
+	private Site create(SiteInfo info, MultipartFile[] audios, MultipartFile[] pictures) {
+		Site site=new Site();
+		this.uploadMedia(site, audios, pictures);
 		this.addInfo(site, info);
-
+		return site;
 	}
 
-	private void edit(SiteInfo info, Long id, MultipartFile[] audios, MultipartFile[] pictures, Long category) {
-		site = sitedao.getSiteById(id);
-		this.uploadMedia(audios, pictures);
+	private Site edit(SiteInfo info, Long id, MultipartFile[] audios, MultipartFile[] pictures, Long category) {
+		Site site = sitedao.getSiteById(id);
+		System.out.println(site.getPictures().size());
+		this.uploadMedia(site,audios, pictures);
 		this.addInfo(site, info);
 		site.setCategory(categoryDAO.getCategoryById(category));
+		System.out.println(site.getPictures().size());
+		return site;
 	}
 
-	private void uploadMedia(MultipartFile[] audios, MultipartFile[] pictures){
+	private void uploadMedia(Site site ,MultipartFile[] audios, MultipartFile[] pictures){
 		for(MultipartFile a : audios){
 			if (a.isEmpty())
 				continue;
 			String path = storageService.store(a, FileType.AUDIO);
 			Audio audio = new Audio();
 			audio.setPath(path);
-			ArrayList<LocaleName> names = new ArrayList<>();
+			List<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, a.getOriginalFilename()));
 			audio.setNames(names);
-			//mediadao.insertAudio(audio);
 			site.addLocaleAudio(new LocaleAudio(Locale.GERMAN,audio));
 		}
 		for(MultipartFile p : pictures){
@@ -122,17 +123,17 @@ public class SiteInputController {
 			Picture picture = new Picture();
 			//TODO create different sizes and add paths like this:
 			picture.addPath(Size.LARGE,path);
-			ArrayList<LocaleName> names = new ArrayList<>();
+			List<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
 			picture.setNames(names);
-			//mediadao.insertPicture(picture);
 			site.addPicture(picture);
+			//sitedao.addPicture(site,picture);
 		}
 	}
 	
 	private Site addInfo(Site s, SiteInfo info) {
-		ArrayList<LocaleName> names = new ArrayList<LocaleName>();
-		ArrayList<LocaleDescription> descriptions = new ArrayList<LocaleDescription>();
+		List<LocaleName> names = new ArrayList<LocaleName>();
+		List<LocaleDescription> descriptions = new ArrayList<LocaleDescription>();
 		if (info.getNameDE() != null) {
 			LocaleName name = new LocaleName(Locale.GERMAN, info.getNameDE());
 			names.add(name);
@@ -195,6 +196,7 @@ public class SiteInputController {
 				.body(file);
 	}
 
+	/*
 	@PostMapping("/site/picture")
 	public String handleFileUploadAndCreatePicture(@RequestParam("picture") MultipartFile file, RedirectAttributes redirectAttributes) {
 		String path = storageService.store(file, FileType.PICTURE);
@@ -240,7 +242,7 @@ public class SiteInputController {
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + file.getOriginalFilename() + "!");
 		return "redirect:/upload";
-	}
+	}*/
 	
 	
 	@ExceptionHandler(StorageException.class)

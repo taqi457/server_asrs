@@ -34,8 +34,8 @@ public class SiteDAO{
 		this.cf.delete(id, Site.class);
 	}
 
-	public void updateSite(Site s) {
-		this.cf.update(s);
+	public Site updateSite(Site s) {
+		return this.cf.update(s);
 	}
 
 	public List<Site> getSitesByName(String s) {
@@ -54,12 +54,20 @@ public class SiteDAO{
 		return result;
 	}
 
-	public void addMedium(Site s, Picture m) {
+	public Site addPicture(Site s, Picture m) {
 		s.addPicture(m);
+		return this.cf.update(s);
+	}
+	
+	public Site removePicture(Site s, Picture m){
+		s.removePicture(m);
+		s=this.cf.update(s);
+		this.cf.delete(m.getId(), Picture.class);
+		return s;
 	}
 
 	public void setCoordinate(Site s, Coordinate c) {
 		s.setCoordinate(c);
 	}
-
+	
 }

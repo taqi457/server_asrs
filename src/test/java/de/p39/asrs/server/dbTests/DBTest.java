@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.JPACrudService;
+import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.model.Category;
@@ -53,7 +54,22 @@ public class DBTest {
 		r = routes.get(0);
 		assertTrue(r.getSites().size()==2);
 		for(Site s : r.getSites()){
-			assertTrue(s.getAudios().size()==1);
+			assertTrue(s.getPictures().size()==1);
+		}
+	}
+	
+	@Test
+	public void routeCreationThenDeletingPictureOfSite(){
+		CrudFacade cf = new JPACrudService("server");
+		RouteDAO dao= new RouteDAO(cf);
+		MediumDAO mdao = new MediumDAO(cf);
+		Route r = this.createDummyData();
+		dao.instertRoute(r);
+		List<Route> routes = dao.getAllRoutes();
+		assertTrue(routes.size()>=1);
+		r = routes.get(0);
+		assertTrue(r.getSites().size()==2);
+		for(Site s : r.getSites()){
 			assertTrue(s.getPictures().size()==1);
 		}
 	}
@@ -98,7 +114,7 @@ public class DBTest {
 		Site s1 = new Site();
 		s1.setCategory(c1);
 		s1.setCoordinate(co1);
-		
+		s1.addPicture(p1);
 		Audio a2 = new Audio();
 		Picture p2 = new Picture();
 		
@@ -110,6 +126,7 @@ public class DBTest {
 		Site s2 = new Site();
 		s2.setCategory(c2);
 		s2.setCoordinate(co2);
+		s2.addPicture(p2);
 		LocaleName n1 = new LocaleName(Locale.GERMAN, "test_german");
 		LocaleName n2 = new LocaleName(Locale.FRENCH, "test_french");
 		LocaleName n3 = new LocaleName(Locale.ENGLISH, "test_english");

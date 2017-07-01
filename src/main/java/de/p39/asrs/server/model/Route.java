@@ -117,7 +117,7 @@ public class Route extends NamedEntity {
 	/**
 	 * @return the category
 	 */
-	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Category.class,cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Category getCategory() {
 		return category;
 	}
@@ -126,7 +126,7 @@ public class Route extends NamedEntity {
 	 * @param category
 	 *            the category to set
 	 */
-	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Category.class,cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public void setCategory(Category category) {
 		this.category = category;
 	}

@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import de.p39.asrs.server.controller.exceptions.BadRequestException;
-import de.p39.asrs.server.model.media.Picture;
 import de.p39.asrs.server.model.media.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

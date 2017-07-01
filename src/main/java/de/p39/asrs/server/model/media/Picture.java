@@ -141,4 +141,6 @@ public class Picture extends NamedEntity {
 	public void setAudios(List<LocaleAudio> audios) {
 		this.audios = audios;
 	}
+	
+	
 }

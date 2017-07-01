@@ -3,8 +3,11 @@ package de.p39.asrs.server.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -12,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -38,7 +43,7 @@ public class Site extends NamedEntity {
 
 	private Coordinate coordinate;
 
-	private List<Picture> pictures=new ArrayList<>();
+	private Set<Picture> pictures=new HashSet<>();
 
 	private boolean isCompleted;
 
@@ -71,7 +76,7 @@ public class Site extends NamedEntity {
 	 * @return the pictures
 	 */
 	@OneToMany(targetEntity = Picture.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public List<Picture> getPictures() {
+	public Set<Picture> getPictures() {
 		return pictures;
 	}
 
@@ -80,14 +85,14 @@ public class Site extends NamedEntity {
 	 *            the pictures to set
 	 */
 	@OneToMany(targetEntity = Picture.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public void setPictures(List<Picture> pictures) {
+	public void setPictures(Set<Picture> pictures) {
 		this.pictures = pictures;
 	}
 
 	/**
 	 * @return the category
 	 */
-	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public Category getCategory() {
 		return category;
 	}
@@ -96,7 +101,7 @@ public class Site extends NamedEntity {
 	 * @param category
 	 *            the category to set
 	 */
-	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Category.class,cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	public void setCategory(Category category) {
 		this.category = category;
 	}
@@ -280,7 +285,16 @@ public class Site extends NamedEntity {
 	}
 
 	public void addPicture(Picture picture) {
-		this.pictures.add(picture);
+		if(!this.pictures.contains(picture))
+			this.pictures.add(picture);
+	}
+	
+	public void removePicture(Picture picture){
+		if(this.pictures.contains(picture)){
+			System.out.println("picture is removed");
+			this.pictures.remove(picture);
+		}
+			
 	}
 	
 	
