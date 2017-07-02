@@ -15,13 +15,13 @@ import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
-import net.opengis.kml._2.AbstractFeatureType;
-import net.opengis.kml._2.DocumentType;
-import net.opengis.kml._2.FolderType;
-import net.opengis.kml._2.KmlType;
-import net.opengis.kml._2.LineStringType;
-import net.opengis.kml._2.PlacemarkType;
-import net.opengis.kml._2.PointType;
+import de.p39.asrs.server.controller.util.parser.kml.AbstractFeatureType;
+import de.p39.asrs.server.controller.util.parser.kml.DocumentType;
+import de.p39.asrs.server.controller.util.parser.kml.FolderType;
+import de.p39.asrs.server.controller.util.parser.kml.KmlType;
+import de.p39.asrs.server.controller.util.parser.kml.LineStringType;
+import de.p39.asrs.server.controller.util.parser.kml.PlacemarkType;
+import de.p39.asrs.server.controller.util.parser.kml.PointType;
 
 /**
  * @author robin
@@ -47,7 +47,7 @@ public class KMLParser {
 
     private void init() {
         try {
-            JAXBContext jaxbcontext = JAXBContext.newInstance("net.opengis.kml._2");
+            JAXBContext jaxbcontext = JAXBContext.newInstance("de.p39.asrs.server.controller.util.parser.kml");
             unmarshaller = jaxbcontext.createUnmarshaller();
         } catch (JAXBException e) {
             e.printStackTrace();
