@@ -8,6 +8,9 @@ import javax.xml.bind.JAXBException;
 
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.model.*;
+import de.p39.asrs.server.model.media.Audio;
+import de.p39.asrs.server.model.media.Picture;
+import de.p39.asrs.server.model.media.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.core.io.Resource;
@@ -73,8 +76,10 @@ public class RouteInputController {
 	}
 
 	@PostMapping("/routeinfo")
-	public String handleRouteInfo(@ModelAttribute RouteInfo info) {
-		Long id = this.create(info);
+	public String handleRouteInfo(@ModelAttribute RouteInfo info, @RequestParam("audio_de") MultipartFile audio_de,
+								  @RequestParam("audio_en") MultipartFile audio_en, @RequestParam("audio_fr") MultipartFile audio_fr) {
+		MultipartFile[] audios = {audio_de, audio_fr, audio_en};
+		Long id = this.create(info, audios);
 		if (id != 0)
 		return "redirect:editroute/" + id;
 		else
@@ -82,13 +87,16 @@ public class RouteInputController {
 	}
 
 	@PostMapping("/editroute")
-	public String editRoute(@ModelAttribute RouteInfo info, @RequestParam("id") Long id, @RequestParam("category") Long category) {
-		this.edit(info, id, category);
+	public String editRoute(@ModelAttribute RouteInfo info, @RequestParam("id") Long id, @RequestParam("category") Long category,
+							@RequestParam("audio_de") MultipartFile audio_de,
+							@RequestParam("audio_en") MultipartFile audio_en, @RequestParam("audio_fr") MultipartFile audio_fr) {
+		MultipartFile[] audios = {audio_de, audio_fr, audio_en};
+		this.edit(info, id, category, audios);
 
 		return "redirect:editroute/" + id;
 	}
 
-	private void edit(RouteInfo info, Long id, Long category) {
+	private void edit(RouteInfo info, Long id, Long category, MultipartFile[] audios) {
 		route = dao.getRouteById(id);
 		if (route != null) {
 			/*List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
@@ -96,6 +104,7 @@ public class RouteInputController {
 				Route existing = exists.get(0);
 				this.dao.deleteRoute(existing.getId());
 			}*/
+			this.uploadMedia(route, audios);
 			this.addInfo(route, info);
 			route.setCategory(CategoryDaoInterface.getCategoryById(category));
 			this.dao.updateRoute(route);
@@ -103,7 +112,7 @@ public class RouteInputController {
 		}
 	}
 
-	private long create(RouteInfo info) {
+	private long create(RouteInfo info, MultipartFile[] audios) {
 		if (route != null) {
 			/*List<Route> exists = this.dao.getRouteByPath(route.getPathToKml());
 			if (!exists.isEmpty()) {
@@ -111,12 +120,36 @@ public class RouteInputController {
 				this.dao.deleteRoute(existing.getId());
 			}*/
 			this.addInfo(route, info);
+			this.uploadMedia(route, audios);
 			Route new_route = this.dao.instertRoute(route);
 			route = null;
 			return new_route.getId();
 
 		}
 		return 0;
+	}
+
+	private void uploadMedia(Route route, MultipartFile[] audios) {
+		for (int i = 0; i < audios.length; i++) {
+			if (audios[i].isEmpty())
+				continue;
+			String path = storageService.store(audios[i], FileType.AUDIO);
+			Audio audio = new Audio();
+			audio.setPath(path);
+			List<LocaleName> names = new ArrayList<>();
+			names.add(new LocaleName(Locale.GERMAN, audios[i].getOriginalFilename()));
+			audio.setNames(names);
+			if (i == 0){
+				route.addLocaleAudio(new LocaleAudio(Locale.GERMAN, audio));
+			}
+			else if (i == 1){
+				route.addLocaleAudio(new LocaleAudio(Locale.FRENCH, audio));
+			}
+			else if (i==2){
+				route.addLocaleAudio(new LocaleAudio(Locale.ENGLISH, audio));
+			}
+		}
+
 	}
 
 	@PostMapping("/kml")

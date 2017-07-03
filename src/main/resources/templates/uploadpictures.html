@@ -34,8 +34,9 @@
                                                 untenstehenden Felder aus</h3>
 
                                             <form class="form-horizontal" id="validation-form"
-                                                  th:action="@{/newpicture}" th:object="${PictureInfo}"
+                                                  th:action="@{/uploadpicture}" th:object="${PictureInfo}"
                                                   method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="siteid" th:value="${id}" />
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="widget-box">
@@ -128,7 +129,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionDE" id="descriptionDE"
-                                                                                              th:field="*{descriptionDE}"
+                                                                                              th:field="*{germanDescription}"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
@@ -141,7 +142,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionEN" id="descriptionEN"
-                                                                                              th:field="*{descriptionEN}"
+                                                                                              th:field="*{englishDescription}"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
@@ -154,7 +155,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionFR" id="descriptionFR"
-                                                                                              th:field="*{descriptionFR}"
+                                                                                              th:field="*{frenchDescription}"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
