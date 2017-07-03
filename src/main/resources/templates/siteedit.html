@@ -501,9 +501,9 @@
 																					<div class="hidden-sm hidden-xs btn-group">
 
 
-																						<button class="btn btn-xs btn-info">
-																							<i class="ace-icon fa fa-arrow bigger-120"></i>
-																						</button>
+																						<a th:href='${"/siteedit/" + site.id + "editpicture/" + sb.id}'> <button class="btn btn-xs btn-info">
+																							<i class="ace-icon fa fa-pencil bigger-120"></i>
+																						</button></a>
 
 																						<a th:href='${"/deletepicture/"+site.id+"/"+sb.id}'><button
 																								class="btn btn-xs btn-danger">
