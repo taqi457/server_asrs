@@ -11,6 +11,7 @@ import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
+import de.p39.asrs.server.controller.db.dao.AuthenticationDAO;
 
 @SpringBootApplication
 public class Application {
@@ -35,6 +36,11 @@ public class Application {
 	@Bean
 	public MediumDAO MediumDAOImpl(){
 		return new MediumDAO(cf);
+	}
+	
+	@Bean 
+	public AuthenticationDAO AuthenticationDAO(){
+		return new AuthenticationDAO(cf);
 	}
 	
 	//@Bean
