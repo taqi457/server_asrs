@@ -33,7 +33,7 @@ import de.p39.asrs.server.model.auth.User;
  *
  */
 public class JPACrudService implements CrudFacade {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(JPACrudService.class);
 	/**
 	 * the entity manager of the crud service
@@ -45,31 +45,47 @@ public class JPACrudService implements CrudFacade {
 	 * 
 	 */
 	public JPACrudService(String persistenceUnit) {
-		this.persistenceUnit=persistenceUnit;
+		this.persistenceUnit = persistenceUnit;
 		this.init();
 	}
-	
-	public JPACrudService(){
+
+	public JPACrudService() {
 		persistenceUnit = "server";
 		init();
 	}
-	
 
 	private void init() {
-		this.emf=Persistence.createEntityManagerFactory(persistenceUnit);
-		User u = new User();
-		u.setUsername("admin");
-		BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
-		String password = hash.encode("test123");
-		u.setPassword(password);
-		Set<Role> sr = new HashSet<>();
-		sr.add(Role.ADMIN);
-		u.setRoles(sr);
-		this.create(u);
+		this.emf = Persistence.createEntityManagerFactory(persistenceUnit);
+		this.findOrCreateUser();
 	}
 
-	/* (non-Javadoc)
-	 * @see de.p39.asrs.server.controller.db.CrudFacade#find(java.io.Serializable, java.lang.Class)
+	private void findOrCreateUser() {
+		try {
+			String q = "SELECT e FROM " + User.class.getName() + " e WHERE username = :name";
+			EntityManager em = this.emf.createEntityManager();
+			Query query = em.createQuery(q);
+			query.setParameter("name", "admin");
+			query.getResultList().get(0);
+		} catch (IndexOutOfBoundsException | NullPointerException e) {
+			User u = new User();
+			u.setUsername("admin");
+			BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
+			String password = hash.encode("test123");
+			u.setPassword(password);
+			Set<Role> sr = new HashSet<>();
+			sr.add(Role.ADMIN);
+			u.setRoles(sr);
+			this.create(u);
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.p39.asrs.server.controller.db.CrudFacade#find(java.io.Serializable,
+	 * java.lang.Class)
 	 */
 	@Override
 	public <K extends Serializable, T extends BaseEntity<K>> T find(K id, Class<T> clazz) {
@@ -81,20 +97,24 @@ public class JPACrudService implements CrudFacade {
 			transaction.begin();
 			t = em.find(clazz, id);
 			transaction.commit();
-		}catch (RuntimeException e) {
-			LOGGER.log(Level.ERROR, e.getMessage(),e);
-			if(transaction != null && transaction.isActive()){
+		} catch (RuntimeException e) {
+			LOGGER.log(Level.ERROR, e.getMessage(), e);
+			if (transaction != null && transaction.isActive()) {
 				transaction.rollback();
 				throw new PersistenceException(e.getMessage());
 			}
-		}finally{
+		} finally {
 			em.close();
 		}
 		return t;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.p39.asrs.server.controller.db.CrudFacade#create(de.p39.asrs.server.model.ABasicObject)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.p39.asrs.server.controller.db.CrudFacade#create(de.p39.asrs.server.
+	 * model.ABasicObject)
 	 */
 	@Override
 	public <K extends Serializable, T extends BaseEntity<K>> T create(T o) {
@@ -110,46 +130,54 @@ public class JPACrudService implements CrudFacade {
 			em.persist(o);
 			t = em.merge(o);
 			transaction.commit();
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			LOGGER.log(Level.ERROR, e.getMessage(), e);
-			if(transaction != null && transaction.isActive()){
+			if (transaction != null && transaction.isActive()) {
 				transaction.rollback();
 				throw new PersistenceException(e.getMessage());
 			}
-		}finally{
+		} finally {
 			em.close();
 		}
 		return t;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.p39.asrs.server.controller.db.CrudFacade#delete(de.p39.asrs.server.model.ABasicObject)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.p39.asrs.server.controller.db.CrudFacade#delete(de.p39.asrs.server.
+	 * model.ABasicObject)
 	 */
 	@Override
-	public <K extends Serializable, T extends BaseEntity<K>> void delete(K id,  Class<T> clazz) {
+	public <K extends Serializable, T extends BaseEntity<K>> void delete(K id, Class<T> clazz) {
 		EntityManager em = this.emf.createEntityManager();
 		EntityTransaction transaction = null;
 		T t = null;
 		try {
 			transaction = em.getTransaction();
 			transaction.begin();
-			t = em.find(clazz,id);
+			t = em.find(clazz, id);
 			em.remove(t);
 			em.flush();
 			transaction.commit();
-		}catch (RuntimeException e) {
-			LOGGER.log(Level.ERROR, e.getMessage(),e);
-			if(transaction != null && transaction.isActive()){
+		} catch (RuntimeException e) {
+			LOGGER.log(Level.ERROR, e.getMessage(), e);
+			if (transaction != null && transaction.isActive()) {
 				transaction.rollback();
 				throw new PersistenceException(e.getMessage());
 			}
-		}finally{
+		} finally {
 			em.close();
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see de.p39.asrs.server.controller.db.CrudFacade#update(de.p39.asrs.server.model.ABasicObject)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.p39.asrs.server.controller.db.CrudFacade#update(de.p39.asrs.server.
+	 * model.ABasicObject)
 	 */
 	@Override
 	public <K extends Serializable, T extends BaseEntity<K>> T update(T o) {
@@ -161,20 +189,24 @@ public class JPACrudService implements CrudFacade {
 			transaction.begin();
 			t = em.merge(o);
 			transaction.commit();
-		}catch (RuntimeException e) {
-			LOGGER.log(Level.ERROR, e.getMessage(),e);
-			if(transaction != null && transaction.isActive()){
+		} catch (RuntimeException e) {
+			LOGGER.log(Level.ERROR, e.getMessage(), e);
+			if (transaction != null && transaction.isActive()) {
 				transaction.rollback();
 				throw new PersistenceException(e.getMessage());
 			}
-		}finally{
+		} finally {
 			em.close();
 		}
 		return t;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.p39.asrs.server.controller.db.CrudFacade#findOrCreate(de.p39.asrs.server.model.ABasicObject, java.io.Serializable)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.p39.asrs.server.controller.db.CrudFacade#findOrCreate(de.p39.asrs.
+	 * server.model.ABasicObject, java.io.Serializable)
 	 */
 	@Override
 	public <K extends Serializable, T extends BaseEntity<K>> T findOrCreate(T object, K key) {
@@ -182,7 +214,9 @@ public class JPACrudService implements CrudFacade {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see de.p39.asrs.server.controller.db.CrudFacade#findAll(java.lang.Class)
 	 */
 	@Override
@@ -197,8 +231,11 @@ public class JPACrudService implements CrudFacade {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.p39.asrs.server.controller.db.CrudFacade#updateAll(java.util.Collection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.p39.asrs.server.controller.db.CrudFacade#updateAll(java.util.
+	 * Collection)
 	 */
 	@Override
 	public <K extends Serializable, T extends BaseEntity<K>> Collection<T> updateAll(Collection<T> objects) {
@@ -210,18 +247,24 @@ public class JPACrudService implements CrudFacade {
 		return objs;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.p39.asrs.server.controller.db.CrudFacade#deleteAll(java.util.Collection, java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.p39.asrs.server.controller.db.CrudFacade#deleteAll(java.util.
+	 * Collection, java.lang.Class)
 	 */
 	@Override
 	public <K extends Serializable, T extends BaseEntity<K>> void deleteAll(Collection<K> objects, Class<T> clazz) {
 		for (K obj : objects) {
-			delete(obj,clazz);
+			delete(obj, clazz);
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see de.p39.asrs.server.controller.db.CrudFacade#createAll(java.util.Collection)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.p39.asrs.server.controller.db.CrudFacade#createAll(java.util.
+	 * Collection)
 	 */
 	@Override
 	public <K extends Serializable, T extends BaseEntity<K>> void createAll(Collection<T> o) {
@@ -247,7 +290,5 @@ public class JPACrudService implements CrudFacade {
 		EntityManager em = this.emf.createEntityManager();
 		return em.createQuery(jpql);
 	}
-
-	
 
 }
