@@ -32,9 +32,9 @@ public class FileSystemStorage implements Storage {
 
 	public FileSystemStorage() {
 		this.rootLocations = new HashMap<>();
-		this.rootLocations.put(FileType.AUDIO, Paths.get("~/server-asrs/resources/media/audio"));
-		this.rootLocations.put(FileType.KML, Paths.get("~/server-asrs/resources/kml"));
-		this.rootLocations.put(FileType.PICTURE, Paths.get("~/server-asrs/resources/media/pictures"));
+		this.rootLocations.put(FileType.AUDIO, Paths.get("/Users/bjornmohr/SE/Server-ASRS/media/audio/"));
+		this.rootLocations.put(FileType.KML, Paths.get("/Users/bjornmohr/SE/Server-ASRS/kmls/"));
+		this.rootLocations.put(FileType.PICTURE, Paths.get("/Users/bjornmohr/SE/Server-ASRS/media/pictures/"));
 	}
 
 	public String store(MultipartFile file, FileType type) {

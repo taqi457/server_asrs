@@ -161,6 +161,56 @@ Route editieren                    </h1>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">Upload von Medien</h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="id-input-audio-de">Audiodatei Deutsch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="file" name="audios"
+                                                                                       id="id-input-audio-de"
+                                                                                       class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="id-input-audio-en">Audiodatei Englisch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="file" name="audios"
+                                                                                       id="id-input-audio-en"
+                                                                                       class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="id-input-audio-fr">Audiodatei Französisch</label>
+
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="file" name="audios"
+                                                                                       id="id-input-audio-fr"
+                                                                                       class="col-xs-12 col-sm-6" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
 
@@ -183,7 +233,7 @@ Route editieren                    </h1>
                     </div><!-- /.widget-body -->
                         <br/>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="widget-box">
                                     <div class="widget-header">
                                         <h4 class="widget-title">
@@ -219,10 +269,6 @@ Route editieren                    </h1>
 
                                                                     <a th:href='${"/siteedit/" + sb.id}'><button class="btn btn-xs btn-info">
                                                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                                                    </button></a>
-
-                                                                    <a th:href='${"../deletesite/"+sb.id}'><button class="btn btn-xs btn-danger">
-                                                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                                     </button></a>
 
                                                                 </div>
@@ -269,6 +315,103 @@ Route editieren                    </h1>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                                <div class="col-md-6">
+                                    <div class="widget-box">
+                                        <div class="widget-header">
+                                            <h4 class="widget-title">Medien</h4>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">Audio-Dateien</h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+                                                                    <table id="audio-table"
+                                                                           class="table  table-bordered table-hover">
+                                                                        <thead>
+                                                                        <tr>
+
+                                                                            <th>ID</th>
+                                                                            <th>Name</th>
+
+                                                                            <th></th>
+                                                                        </tr>
+                                                                        </thead>
+
+                                                                        <tbody>
+                                                                        <tr th:each="sb : ${site.getAudios()}">
+                                                                            <td th:text="${{sb.id}}">13/01/2011</td>
+                                                                            <td
+                                                                                    th:text="${{sb.getNames().get(0).getString()}}">13/01/2011</td>
+                                                                            <td>
+                                                                                <div class="hidden-sm hidden-xs btn-group">
+
+
+                                                                                    <a th:href='${"/siteedit/"+sb.id}'><button
+                                                                                            class="btn btn-xs btn-info">
+                                                                                        <i class="ace-icon fa fa-arrow bigger-120"></i>
+                                                                                    </button></a> <a th:href='${"/deleteaudio/"+sb.id}'><button
+                                                                                        class="btn btn-xs btn-danger">
+                                                                                    <i
+                                                                                            class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                                </button></a>
+
+                                                                                    <div class="hidden-md hidden-lg">
+                                                                                        <div class="inline pos-rel">
+                                                                                            <button
+                                                                                                    class="btn btn-minier btn-primary dropdown-toggle"
+                                                                                                    data-toggle="dropdown"
+                                                                                                    data-position="auto">
+                                                                                                <i
+                                                                                                        class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                                                            </button>
+
+                                                                                            <ul
+                                                                                                    class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                                                                <li><a href="#" class="tooltip-info"
+                                                                                                       data-rel="tooltip" title="View"> <span
+                                                                                                        class="blue"> <i
+                                                                                                        class="ace-icon fa fa-search-plus bigger-120"></i>
+																																</span>
+                                                                                                </a></li>
+
+                                                                                                <li><a href="#"
+                                                                                                       class="tooltip-success"
+                                                                                                       data-rel="tooltip" title="Edit"> <span
+                                                                                                        class="green"> <i
+                                                                                                        class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																																</span>
+                                                                                                </a></li>
+
+                                                                                                <li><a href="#"
+                                                                                                       class="tooltip-error" data-rel="tooltip"
+                                                                                                       title="Delete"> <span class="red">
+																																		<i
+                                                                                                                                                class="ace-icon fa fa-trash-o bigger-120"></i>
+																																</span>
+                                                                                                </a></li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.span -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                         <div class="widget-box">

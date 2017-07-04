@@ -254,26 +254,52 @@
 																		<div class="form-group">
 																			<label
 																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="id-input-audio">Audiodateien</label>
+																				for="id-input-picture">Hauptbild</label>
 
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<input type="file" name="audios"
-																						id="id-input-audio" multiple=""
+																					<input type="file" name="picture"
+																						id="id-input-picture"
 																						class="col-xs-12 col-sm-6" />
 																				</div>
 																			</div>
 																		</div>
 																		<div class="form-group">
 																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="id-input-picture">Bilder</label>
+																					class="control-label col-xs-12 col-sm-3 no-padding-right"
+																					for="id-input-audio-de">Audiodatei Deutsch</label>
 
 																			<div class="col-xs-12 col-sm-9">
 																				<div class="clearfix">
-																					<input type="file" name="pictures"
-																						id="id-input-picture" multiple=""
-																						class="col-xs-12 col-sm-6" />
+																					<input type="file" name="audio_de"
+																						   id="id-input-audio-de"
+																						   class="col-xs-12 col-sm-6" />
+																				</div>
+																			</div>
+																		</div>
+																		<div class="form-group">
+																			<label
+																					class="control-label col-xs-12 col-sm-3 no-padding-right"
+																					for="id-input-audio-en">Audiodatei Englisch</label>
+
+																			<div class="col-xs-12 col-sm-9">
+																				<div class="clearfix">
+																					<input type="file" name="audio_en"
+																						   id="id-input-audio-en"
+																						   class="col-xs-12 col-sm-6" />
+																				</div>
+																			</div>
+																		</div>
+																		<div class="form-group">
+																			<label
+																					class="control-label col-xs-12 col-sm-3 no-padding-right"
+																					for="id-input-audio-fr">Audiodatei Französisch</label>
+
+																			<div class="col-xs-12 col-sm-9">
+																				<div class="clearfix">
+																					<input type="file" name="audio_fr"
+																						   id="id-input-audio-fr"
+																						   class="col-xs-12 col-sm-6" />
 																				</div>
 																			</div>
 																		</div>
@@ -286,8 +312,12 @@
 
 													<div class="wizard-actions">
 
-														<button class="btn btn-success btn-next" type="submit">
+														<button class="btn btn-success btn-next" type="submit" name="button" value="complete">
 															Abschicken <i
+																class="ace-icon fa fa-arrow-right icon-on-right"></i>
+														</button>
+														<button class="btn btn-success btn-next" type="submit" name="button" value="upload">
+															Weitere Bilder hochladen <i
 																class="ace-icon fa fa-arrow-right icon-on-right"></i>
 														</button>
 													</div>
