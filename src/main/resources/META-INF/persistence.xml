@@ -12,6 +12,7 @@
 		<class>de.p39.asrs.server.model.Site</class>
 		<class>de.p39.asrs.server.model.Category</class>
 		<class>de.p39.asrs.server.model.Coordinate</class>
+		<class>de.p39.asrs.server.model.auth.User</class>
 
 
 		<properties>

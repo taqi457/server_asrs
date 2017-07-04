@@ -2,12 +2,11 @@ package de.p39.asrs.server.model.auth;
 
 import java.util.Set;
 
-import javax.persistence.JoinTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
 import de.p39.asrs.server.model.BaseEntity;
@@ -16,6 +15,7 @@ import de.p39.asrs.server.model.BaseEntity;
  * @author adrianrebmann
  *
  */
+@Entity
 public class User extends BaseEntity<Long>{
 
 	/**
@@ -63,8 +63,7 @@ public class User extends BaseEntity<Long>{
         this.passwordConfirm = passwordConfirm;
     }
 
-    @ManyToMany
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ElementCollection
     public Set<Role> getRoles() {
         return roles;
     }

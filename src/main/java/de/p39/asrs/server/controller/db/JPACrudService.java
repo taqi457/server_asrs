@@ -6,7 +6,9 @@ package de.p39.asrs.server.controller.db;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,8 +22,11 @@ import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import de.p39.asrs.server.model.BaseEntity;
+import de.p39.asrs.server.model.auth.Role;
+import de.p39.asrs.server.model.auth.User;
 
 /**
  * @author Adrian Rebmann <adrianrebmann@gmail.com>
@@ -52,6 +57,15 @@ public class JPACrudService implements CrudFacade {
 
 	private void init() {
 		this.emf=Persistence.createEntityManagerFactory(persistenceUnit);
+		User u = new User();
+		u.setUsername("admin");
+		BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
+		String password = hash.encode("test123");
+		u.setPassword(password);
+		Set<Role> sr = new HashSet<>();
+		sr.add(Role.ADMIN);
+		u.setRoles(sr);
+		this.create(u);
 	}
 
 	/* (non-Javadoc)

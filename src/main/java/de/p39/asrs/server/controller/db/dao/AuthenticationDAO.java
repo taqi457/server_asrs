@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Query;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
-import de.p39.asrs.server.model.auth.Role;
 import de.p39.asrs.server.model.auth.User;
 
 public class AuthenticationDAO {
@@ -29,10 +28,6 @@ public class AuthenticationDAO {
 	
 	public List<User> findAllUsers(){
 		return this.cf.findAll(User.class);
-	}
-	
-	public List<Role> findAllRoles(){
-		return this.cf.findAll(Role.class);
 	}
 
 	public void save(User user) {
