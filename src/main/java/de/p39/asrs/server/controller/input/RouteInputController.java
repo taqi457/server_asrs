@@ -131,8 +131,11 @@ public class RouteInputController {
 
 	private void uploadMedia(Route route, MultipartFile[] audios) {
 		for (int i = 0; i < audios.length; i++) {
-			if (audios[i].isEmpty())
+			if (audios[i].isEmpty()) {
+				if(route.getAudios().size() >= i)
+				route.addLocaleAudio(route.getAudios().get(i));
 				continue;
+			}
 			String path = storageService.store(audios[i], FileType.AUDIO);
 			Audio audio = new Audio();
 			audio.setPath(path);

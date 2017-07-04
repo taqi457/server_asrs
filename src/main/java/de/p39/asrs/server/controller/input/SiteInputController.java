@@ -1,10 +1,12 @@
 package de.p39.asrs.server.controller.input;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.sun.org.apache.xpath.internal.operations.Mult;
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.input.info.PictureInfo;
@@ -13,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,6 @@ import de.p39.asrs.server.controller.input.info.SiteInfo;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Picture;
 import de.p39.asrs.server.model.media.Size;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 
 /**
  * @author adrianrebmann
@@ -53,7 +51,7 @@ public class SiteInputController {
     @GetMapping("/deletesite/{id}")
     public String handleSiteDelete(@PathVariable("id") Long id) {
         sitedao.deleteSite(id);
-        return "redirect:/siteoverview";
+        return "redirect:/locationoverview";
     }
 
     @GetMapping("/deleteaudio/{id}")
@@ -85,14 +83,14 @@ public class SiteInputController {
         MultipartFile[] audios = {audio_de, audio_fr, audio_en};
         Site site = this.create(info, audios, picture);
         Site new_site = sitedao.insertSite(site);
-        if (button.equals("complete"))
+        if (button.equals("finish"))
             return "redirect:siteedit/" + new_site.getId();
-        else if(button.equals("upload")){
+        else if(button.equals("continue")){
             model.addAttribute("id", site.getId());
             model.addAttribute("PictureInfo", new PictureInfo());
-            return "uploadpicture";
+            return "uploadpictures";
         }
-        return "redirect:siteoverview";
+        return "redirect:locationoverview";
     }
 
     @PostMapping("editsite")
@@ -103,14 +101,14 @@ public class SiteInputController {
         MultipartFile[] audios = {audio_de, audio_fr, audio_en};
         Site site = this.edit(info, id, audios, picture, category);
         site = sitedao.updateSite(site);
-        if (button.equals("complete"))
+        if (button.equals("finish"))
             return "redirect:siteedit/" + site.getId();
-        else if(button.equals("upload")){
+        else if(button.equals("continue")){
             model.addAttribute("id", site.getId());
             model.addAttribute("PictureInfo", new PictureInfo());
-            return "uploadpicture";
+            return "uploadpictures";
         }
-        return "redirect:siteoverview";
+        return "redirect:locationoverview";
     }
 
     private Site create(SiteInfo info, MultipartFile[] audios, MultipartFile picture) {
@@ -122,7 +120,6 @@ public class SiteInputController {
 
     private Site edit(SiteInfo info, Long id, MultipartFile[] audios, MultipartFile picture, Long category) {
         Site site = sitedao.getSiteById(id);
-        System.out.println(site.getPictures().size());
         this.uploadMedia(site, audios, picture);
         this.addInfo(site, info);
         site.setCategory(categoryDAO.getCategoryById(category));
@@ -133,7 +130,8 @@ public class SiteInputController {
     private void uploadMedia(Site site, MultipartFile[] audios, MultipartFile p) {
         for (int i = 0; i < audios.length; i++) {
             if (audios[i].isEmpty()) {
-                site.addLocaleAudio(site.getAudios().get(i));
+                if(site.getAudios() != null && site.getAudios().size() > i)
+                    site.addLocaleAudio(site.getAudios().get(i));
                 continue;
             }
             String path = storageService.store(audios[i], FileType.AUDIO);
@@ -162,13 +160,14 @@ public class SiteInputController {
         names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
         picture.setNames(names);
         site.addPicture(picture);
-        //sitedao.addPicture(site,picture);
+        sitedao.addPicture(site,picture);
 
     }
 
     private void uploadMediaPicture(Site site, MultipartFile[] audios, MultipartFile p, Picture picture) {
         for (int i = 0; i < audios.length; i++) {
-            if (audios[i].isEmpty()) {
+            if (picture.getAudios() != null && audios[i].isEmpty()) {
+                if(picture.getAudios().size() > i)
                 picture.addLocaleAudio(picture.getAudios().get(i));
                 continue;
             }
@@ -297,9 +296,9 @@ public class SiteInputController {
         else if(button.equals("upload")){
             model.addAttribute("id", id);
             model.addAttribute("PictureInfo", new PictureInfo());
-            return "uploadpicture";
+            return "uploadpictures";
         }
-        return "redirect:siteoverview";
+        return "redirect:locationoverview";
     }
 
     @GetMapping("siteedit/{siteid}/editpicture/{pictureid}")
@@ -307,6 +306,7 @@ public class SiteInputController {
         Picture picture = mediumDAO.getPictureById(pictureid);
         model.addAttribute("picture", picture);
         model.addAttribute("siteid", siteid);
+        model.addAttribute("PictureInfo", new PictureInfo());
 
         return "editpicture";
     }
@@ -376,6 +376,13 @@ public class SiteInputController {
     public ResponseEntity<Object> handleStorageFileNotFound(StorageException exc) {
         return ResponseEntity.notFound().build();
     }
+    @RequestMapping(value = "image/{imageName}")
+    @ResponseBody
+    public byte[] getImage(@PathVariable(value = "imageName") String imageName) throws IOException {
 
+        File serverFile = new File("/Users/bjornmohr/SE/Server-ASRS/media/images/" + imageName + ".jpg");
+        java.nio.file.Path path = serverFile.toPath();
+        return Files.readAllBytes(serverFile.toPath());
+    }
 
 }

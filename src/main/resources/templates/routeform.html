@@ -49,7 +49,7 @@
                                             <div class="step-pane active" data-step="1">
                                                 <h3 class="lighter block green">Bitte füllen Sie die untenstehenden Felder aus</h3>
 
-                                                <form class="form-horizontal" id="validation-form" th:action="@{/routeinfo}" th:object="${RouteInfo}" method="post">
+                                                <form class="form-horizontal" id="validation-form" th:action="@{/routeinfo}" th:object="${RouteInfo}" method="post" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="widget-box">
@@ -190,7 +190,7 @@
 
                                                                             <div class="col-xs-12 col-sm-9">
                                                                                 <div class="clearfix">
-                                                                                    <input type="file" name="audios"
+                                                                                    <input type="file" name="audio_de"
                                                                                            id="id-input-audio-de"
                                                                                            class="col-xs-12 col-sm-6" />
                                                                                 </div>
@@ -203,7 +203,7 @@
 
                                                                             <div class="col-xs-12 col-sm-9">
                                                                                 <div class="clearfix">
-                                                                                    <input type="file" name="audios"
+                                                                                    <input type="file" name="audio_en"
                                                                                            id="id-input-audio-en"
                                                                                            class="col-xs-12 col-sm-6" />
                                                                                 </div>
@@ -216,7 +216,7 @@
 
                                                                             <div class="col-xs-12 col-sm-9">
                                                                                 <div class="clearfix">
-                                                                                    <input type="file" name="audios"
+                                                                                    <input type="file" name="audio_fr"
                                                                                            id="id-input-audio-fr"
                                                                                            class="col-xs-12 col-sm-6" />
                                                                                 </div>
@@ -399,7 +399,69 @@
         //$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
 
 
-        $('#id-input-file-3').ace_file_input({
+        $('#id-input-audio-de').ace_file_input({
+            style: 'well',
+            btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist:'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+            /**,before_remove : function() {
+						return true;
+					}*/
+            ,
+            preview_error : function(filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
+
+        }).on('change', function(){
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-audio-fr').ace_file_input({
+            style: 'well',
+            btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist:'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+            /**,before_remove : function() {
+						return true;
+					}*/
+            ,
+            preview_error : function(filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
+
+        }).on('change', function(){
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-audio-en').ace_file_input({
             style: 'well',
             btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
             btn_change: null,

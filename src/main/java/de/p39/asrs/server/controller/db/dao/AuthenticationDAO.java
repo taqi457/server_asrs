@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Query;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
-import de.p39.asrs.server.model.auth.Role;
 import de.p39.asrs.server.model.auth.User;
 
 public class AuthenticationDAO {
@@ -19,7 +18,7 @@ public class AuthenticationDAO {
 
 	public User findByUsername(String username) {
 		try {
-			Query q = this.cf.createQuery("SELECT e FROM " + User.class.getName() + " e WHERE name = :name");
+			Query q = this.cf.createQuery("SELECT e FROM " + User.class.getName() + " e WHERE username = :name");
 			q.setParameter("name", username);
 			return (User) q.getResultList().get(0);
 		} catch (NullPointerException e) {
@@ -29,10 +28,6 @@ public class AuthenticationDAO {
 	
 	public List<User> findAllUsers(){
 		return this.cf.findAll(User.class);
-	}
-	
-	public List<Role> findAllRoles(){
-		return this.cf.findAll(Role.class);
 	}
 
 	public void save(User user) {

@@ -1,6 +1,5 @@
 package de.p39.asrs.server.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,8 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -42,6 +39,8 @@ public class Site extends NamedEntity {
 	private static final long serialVersionUID = -4050480950169388654L;
 
 	private Coordinate coordinate;
+	
+	private Picture thumbnail;
 
 	private Set<Picture> pictures=new HashSet<>();
 
@@ -295,6 +294,16 @@ public class Site extends NamedEntity {
 			this.pictures.remove(picture);
 		}
 			
+	}
+
+	@OneToOne(targetEntity= Picture.class,fetch = FetchType.EAGER)
+	public Picture getThumbnail() {
+		return thumbnail;
+	}
+
+	@OneToOne(targetEntity=Picture.class,fetch = FetchType.EAGER)
+	public void setThumbnail(Picture thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 	
 	
