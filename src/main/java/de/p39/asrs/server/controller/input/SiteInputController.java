@@ -28,9 +28,6 @@ import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Picture;
 import de.p39.asrs.server.model.media.Size;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-
 /**
  * @author adrianrebmann
  */
