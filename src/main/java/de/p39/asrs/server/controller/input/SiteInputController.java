@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.sun.org.apache.xpath.internal.operations.Mult;
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.input.info.PictureInfo;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +24,6 @@ import de.p39.asrs.server.controller.input.info.SiteInfo;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Picture;
 import de.p39.asrs.server.model.media.Size;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 
 /**
  * @author adrianrebmann
