@@ -113,25 +113,28 @@ public class SiteInputController {
 
     private Site create(SiteInfo info, MultipartFile[] audios, MultipartFile picture) {
         Site site = new Site();
-        this.uploadMedia(site, audios, picture);
+        site = this.uploadMedia(site, audios, picture);
         this.addInfo(site, info);
         return site;
     }
 
     private Site edit(SiteInfo info, Long id, MultipartFile[] audios, MultipartFile picture, Long category) {
         Site site = sitedao.getSiteById(id);
-        this.uploadMedia(site, audios, picture);
+        site = this.uploadMedia(site, audios, picture);
         this.addInfo(site, info);
         site.setCategory(categoryDAO.getCategoryById(category));
         System.out.println(site.getPictures().size());
         return site;
     }
 
-    private void uploadMedia(Site site, MultipartFile[] audios, MultipartFile p) {
+    private Site uploadMedia(Site site, MultipartFile[] audios, MultipartFile p) {
+        ArrayList<LocaleAudio> newaudios = new ArrayList<LocaleAudio>();
+
         for (int i = 0; i < audios.length; i++) {
-            if (audios[i].isEmpty()) {
-                if(site.getAudios() != null && site.getAudios().size() > i)
-                    site.addLocaleAudio(site.getAudios().get(i));
+            if (site.getAudios() != null && audios[i].isEmpty()) {
+                if(site.getAudios().size() > i)
+                    newaudios.add(site.getAudios().get(i));
+
                 continue;
             }
             String path = storageService.store(audios[i], FileType.AUDIO);
@@ -141,17 +144,18 @@ public class SiteInputController {
             names.add(new LocaleName(Locale.GERMAN, audios[i].getOriginalFilename()));
             audio.setNames(names);
             if (i == 0){
-                site.addLocaleAudio(new LocaleAudio(Locale.GERMAN, audio));
+                newaudios.add(new LocaleAudio(Locale.GERMAN, audio));
             }
             else if (i == 1){
-                site.addLocaleAudio(new LocaleAudio(Locale.FRENCH, audio));
+                newaudios.add(new LocaleAudio(Locale.FRENCH, audio));
             }
             else if (i==2){
-                site.addLocaleAudio(new LocaleAudio(Locale.ENGLISH, audio));
+                newaudios.add(new LocaleAudio(Locale.ENGLISH, audio));
             }
         }
+        site.setAudios(newaudios);
         if (p.isEmpty())
-            return;
+            return site;
         String path = storageService.store(p, FileType.PICTURE);
         Picture picture = new Picture();
         //TODO create different sizes and add paths like this:
@@ -159,16 +163,19 @@ public class SiteInputController {
         List<LocaleName> names = new ArrayList<>();
         names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
         picture.setNames(names);
-        site.addPicture(picture);
-        sitedao.addPicture(site,picture);
+        site.setThumbnail(picture);
+        return site;
 
     }
 
-    private void uploadMediaPicture(Site site, MultipartFile[] audios, MultipartFile p, Picture picture) {
+    private Picture uploadMediaPicture(Site site, MultipartFile[] audios, MultipartFile p, Picture picture) {
+        ArrayList<LocaleAudio> newaudios = new ArrayList<LocaleAudio>();
+
         for (int i = 0; i < audios.length; i++) {
             if (picture.getAudios() != null && audios[i].isEmpty()) {
                 if(picture.getAudios().size() > i)
-                picture.addLocaleAudio(picture.getAudios().get(i));
+                newaudios.add(picture.getAudios().get(i));
+
                 continue;
             }
             String path = storageService.store(audios[i], FileType.AUDIO);
@@ -178,17 +185,18 @@ public class SiteInputController {
             names.add(new LocaleName(Locale.GERMAN, audios[i].getOriginalFilename()));
             audio.setNames(names);
             if (i == 0){
-                picture.addLocaleAudio(new LocaleAudio(Locale.GERMAN, audio));
+                newaudios.add(new LocaleAudio(Locale.GERMAN, audio));
             }
             else if (i == 1){
-                picture.addLocaleAudio(new LocaleAudio(Locale.FRENCH, audio));
+                newaudios.add(new LocaleAudio(Locale.FRENCH, audio));
             }
             else if (i==2){
-                picture.addLocaleAudio(new LocaleAudio(Locale.ENGLISH, audio));
+                newaudios.add(new LocaleAudio(Locale.ENGLISH, audio));
             }
         }
+        picture.setAudios(newaudios);
         if (p.isEmpty())
-            return;
+            return picture;
         String path = storageService.store(p, FileType.PICTURE);
         //TODO create different sizes and add paths like this:
         picture.addPath(Size.LARGE, path);
@@ -196,8 +204,7 @@ public class SiteInputController {
         names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
         picture.setNames(names);
         site.addPicture(picture);
-        sitedao.addPicture(site,picture);
-
+        return picture;
     }
 
     private Site addInfo(Site s, SiteInfo info) {
@@ -318,8 +325,8 @@ public class SiteInputController {
         Picture p = mediumDAO.getPictureById(pictureid);
         MultipartFile[] audios = {audio_de, audio_fr, audio_en};
         p = addInfoPicture(p, info);
-        this.uploadMediaPicture(sitedao.getSiteById(siteid), audios, picture, p);
-
+        p = this.uploadMediaPicture(sitedao.getSiteById(siteid), audios, picture, p);
+        mediumDAO.updatePicture(p);
         return "redirect:siteedit/"+ siteid +"/editpicture/"+ pictureid;
     }
 

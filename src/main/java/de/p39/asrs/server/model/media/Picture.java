@@ -91,6 +91,18 @@ public class Picture extends NamedEntity {
 		this.names = names;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+
+		Picture picture = (Picture) o;
+
+		return getId() != null ? getId().equals(picture.getId()) : picture.getId() == null;
+	}
+
+
 	/**
 	 * @return the descriptions
 	 */

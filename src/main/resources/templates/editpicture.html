@@ -149,7 +149,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionDE" id="descriptionDE"
-                                                                                              th:field="*{germanDescription}" th:value="${picture.getDescriptions().size() > 0 ? picture.getDescriptions().get(0) : ''}"
+                                                                                              th:field="*{germanDescription}" th:text="${picture.getDescriptions().size() > 0 ? picture.getDescriptions().get(0).getString() : picture.getDescriptions().size()}"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
@@ -162,7 +162,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionEN" id="descriptionEN"
-                                                                                              th:field="*{englishDescription}" th:value="${picture.getDescriptions().size() > 2 ? picture.getDescriptions().get(2) : '' }"
+                                                                                              th:field="*{englishDescription}" th:text="${picture.getDescriptions().size() > 2 ? picture.getDescriptions().get(2).getString() : picture.getDescriptions().size() }"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
@@ -175,7 +175,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionFR" id="descriptionFR"
-                                                                                              th:field="*{frenchDescription}" th:value="${picture.getDescriptions().size() > 1 ? picture.getDescriptions().get(1) : ''}"
+                                                                                              th:field="*{frenchDescription}" th:text="${picture.getDescriptions().size() > 1 ? picture.getDescriptions().get(1).getString() : picture.getDescriptions().size()}"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
@@ -244,15 +244,12 @@
                                                                             <tr th:each="sb : ${picture.getAudios()}">
                                                                                 <td th:text="${{sb.id}}">13/01/2011</td>
                                                                                 <td
-                                                                                        th:text="${{sb.getNames().get(0).getString()}}">13/01/2011</td>
+                                                                                        th:text="${{sb.getAudio().getNames().get(0).getString()}}">13/01/2011</td>
                                                                                 <td>
                                                                                     <div class="hidden-sm hidden-xs btn-group">
 
 
-                                                                                        <a th:href='${"/siteedit/"+sb.id}'><button
-                                                                                                class="btn btn-xs btn-info">
-                                                                                            <i class="ace-icon fa fa-arrow bigger-120"></i>
-                                                                                        </button></a> <a th:href='${"/deleteaudio/"+sb.id}'><button
+                                                                                        <a th:href='${"/deleteaudio/"+sb.id}'><button
                                                                                             class="btn btn-xs btn-danger">
                                                                                         <i
                                                                                                 class="ace-icon fa fa-trash-o bigger-120"></i>
