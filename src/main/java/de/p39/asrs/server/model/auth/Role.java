@@ -2,10 +2,7 @@ package de.p39.asrs.server.model.auth;
 
 import java.util.Set;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import de.p39.asrs.server.model.BaseEntity;
 
@@ -15,6 +12,8 @@ import de.p39.asrs.server.model.BaseEntity;
  * @author adrianrebmann
  *
  */
+@Entity
+
 public class Role extends BaseEntity<Long> {
 
 	/**

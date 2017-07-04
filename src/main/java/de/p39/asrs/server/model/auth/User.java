@@ -2,13 +2,7 @@ package de.p39.asrs.server.model.auth;
 
 import java.util.Set;
 
-import javax.persistence.JoinTable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import de.p39.asrs.server.model.BaseEntity;
 /**
@@ -16,6 +10,8 @@ import de.p39.asrs.server.model.BaseEntity;
  * @author adrianrebmann
  *
  */
+@Entity
+
 public class User extends BaseEntity<Long>{
 
 	/**
