@@ -32,22 +32,22 @@ public class HomeController {
 
     @GetMapping("/")
     public String home1() {
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/home")
     public String home() {
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/admin")
     public String admin() {
-        return "/admin";
+        return "admin";
     }
 
     @GetMapping("/user")
     public String user() {
-        return "/user";
+        return "user";
     }
 
     @GetMapping("/login")
@@ -56,44 +56,44 @@ public class HomeController {
                 = SecurityContextHolder.getContext().getAuthentication();
 
         if (!auth.getPrincipal().equals("anonymousUser")) {
-        return "/home";
+        return "home";
         }
 
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/403")
     public String error403() {
-        return "/error/403";
+        return "error/403";
     }
     
     @GetMapping("/upload")
     public String upload(){
-    	return "/upload";
+    	return "upload";
     }
     
     @GetMapping("/uploadkml")
     public String uploadkml(){
-    	return "/uploadkml";
+    	return "uploadkml";
     }
     
     @GetMapping("/routeoverview")
     public String route(Model model){
     	model.addAttribute("allRoutes", RoutedaoInterface.getAllRoutes());
 
-        return "/routeoverview";
+        return "routeoverview";
     }
 
     @GetMapping("/locationoverview")
     public String site(Model model){
         model.addAttribute("allSites", SiteDaoInterface.getAllSites());
 
-        return "/siteoverview";
+        return "siteoverview";
     }
     @GetMapping("/newroute")
     public String createroute(Model model){
 
-        return "/kmlupload";
+        return "kmlupload";
     }
 
     @GetMapping("/newsite")
@@ -101,7 +101,7 @@ public class HomeController {
         model.addAttribute("SiteInfo", new SiteInfo());
         model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType(CategoryType.SITE));
 
-        return "/siteform";
+        return "siteform";
     }
 
     @GetMapping("/siteedit/{id}")
@@ -115,7 +115,7 @@ public class HomeController {
     @GetMapping("/newcategory")
     public String createcategory(Model model){
         model.addAttribute("CategoryInfo", new CategoryInfo());
-        return "/newcategory";
+        return "newcategory";
     }
 
     @GetMapping("/categoryedit/{id}")
