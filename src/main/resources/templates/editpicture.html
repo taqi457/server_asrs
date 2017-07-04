@@ -34,7 +34,9 @@
                                                 <h4 class="widget-title">Bild</h4>
                                             </div>
                                             <div class="widget-body">
-                                                <img th:src="${picture.getPath()}" />
+                                                <div class="widget-main">
+                                                <img th:src='${"/image/"+picture.getNames().get(0).getString()}' class="img-responsive"/>
+                                                </div>
                                             </div>
                                             </div>
                                         </div>
@@ -44,7 +46,7 @@
                                       th:action="@{/editpicture}" th:object="${PictureInfo}" method="post"
                                       enctype="multipart/form-data">
                                     <input type="hidden" th:value="${picture.getId()}" name="pictureid" />
-                                    <input type="hidden" th:vale="${siteid}" name="siteid" />
+                                    <input type="hidden" th:value="${siteid}" name="siteid" />
                                     <div>
                                         <div class="step-content pos-rel">
                                             <div class="step-pane active" data-step="1">
@@ -68,7 +70,7 @@
 
                                                                                 <div class="col-xs-12 col-sm-9">
                                                                                     <div class="clearfix">
-                                                                                        <input type="file" name="audios"
+                                                                                        <input type="file" name="audio_de"
                                                                                                id="id-input-audio-de"
                                                                                                class="col-xs-12 col-sm-6" />
                                                                                     </div>
@@ -81,7 +83,7 @@
 
                                                                                 <div class="col-xs-12 col-sm-9">
                                                                                     <div class="clearfix">
-                                                                                        <input type="file" name="audios"
+                                                                                        <input type="file" name="audio_en"
                                                                                                id="id-input-audio-en"
                                                                                                class="col-xs-12 col-sm-6" />
                                                                                     </div>
@@ -94,7 +96,7 @@
 
                                                                                 <div class="col-xs-12 col-sm-9">
                                                                                     <div class="clearfix">
-                                                                                        <input type="file" name="audios"
+                                                                                        <input type="file" name="audio_fr"
                                                                                                id="id-input-audio-fr"
                                                                                                class="col-xs-12 col-sm-6" />
                                                                                     </div>
@@ -147,7 +149,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionDE" id="descriptionDE"
-                                                                                              th:field="*{germanDescription}" th:value="${picture.getDescription().get(0)}"
+                                                                                              th:field="*{germanDescription}" th:value="${picture.getDescriptions().size() > 0 ? picture.getDescriptions().get(0) : ''}"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
@@ -160,7 +162,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionEN" id="descriptionEN"
-                                                                                              th:field="*{englishDescription}" th:value="${picture.getDescription().get(2)}"
+                                                                                              th:field="*{englishDescription}" th:value="${picture.getDescriptions().size() > 2 ? picture.getDescriptions().get(2) : '' }"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
@@ -173,7 +175,7 @@
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
 																					<textarea name="descriptionFR" id="descriptionFR"
-                                                                                              th:field="*{frenchDescription}" th:value="${picture.getDescription().get(1)}"
+                                                                                              th:field="*{frenchDescription}" th:value="${picture.getDescriptions().size() > 1 ? picture.getDescriptions().get(1) : ''}"
                                                                                               class="col-xs-12 col-sm-6"></textarea>
                                                                             </div>
                                                                         </div>
@@ -316,7 +318,6 @@
                         <!-- PAGE CONTENT ENDS -->
                     </div>
                     <!-- /.col -->
-                </div>
                 <!-- /.row -->
             </div>
             <!-- /.page-content -->
@@ -483,7 +484,73 @@
         //pre-show a file name, for example a previously selected file
         //$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
 
-        $('#id-input-audio')
+        $('#id-input-audio-de')
+            .ace_file_input(
+                {
+                    style : 'well',
+                    btn_choose : 'Audio-Dateien hier rein ziehen oder klicken um sie auszuwählen',
+                    btn_change : null,
+                    no_icon : 'ace-icon fa fa-cloud-upload',
+                    droppable : true,
+                    thumbnail : 'large',//large | fit
+                    whitelist : 'kml'
+                    //,icon_remove:null//set null, to hide remove/reset button
+                    /**,before_change:function(files, dropped) {
+											//Check an example below
+											//or examples/file-upload.html
+											return true;
+										}*/
+                    /**,before_remove : function() {
+											return true;
+										}*/
+                    ,
+                    preview_error : function(filename, error_code) {
+                        //name of the file that failed
+                        //error_code values
+                        //1 = 'FILE_LOAD_FAILED',
+                        //2 = 'IMAGE_LOAD_FAILED',
+                        //3 = 'THUMBNAIL_FAILED'
+                        //alert(error_code);
+                    }
+
+                }).on('change', function() {
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-audio-en')
+            .ace_file_input(
+                {
+                    style : 'well',
+                    btn_choose : 'Audio-Dateien hier rein ziehen oder klicken um sie auszuwählen',
+                    btn_change : null,
+                    no_icon : 'ace-icon fa fa-cloud-upload',
+                    droppable : true,
+                    thumbnail : 'large',//large | fit
+                    whitelist : 'kml'
+                    //,icon_remove:null//set null, to hide remove/reset button
+                    /**,before_change:function(files, dropped) {
+											//Check an example below
+											//or examples/file-upload.html
+											return true;
+										}*/
+                    /**,before_remove : function() {
+											return true;
+										}*/
+                    ,
+                    preview_error : function(filename, error_code) {
+                        //name of the file that failed
+                        //error_code values
+                        //1 = 'FILE_LOAD_FAILED',
+                        //2 = 'IMAGE_LOAD_FAILED',
+                        //3 = 'THUMBNAIL_FAILED'
+                        //alert(error_code);
+                    }
+
+                }).on('change', function() {
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-audio-fr')
             .ace_file_input(
                 {
                     style : 'well',

@@ -18,7 +18,7 @@ public class AuthenticationDAO {
 
 	public User findByUsername(String username) {
 		try {
-			Query q = this.cf.createQuery("SELECT e FROM " + User.class.getName() + " e WHERE name = :name");
+			Query q = this.cf.createQuery("SELECT e FROM " + User.class.getName() + " e WHERE username = :name");
 			q.setParameter("name", username);
 			return (User) q.getResultList().get(0);
 		} catch (NullPointerException e) {
