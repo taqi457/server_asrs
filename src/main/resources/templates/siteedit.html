@@ -1,13 +1,21 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+<meta http-equiv="content-language" content="de" />
+<meta name="author" content="Thomas Heiles" />
 <head>
 <title>Sehenswürdigkeit editieren - Saarromanus</title>
+
 <div th:replace="fragments/header :: header-css" />
 
+	<script type="text/javascript" src="/js/popup.js"></script>
+
 </head>
-<body class="no-skin">
+<body class="no-skin" onload="drawmap();">
 	<div th:replace="fragments/header :: header" />
 	<div class="main-container ace-save-state" id="main-container">
 		<div th:replace="fragments/sidebar :: sidebar" />
@@ -154,6 +162,18 @@
 																				</div>
 																			</div>
 																		</div>
+																		<div class="form-group">
+																			<label
+																					class="control-label col-xs-12 col-sm-3 no-padding-right"
+																					for="latitude">Karte</label>
+
+																			<div class="col-xs-12 col-sm-9">
+																				<div class="clearfix">
+																					<a class="map" target="_top" th:href='${"/sitemap/" + site.getId()}' onclick="myPopUp( this.href, 800, 600; return( false );">Karte</a>
+																				</div>
+																			</div>
+																		</div>
+
 																	</div>
 																</div>
 															</div>

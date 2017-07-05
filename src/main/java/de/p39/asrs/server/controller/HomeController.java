@@ -132,5 +132,10 @@ public class HomeController {
         model.addAttribute("categories", CategoryDaoInterface.getAllCategories());
         return "categoriesoverview";
     }
+    @GetMapping("/sitemap/{id}")
+    public String getMao(@PathVariable("id") Long id, Model model){
+        model.addAttribute("site", SiteDaoInterface.getSiteById(id));
+        return "map";
+    }
 
 }

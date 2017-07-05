@@ -95,7 +95,6 @@ public class UserController {
 
             user.setPassword(bcrypt.encode(info.getPassword()));
         }
-        user.setPassword(info.getPassword());
         authDAO.update(user);
         return "redirect:/edituser/" + id;
     }
