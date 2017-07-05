@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-      xmlns="http://www.w3.org/1999/xhtml">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>Neue Route erstellen - Saarromanus</title>
+    <title>User bearbeiten erstellen - Saarromanus</title>
     <div th:replace="fragments/header :: header-css" />
 
 </head>
@@ -18,72 +18,74 @@
 
                 <div class="page-header">
                     <h1>
-                        Neue Route erstellen
+                        User bearbeiten
                     </h1>
                 </div><!-- /.page-header -->
 
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
-<div class="widget-box">
+
                         <div class="widget-body">
                             <div class="widget-main">
                                 <div id="fuelux-wizard-container">
-                                    <div>
-                                        <ul class="steps">
-                                            <li data-step="1" class="active">
-                                                <span class="step">1</span>
-                                                <span class="title">Hochladen der KML</span>
-                                            </li>
-
-                                            <li data-step="2">
-                                                <span class="step">2</span>
-                                                <span class="title">Weitere Informationen angeben</span>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-
-                                    <hr />
-
-
                                     <div class="step-content pos-rel">
                                         <div class="step-pane active" data-step="1">
                                             <h3 class="lighter block green">Bitte füllen Sie die untenstehenden Felder aus</h3>
 
-                                            <form class="form-horizontal" id="validation-form" action="/kml" enctype="multipart/form-data" method="POST">
+                                            <form class="form-horizontal" id="validation-form" th:action="@{/edituser}" th:object="${UserInfo}" method="post" enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="widget-box">
                                                             <div class="widget-header">
                                                                 <h4 class="widget-title">
-                                                                    Hochladen der .kml-Datei
+                                                                    User-Informationen
                                                                 </h4>
                                                             </div>
                                                             <div class="widget-body">
                                                                 <div class="widget-main">
+                                                                    <div style="align-content: center">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="username">Username</label>
+                                                                            <input type="hidden" name="id" th:value="${user.getId()}"/>
+                                                                            <div class="col-xs-12 col-sm-9">
+                                                                                <div class="clearfix">
+                                                                                    <input type="text" name="username" id="username"
+                                                                                           th:value="${user.getUsername()}"
+                                                                                           class="col-xs-12 col-sm-6" />                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password">Passwort</label>
 
-                                                                    <div class="form-group">
-                                                                        <div class="col-xs-12">
-                                                                            <input type="file" id="id-input-file-3" name="kml"/>
+                                                                            <div class="col-xs-12 col-sm-9">
+                                                                                <div class="clearfix">
+                                                                                    <input type="password" name="password" id="password" th:field="*{password}" class="col-xs-12 col-sm-6" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="confirm_password">Passwort wiederholen</label>
+
+                                                                            <div class="col-xs-12 col-sm-9">
+                                                                                <div class="clearfix">
+                                                                                    <input type="password" name="confirm_password" id="confirm_password" class="col-xs-12 col-sm-6" />
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                                 <div class="wizard-actions">
 
                                                     <button class="btn btn-success btn-next" type="submit" >
-                                                        Weiter
+                                                        Abschicken
                                                         <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                                                     </button>
                                                 </div>
-
                                             </form>
                                         </div>
 
@@ -93,7 +95,7 @@
 
                             </div><!-- /.widget-main -->
                         </div><!-- /.widget-body -->
-                        </div>
+
 
                         <!-- PAGE CONTENT ENDS -->
                     </div><!-- /.col -->
@@ -125,7 +127,7 @@
         number: "Please enter a valid number.",
         digits: "Please enter only digits.",
         creditcard: "Please enter a valid credit card number.",
-        equalTo: "Please enter the same value again.",
+        equalTo: "Passwörter müssen übereinstimmen.",
         accept: "Please enter a value with a valid extension.",
         maxlength: jQuery.validator.format("Please enter no more than {0} characters."),
         minlength: jQuery.validator.format("Please enter at least {0} characters."),
@@ -140,6 +142,60 @@
 
         $('[data-rel=tooltip]').tooltip();
         //documentation : http://docs.jquery.com/Plugins/Validation/validate
+
+
+        $('#validation-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+                username: {
+                    required: true
+                },
+                password: {
+                    required: false
+                },
+                confirm_password: {
+                    equalTo: "#password"
+
+                }
+            },
+
+
+
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                $(e).remove();
+            },
+
+            errorPlacement: function (error, element) {
+                if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if(element.is('.select2')) {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+                else if(element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                }
+                else error.insertAfter(element.parent());
+            },
+
+            submitHandler: function (form) {
+                form.submit();
+            },
+            invalidHandler: function (form) {
+            }
+        });
+
+
 
 
         $('#modal-wizard-container').ace_wizard();
@@ -178,9 +234,40 @@
         //$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
 
 
-        $('#id-input-file-3').ace_file_input({
+        $('#id-input-audio').ace_file_input({
             style: 'well',
-            btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_choose: 'Audio-Dateien hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist:'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+            /**,before_remove : function() {
+						return true;
+					}*/
+            ,
+            preview_error : function(filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
+
+        }).on('change', function(){
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-picture').ace_file_input({
+            style: 'well',
+            btn_choose: '.Bilder hier rein ziehen oder klicken um sie auszuwählen',
             btn_change: null,
             no_icon: 'ace-icon fa fa-cloud-upload',
             droppable: true,

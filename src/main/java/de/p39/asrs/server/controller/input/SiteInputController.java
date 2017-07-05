@@ -121,7 +121,7 @@ public class SiteInputController {
     private Site edit(SiteInfo info, Long id, MultipartFile[] audios, MultipartFile picture, Long category) {
         Site site = sitedao.getSiteById(id);
         site = this.uploadMedia(site, audios, picture);
-        this.addInfo(site, info);
+        site = this.addInfo(site, info);
         site.setCategory(categoryDAO.getCategoryById(category));
         System.out.println(site.getPictures().size());
         return site;
@@ -195,15 +195,16 @@ public class SiteInputController {
             }
         }
         picture.setAudios(newaudios);
-        if (p.isEmpty())
+        if (p.isEmpty()) {
             return picture;
+        }
         String path = storageService.store(p, FileType.PICTURE);
         //TODO create different sizes and add paths like this:
         picture.addPath(Size.LARGE, path);
         List<LocaleName> names = new ArrayList<>();
         names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
         picture.setNames(names);
-        site.addPicture(picture);
+
         return picture;
     }
 
@@ -278,6 +279,7 @@ public class SiteInputController {
             descriptions.add(description);
         }
         p.setDescriptions(descriptions);
+
         return p;
     }
 
@@ -290,17 +292,27 @@ public class SiteInputController {
                 .body(file);
     }
 
-    @PostMapping("newpicture")
+    @PostMapping("uploadpicture")
     public String HandlePictureUpload(@ModelAttribute PictureInfo info, Model model, @RequestParam("audio_de") MultipartFile audio_de,
                                       @RequestParam("audio_fr") MultipartFile audio_fr, @RequestParam("audio_en") MultipartFile audio_en,
-                                      @RequestParam("picture") MultipartFile picture, @RequestParam("id") Long id, @RequestParam("button") String button){
+                                      @RequestParam("picture") MultipartFile picture, @RequestParam("siteid") Long id, @RequestParam("button") String button){
         Picture p = new Picture();
         MultipartFile[] audios = {audio_de, audio_fr, audio_en};
+        Site site = sitedao.getSiteById(id);
         p = addInfoPicture(p, info);
-        this.uploadMediaPicture(sitedao.getSiteById(id), audios, picture, p);
-        if (button.equals("complete"))
+        p = this.uploadMediaPicture(site, audios, picture, p);
+        for (Picture pic : site.getPictures()){
+            if (pic.getId() == p.getId()) {
+                pic = p;
+                site.getPictures().remove(pic);
+                break;
+            }
+        }
+        site.addPicture(p);
+        sitedao.updateSite(site);
+        if (button.equals("finish"))
             return "redirect:siteedit/" + id;
-        else if(button.equals("upload")){
+        else if(button.equals("continue")){
             model.addAttribute("id", id);
             model.addAttribute("PictureInfo", new PictureInfo());
             return "uploadpictures";
@@ -321,12 +333,20 @@ public class SiteInputController {
     @PostMapping("editpicture")
     public String HandlePictureUpload(@ModelAttribute PictureInfo info, Model model, @RequestParam("audio_de") MultipartFile audio_de,
                                       @RequestParam("audio_fr") MultipartFile audio_fr, @RequestParam("audio_en") MultipartFile audio_en,
-                                      @RequestParam("picture") MultipartFile picture, @RequestParam("siteid") Long siteid,@RequestParam("pictureid") Long pictureid){
+                                      @RequestParam("siteid") Long siteid,@RequestParam("pictureid") Long pictureid, @RequestParam("picture") MultipartFile picture){
         Picture p = mediumDAO.getPictureById(pictureid);
+        Site site = sitedao.getSiteById(siteid);
         MultipartFile[] audios = {audio_de, audio_fr, audio_en};
         p = addInfoPicture(p, info);
-        p = this.uploadMediaPicture(sitedao.getSiteById(siteid), audios, picture, p);
-        mediumDAO.updatePicture(p);
+        p = this.uploadMediaPicture(site, audios,picture, p);
+        for (Picture pic : site.getPictures()){
+            if (pic.getId() == p.getId()) {
+                site.getPictures().remove(pic);
+                break;
+            }
+        }
+        site.addPicture(p);
+        sitedao.updateSite(site);
         return "redirect:siteedit/"+ siteid +"/editpicture/"+ pictureid;
     }
 
@@ -379,10 +399,11 @@ public class SiteInputController {
 	}*/
 
 
-    @ExceptionHandler(StorageException.class)
+    /*@ExceptionHandler(StorageException.class)
     public ResponseEntity<Object> handleStorageFileNotFound(StorageException exc) {
         return ResponseEntity.notFound().build();
     }
+    */
     @RequestMapping(value = "image/{imageName}")
     @ResponseBody
     public byte[] getImage(@PathVariable(value = "imageName") String imageName) throws IOException {
