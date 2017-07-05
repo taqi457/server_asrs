@@ -122,6 +122,8 @@ public class HomeController {
     public String editcategory(Model model, @PathVariable Long id){
         model.addAttribute("category", CategoryDaoInterface.getCategoryById(id));
         model.addAttribute("CategoryInfo", new CategoryInfo());
+        model.addAttribute("ROUTE", CategoryType.ROUTE);
+        model.addAttribute("SITE", CategoryType.SITE);
         return "categoryedit";
     }
 

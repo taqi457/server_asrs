@@ -211,12 +211,6 @@ public class RouteInputController {
 			LocaleDescription description = new LocaleDescription(Locale.FRENCH, info.getDescriptionFR());
 			descriptions.add(1, description);
 		}
-		if (info.getDurationByFoot() != null) {
-			r.setDurationByFoot(info.getDurationByFoot());
-		}
-		if (info.getDurationByBike() != null) {
-			r.setDurationByBike(info.getDurationByBike());
-		}
 		if (info.getCategory() != null) {
 			r.setCategory(CategoryDaoInterface.getCategoryById(info.getCategory()));
 		}

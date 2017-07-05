@@ -638,10 +638,11 @@
 						});
 	</script>
 	<script type="text/javascript">
-		jQuery(function($) {
-			$.validator.addMethod("regx", function(value, element, regexpr) {
-				return regexpr.test(value);
-			}, "Bitte Punkt als Trennzeichen verwenden.");
+        jQuery.validator.addMethod("double", function (value, element) {
+            return this.optional(element) || /^\d*\.\d*$/.test(value);
+        }, "Wert muss mit einem Punkt getrennt werden");
+
+        jQuery(function($) {
 			$('[data-rel=tooltip]').tooltip();
 			//documentation : http://docs.jquery.com/Plugins/Validation/validate
 
@@ -672,11 +673,11 @@
 										required : true
 									},
 									longitude : {
-										regx : /^\d*.\d*$/,
+										double: "required",
 										required : true
 									},
 									latitude : {
-										regx : /^\d*.\d*$/,
+                                        double: "required",
 										required : true
 									}
 								},
@@ -758,7 +759,7 @@
 
             $('#id-input-audio-de').ace_file_input({
                 style: 'well',
-                btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+                btn_choose: 'Deutsche Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
                 btn_change: null,
                 no_icon: 'ace-icon fa fa-cloud-upload',
                 droppable: true,
@@ -789,7 +790,7 @@
             });
             $('#id-input-audio-fr').ace_file_input({
                 style: 'well',
-                btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+                btn_choose: 'Französische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
                 btn_change: null,
                 no_icon: 'ace-icon fa fa-cloud-upload',
                 droppable: true,
@@ -820,7 +821,7 @@
             });
             $('#id-input-audio-en').ace_file_input({
                 style: 'well',
-                btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+                btn_choose: 'Englische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
                 btn_change: null,
                 no_icon: 'ace-icon fa fa-cloud-upload',
                 droppable: true,
@@ -853,7 +854,7 @@
 					.ace_file_input(
 							{
 								style : 'well',
-								btn_choose : '.Bilder hier rein ziehen oder klicken um sie auszuwählen',
+								btn_choose : '.Bild hier rein ziehen oder klicken um es auszuwählen',
 								btn_change : null,
 								no_icon : 'ace-icon fa fa-cloud-upload',
 								droppable : true,

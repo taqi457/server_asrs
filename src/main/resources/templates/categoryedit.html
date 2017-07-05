@@ -85,13 +85,13 @@
                                                                 <div class="widget-main">
 
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="category">Typ</label>
+                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="type">Typ</label>
 
                                                                         <div class="col-xs-12 col-sm-9">
                                                                             <div class="clearfix">
-                                                                                <select name="category" id="category" class="col-xs-12 col-sm-6">
-                                                                                    <option value="site" th:selected="${category.getType().equals('site')}">Sehenswürdigkeit</option>
-                                                                                    <option value="route" th:selected="${category.getType().equals('route')}">Route</option>
+                                                                                <select name="type" id="type" class="col-xs-12 col-sm-6">
+                                                                                    <option value="site" th:selected='${category.getType() == SITE}'>Sehenswürdigkeit</option>
+                                                                                    <option value="route" th:selected='${category.getType() == ROUTE}'>Route</option>
 
                                                                                 </select>
                                                                             </div>
@@ -236,12 +236,6 @@
                 descriptionFR: {
                     required: true
                 },
-                longitude: {
-                    required: true
-                },
-                latitude: {
-                    required: true
-                }
             },
 
 
