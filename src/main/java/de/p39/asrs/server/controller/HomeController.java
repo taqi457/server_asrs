@@ -122,6 +122,8 @@ public class HomeController {
     public String editcategory(Model model, @PathVariable Long id){
         model.addAttribute("category", CategoryDaoInterface.getCategoryById(id));
         model.addAttribute("CategoryInfo", new CategoryInfo());
+        model.addAttribute("ROUTE", CategoryType.ROUTE);
+        model.addAttribute("SITE", CategoryType.SITE);
         return "categoryedit";
     }
 
@@ -129,6 +131,11 @@ public class HomeController {
     public String categoriesoverview(Model model){
         model.addAttribute("categories", CategoryDaoInterface.getAllCategories());
         return "categoriesoverview";
+    }
+    @GetMapping("/sitemap/{id}")
+    public String getMao(@PathVariable("id") Long id, Model model){
+        model.addAttribute("site", SiteDaoInterface.getSiteById(id));
+        return "map";
     }
 
 }

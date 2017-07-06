@@ -1,13 +1,21 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta http-equiv="content-style-type" content="text/css" />
+<meta http-equiv="content-language" content="de" />
+<meta name="author" content="Thomas Heiles" />
 <head>
 <title>Sehenswürdigkeit editieren - Saarromanus</title>
+
 <div th:replace="fragments/header :: header-css" />
 
+	<script type="text/javascript" src="/js/popup.js"></script>
+
 </head>
-<body class="no-skin">
+<body class="no-skin" onload="drawmap();">
 	<div th:replace="fragments/header :: header" />
 	<div class="main-container ace-save-state" id="main-container">
 		<div th:replace="fragments/sidebar :: sidebar" />
@@ -25,7 +33,22 @@
 						<div class="col-xs-12">
 							<!-- PAGE CONTENT BEGINS -->
 							<div class="widget-box">
-
+								<div class="widget-main">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="widget-box">
+												<div class="widget-header">
+													<h4 class="widget-title">Hauptbild</h4>
+												</div>
+												<div class="widget-body">
+													<div class="widget-main">
+														<img th:src='${"/image/"+site.getThumbnail().getNames().get(0).getString()}' class="img-responsive"/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 									<div class="widget-main">
 										<form class="form-horizontal" id="validation-form"
 											  th:action="@{/editsite}" th:object="${SiteInfo}" method="post"
@@ -139,6 +162,18 @@
 																				</div>
 																			</div>
 																		</div>
+																		<div class="form-group">
+																			<label
+																					class="control-label col-xs-12 col-sm-3 no-padding-right"
+																					for="latitude">Karte</label>
+
+																			<div class="col-xs-12 col-sm-9">
+																				<div class="clearfix">
+																					<a class="map" target="_top" th:href='${"/sitemap/" + site.getId()}' onclick="myPopUp( this.href, 800, 600; return( false );">Karte</a>
+																				</div>
+																			</div>
+																		</div>
+
 																	</div>
 																</div>
 															</div>
@@ -589,7 +624,7 @@
 	<script th:src="@{/js/wizard.min.js}" src="../../js/wizard.min.js"></script>
 	<script th:src="@{/js/jquery.validate.min.js}"
 		src="../../js/jquery.validate.min.js"></script>
-	<script th:src="@{js/jquery-additional-methods.min.js}"
+	<script th:src="@{/js/jquery-additional-methods.min.js}"
 		src="../../js/jquery-additional-methods.min.js"></script>
 	<script th:src="@{/js/bootbox.js}" src="../../js/bootbox.js"></script>
 	<script type="text/javascript">
@@ -623,10 +658,11 @@
 						});
 	</script>
 	<script type="text/javascript">
-		jQuery(function($) {
-			$.validator.addMethod("regx", function(value, element, regexpr) {
-				return regexpr.test(value);
-			}, "Bitte Punkt als Trennzeichen verwenden.");
+        jQuery.validator.addMethod("double", function (value, element) {
+            return this.optional(element) || /^\d*\.\d*$/.test(value);
+        }, "Wert muss mit einem Punkt getrennt werden");
+
+        jQuery(function($) {
 			$('[data-rel=tooltip]').tooltip();
 			//documentation : http://docs.jquery.com/Plugins/Validation/validate
 
@@ -657,11 +693,11 @@
 										required : true
 									},
 									longitude : {
-										regx : /^\d*.\d*$/,
+										double: "required",
 										required : true
 									},
 									latitude : {
-										regx : /^\d*.\d*$/,
+                                        double: "required",
 										required : true
 									}
 								},
@@ -743,7 +779,7 @@
 
             $('#id-input-audio-de').ace_file_input({
                 style: 'well',
-                btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+                btn_choose: 'Deutsche Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
                 btn_change: null,
                 no_icon: 'ace-icon fa fa-cloud-upload',
                 droppable: true,
@@ -774,7 +810,7 @@
             });
             $('#id-input-audio-fr').ace_file_input({
                 style: 'well',
-                btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+                btn_choose: 'Französische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
                 btn_change: null,
                 no_icon: 'ace-icon fa fa-cloud-upload',
                 droppable: true,
@@ -805,7 +841,7 @@
             });
             $('#id-input-audio-en').ace_file_input({
                 style: 'well',
-                btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+                btn_choose: 'Englische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
                 btn_change: null,
                 no_icon: 'ace-icon fa fa-cloud-upload',
                 droppable: true,
@@ -838,7 +874,7 @@
 					.ace_file_input(
 							{
 								style : 'well',
-								btn_choose : '.Bilder hier rein ziehen oder klicken um sie auszuwählen',
+								btn_choose : '.Bild hier rein ziehen oder klicken um es auszuwählen',
 								btn_change : null,
 								no_icon : 'ace-icon fa fa-cloud-upload',
 								droppable : true,

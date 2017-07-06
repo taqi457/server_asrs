@@ -296,12 +296,12 @@ public class Site extends NamedEntity {
 			
 	}
 
-	@OneToOne(targetEntity= Picture.class,fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL,targetEntity= Picture.class,fetch = FetchType.EAGER)
 	public Picture getThumbnail() {
 		return thumbnail;
 	}
 
-	@OneToOne(targetEntity=Picture.class,fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL,targetEntity=Picture.class,fetch = FetchType.EAGER)
 	public void setThumbnail(Picture thumbnail) {
 		this.thumbnail = thumbnail;
 	}

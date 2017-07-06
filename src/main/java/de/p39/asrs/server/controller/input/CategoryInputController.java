@@ -45,6 +45,7 @@ public class CategoryInputController {
 		categoryDAO.updateCategory(category);
 		category.setType(CategoryType.SITE);
 		model.addAttribute("category", categoryDAO.getCategoryById(id));
+
 		return "redirect:categoryedit/" + id;
 	}
 

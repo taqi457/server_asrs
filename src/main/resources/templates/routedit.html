@@ -97,24 +97,6 @@ Route editieren                    </h1>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group">
-                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="durationByFoot">Dauer zu Fuß(in Minuten)</label>
-
-                                                                        <div class="col-xs-12 col-sm-9">
-                                                                            <div class="clearfix">
-                                                                                <input type="text" name="durationByFoot" id="durationByFoot" th:value="${route.getDurationByFoot()}" class="col-xs-12 col-sm-6" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="durationByBike">Dauer mit Fahrrad (in Minuten)</label>
-
-                                                                        <div class="col-xs-12 col-sm-9">
-                                                                            <div class="clearfix">
-                                                                                <input type="text" name="durationByBike" id="durationByBike" th:value="${route.getDurationByBike()}" class="col-xs-12 col-sm-6" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -485,7 +467,7 @@ Route editieren                    </h1>
         src="../../js/wizard.min.js"></script>
 <script th:src="@{/js/jquery.validate.min.js}"
         src="../../js/jquery.validate.min.js"></script>
-<script th:src="@{js/jquery-additional-methods.min.js}"
+<script th:src="@{/js/jquery-additional-methods.min.js}"
         src="../../js/jquery-additional-methods.min.js"></script>
 <script th:src="@{/js/bootbox.js}"
         src="../../js/bootbox.js"></script>
@@ -541,12 +523,6 @@ Route editieren                    </h1>
                 descriptionFR: {
                     required: true
                 },
-                durationByFoot: {
-                    required: true
-                },
-                durationByBike: {
-                    required: true
-                }
             },
 
 
@@ -623,7 +599,7 @@ Route editieren                    </h1>
 
         $('#id-input-audio-de').ace_file_input({
             style: 'well',
-            btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_choose: 'Deutsche Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
             btn_change: null,
             no_icon: 'ace-icon fa fa-cloud-upload',
             droppable: true,
@@ -654,7 +630,7 @@ Route editieren                    </h1>
         });
         $('#id-input-audio-fr').ace_file_input({
             style: 'well',
-            btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_choose: 'Französische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
             btn_change: null,
             no_icon: 'ace-icon fa fa-cloud-upload',
             droppable: true,
@@ -685,7 +661,7 @@ Route editieren                    </h1>
         });
         $('#id-input-audio-en').ace_file_input({
             style: 'well',
-            btn_choose: '.kml-Datei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_choose: 'Englische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
             btn_change: null,
             no_icon: 'ace-icon fa fa-cloud-upload',
             droppable: true,
