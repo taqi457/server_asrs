@@ -29,7 +29,7 @@ public class SiteController {
 		if(!kind.equals("all")){
     		throw new BadRequestException("Specifiy an ID by /site/{id} or all by /site?kind=all");
     	}
-    	return daoInterface.getAllSites();
+    	return daoInterface.getAllSitesCompleted();
     }
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

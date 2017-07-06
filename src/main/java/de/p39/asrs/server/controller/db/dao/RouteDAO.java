@@ -42,7 +42,14 @@ public class RouteDAO{
 	public List<Route> getAllRoutes() {
 				return this.cf.findAll(Route.class);
 	}
-	
+
+	public List<Route> getAllRoutesCompleted() {
+
+		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE completed = true");
+		return (List<Route>) q.getResultList();
+	}
+
+
 	public void deleteRoute(Long id) {
 		this.cf.delete(id, Route.class);
 	}

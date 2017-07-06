@@ -6,8 +6,11 @@ import java.util.List;
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.LocaleName;
+import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 import de.p39.asrs.server.model.media.Picture;
+
+import javax.persistence.Query;
 
 public class SiteDAO{
 
@@ -29,6 +32,13 @@ public class SiteDAO{
 	public List<Site> getAllSites() {
 		return this.cf.findAll(Site.class);
 	}
+
+	public List<Site> getAllSitesCompleted() {
+
+		Query q = this.cf.createQuery("SELECT e FROM " + Site.class.getName() + " e WHERE completed = true");
+		return (List<Site>) q.getResultList();
+	}
+
 
 	public void deleteSite(Long id) {
 		this.cf.delete(id, Site.class);
