@@ -1,11 +1,7 @@
 
 package de.p39.asrs.server.model;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -40,7 +36,7 @@ public class Route extends NamedEntity {
 	private String path;
 	private Integer durationByFoot;
 	private Integer durationByBike;
-	private Integer distanceInMeters;
+	private Double distanceInKilometers;
 
 	private Category category;
 	private double amplitude;
@@ -54,6 +50,9 @@ public class Route extends NamedEntity {
 	/**
 	 * @return the coordinates
 	 */
+
+
+
 	@OneToMany(targetEntity = Coordinate.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public List<Coordinate> getCoordinates() {
 		return coordinates;
@@ -279,12 +278,12 @@ public class Route extends NamedEntity {
 		return distance;
 	}
 
-	public Integer getDistanceInMeters() {
-		return distanceInMeters;
+	public Double getDistanceInKilometers() {
+		return distanceInKilometers;
 	}
 
-	public void setDistanceInMeters(Integer distanceInMeters) {
-		this.distanceInMeters = distanceInMeters;
+	public void setDistanceInKilometers(Double distanceInMeters) {
+		this.distanceInKilometers = distanceInMeters;
 	}
 
 	public String getPath() {

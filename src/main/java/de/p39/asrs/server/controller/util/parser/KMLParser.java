@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.persistence.Transient;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -205,13 +204,14 @@ public class KMLParser {
         for(int i = 0; i < coordinates.size()-1; i++) {
             length += coordinates.get(i).getDistance(coordinates.get(i + 1));
         }
-
-        r.setDistanceInMeters((int)Math.ceil(length));
+        length = Math.ceil(length/100);
+        length /= 10;
+        r.setDistanceInKilometers((double)(length));
     }
 
     private void calculateDurations(Route r){
-        int length = r.getDistanceInMeters();
-
+        double length = r.getDistanceInKilometers();
+        length *= 1000;
         r.setDurationByFoot((int)Math.ceil(length/speedByFoot));
         r.setDurationByBike((int)Math.ceil(length/speedByBike));
     }
