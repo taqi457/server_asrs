@@ -86,7 +86,7 @@ public class HomeController {
 
     @GetMapping("/locationoverview")
     public String site(Model model){
-        model.addAttribute("allSites", SiteDaoInterface.getAllSitesCompleted());
+        model.addAttribute("allSites", SiteDaoInterface.getAllSites());
 
         return "siteoverview";
     }
