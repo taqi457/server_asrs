@@ -48,6 +48,8 @@ public class Site extends NamedEntity {
 
 	private Category category;
 	
+	private Set<SiteCategory> categories;
+	
 	private Map<String, String> meta = new HashMap<>();
 
 	public Site() {
@@ -304,6 +306,16 @@ public class Site extends NamedEntity {
 	@OneToOne(cascade = CascadeType.ALL,targetEntity=Picture.class,fetch = FetchType.EAGER)
 	public void setThumbnail(Picture thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	public Set<SiteCategory> getCategories() {
+		return categories;
+	}
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	public void setCategories(Set<SiteCategory> categories) {
+		this.categories = categories;
 	}
 	
 	
