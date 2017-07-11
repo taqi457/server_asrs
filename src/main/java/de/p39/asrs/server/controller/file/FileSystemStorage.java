@@ -1,16 +1,25 @@
 package de.p39.asrs.server.controller.file;
 
-import java.awt.*;
+import java.awt.Image;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
+import java.util.List;
+import javax.imageio.ImageIO;
+
+import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.File;
 
 import de.p39.asrs.server.model.media.Size;
 import org.springframework.core.io.Resource;
@@ -21,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import de.p39.asrs.server.controller.exceptions.StorageException;
 
-import javax.imageio.ImageIO;
 
 /**
  * Based on https://spring.io/guides/gs/uploading-files/
@@ -63,12 +71,12 @@ public class FileSystemStorage implements Storage {
 		}
 	}
 
-	public String[] storePicture(MultipartFile file) {
+	public List<String> storePicture(MultipartFile file) {
 		try {
 			if (file.isEmpty()) {
 				throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
 			}
-			String[] result = new String[3];
+			List<String> result = new ArrayList<>();
 
             Image image = ImageIO.read(file.getInputStream());
 
@@ -88,7 +96,7 @@ public class FileSystemStorage implements Storage {
                 InputStream is = new ByteArrayInputStream(baos.toByteArray());
                 Files.copy(is, p, StandardCopyOption.REPLACE_EXISTING);
 
-                result[size.ordinal()] = p.toString();
+                result.add(p.toString());
             }
 			return result;
 		} catch (IOException e) {

@@ -33,8 +33,8 @@ public class Picture extends NamedEntity {
 	 */
 	private static final long serialVersionUID = 2524529774881275743L;
 
-	private String[] paths = new String[3];
-	
+	private List<String> paths;
+
 	public Picture(){super();}
 
 	@Id
@@ -118,44 +118,28 @@ public class Picture extends NamedEntity {
 		this.descriptions = descriptions;
 	}
 	
-	public void addPath(Size s, String p){
-		switch (s){
-			case SMALL:
-				paths[0] = p;
-				break;
-			case MEDIUM:
-				paths[1] = p;
-				break;
-			case LARGE:
-				paths[2] = p;
-				break;
-			default:
-				break;
-		}
-	}
-	
 	public String getPath(Size s){
         switch (s){
             case SMALL:
-                return paths[0];
+                return paths.get(0);
 
             case MEDIUM:
-                return paths[1] ;
+                return paths.get(1);
 
             case LARGE:
-                return paths[2] ;
+                return paths.get(2);
             default:
                 return "";
         }
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	public String[] getPaths() {
+	public List<String> getPaths() {
 		return paths;
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	public void setPaths(String[] paths) {
+	public void setPaths(List<String> paths) {
 		this.paths = paths;
 	}
 	

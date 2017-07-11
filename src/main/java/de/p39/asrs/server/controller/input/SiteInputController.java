@@ -156,7 +156,7 @@ public class SiteInputController {
         if (p.isEmpty())
             return site;
 
-        String[] paths = storageService.storePicture(p);
+        List<String> paths = storageService.storePicture(p);
         Picture picture = new Picture();
 
         picture.setPaths(paths);
@@ -196,7 +196,7 @@ public class SiteInputController {
             return picture;
         }
 
-        String[] paths = storageService.storePicture(p);
+        List<String> paths = storageService.storePicture(p);
         picture.setPaths(paths);
         List<LocaleName> names = new ArrayList<>();
         names.add(new LocaleName(Locale.GERMAN, p.getOriginalFilename()));
