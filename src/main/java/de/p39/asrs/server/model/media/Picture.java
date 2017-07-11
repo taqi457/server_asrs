@@ -134,11 +134,13 @@ public class Picture extends NamedEntity {
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	public List<String> getPaths() {
 		return paths;
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	public void setPaths(List<String> paths) {
 		this.paths = paths;
 	}

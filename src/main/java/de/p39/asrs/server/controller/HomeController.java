@@ -6,10 +6,7 @@ import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.controller.input.info.CategoryInfo;
 import de.p39.asrs.server.controller.input.info.RouteInfo;
 import de.p39.asrs.server.controller.input.info.SiteInfo;
-import de.p39.asrs.server.model.Category;
-import de.p39.asrs.server.model.CategoryType;
-import de.p39.asrs.server.model.Route;
-import de.p39.asrs.server.model.Site;
+import de.p39.asrs.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -108,7 +105,7 @@ public class HomeController {
     public String editsite(Model model, @PathVariable Long id){
         model.addAttribute("site", SiteDaoInterface.getSiteById(id));
         model.addAttribute("SiteInfo", new SiteInfo());
-        model.addAttribute("categories", CategoryDaoInterface.getCategoriesByType(CategoryType.SITE));
+        model.addAttribute("category", SiteCategory.class);
         return "siteedit";
     }
 

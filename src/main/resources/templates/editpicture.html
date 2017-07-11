@@ -349,7 +349,7 @@
                 equalTo : "Please enter the same value again.",
                 accept : "Please enter a value with a valid extension.",
                 maxlength : jQuery.validator
-                    .format("Please enter no more than {0} characters."),
+                    .format("Bitte nicht mehr als {0} Zeichen eingeben."),
                 minlength : jQuery.validator
                     .format("Please enter at least {0} characters."),
                 rangelength : jQuery.validator
@@ -364,9 +364,7 @@
 </script>
 <script type="text/javascript">
     jQuery(function($) {
-        $.validator.addMethod("regx", function(value, element, regexpr) {
-            return regexpr.test(value);
-        }, "Bitte Punkt als Trennzeichen verwenden.");
+
         $('[data-rel=tooltip]').tooltip();
         //documentation : http://docs.jquery.com/Plugins/Validation/validate
 
@@ -379,31 +377,46 @@
                     ignore : "",
                     rules : {
                         nameDE : {
-                            required : true
+                            required : true,
+                            maxlength: 27
                         },
                         nameEN : {
-                            required : true
+                            required : true,
+                            maxlength: 27
                         },
                         nameFR : {
-                            required : true
+                            required : true,
+                            maxlength: 27
                         },
                         descriptionDE : {
-                            required : true
+                            required : true,
+                            maxlength: 550
                         },
                         descriptionEN : {
-                            required : true
+                            required : true,
+                            maxlength: 550
                         },
                         descriptionFR : {
-                            required : true
+                            required : true,
+                            maxlength: 550
                         },
-                        longitude : {
-                            regx : /^\d*.\d*$/,
-                            required : true
+                        audio_en: {
+                            extension: "mp3"
+
                         },
-                        latitude : {
-                            regx : /^\d*.\d*$/,
-                            required : true
-                        }
+                        audio_de: {
+                            extension: "mp3"
+
+                        },
+                        audio_fr: {
+                            extension: "mp3"
+
+                        },
+                        picture: {
+                            extension: "png|jpg|jpeg"
+
+                        },
+
                     },
 
                     highlight : function(e) {

@@ -3,10 +3,7 @@ package de.p39.asrs.server.controller.input;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
@@ -80,9 +77,9 @@ public class SiteInputController {
     @PostMapping("/newsite")
     public String handleSiteInfo(@ModelAttribute SiteInfo info, @RequestParam("audio_de") MultipartFile audio_de,
                                  @RequestParam("audio_en") MultipartFile audio_en, @RequestParam("audio_fr") MultipartFile audio_fr,
-                                 @RequestParam("picture") MultipartFile picture, @RequestParam("button") String button, Model model) {
+                                 @RequestParam("picture") MultipartFile picture, @RequestParam("button") String button, Model model, @RequestParam("category[]") String[] categories) {
         MultipartFile[] audios = {audio_de, audio_fr, audio_en};
-        Site site = this.create(info, audios, picture);
+        Site site = this.create(info, audios, picture, categories);
         Site new_site = sitedao.insertSite(site);
         if (button.equals("finish"))
             return "redirect:siteedit/" + new_site.getId();
@@ -98,7 +95,7 @@ public class SiteInputController {
     public String handleSiteEdit(@ModelAttribute SiteInfo info, @RequestParam("audio_de") MultipartFile audio_de,
                                  @RequestParam("audio_en") MultipartFile audio_en, @RequestParam("audio_fr") MultipartFile audio_fr,
                                  @RequestParam("pictures") MultipartFile picture, Model model, @RequestParam("id")
-                                         Long id, @RequestParam("category") Long category, @RequestParam("button") String button) {
+                                         Long id, @RequestParam("category[]") String[] category, @RequestParam("button") String button) {
         MultipartFile[] audios = {audio_de, audio_fr, audio_en};
         Site site = this.edit(info, id, audios, picture, category);
         site = sitedao.updateSite(site);
@@ -112,18 +109,36 @@ public class SiteInputController {
         return "redirect:locationoverview";
     }
 
-    private Site create(SiteInfo info, MultipartFile[] audios, MultipartFile picture) {
+    private Site create(SiteInfo info, MultipartFile[] audios, MultipartFile picture,@RequestParam("category") String[] categories) {
         Site site = new Site();
         site = this.uploadMedia(site, audios, picture);
         this.addInfo(site, info);
+
         return site;
     }
 
-    private Site edit(SiteInfo info, Long id, MultipartFile[] audios, MultipartFile picture, Long category) {
+    private Site edit(SiteInfo info, Long id, MultipartFile[] audios, MultipartFile picture, String[] categories) {
         Site site = sitedao.getSiteById(id);
         site = this.uploadMedia(site, audios, picture);
         site = this.addInfo(site, info);
-        site.setCategory(categoryDAO.getCategoryById(category));
+        HashSet set_cat = new HashSet();
+        for (String category : categories){
+            switch(category){
+                case "Villa":
+                    set_cat.add(SiteCategory.MANSION);
+                    break;
+                case "Heiligtum":
+                    set_cat.add((SiteCategory.SANCTUARIES));
+                    break;
+                case "Grabstätte":
+                    set_cat.add(SiteCategory.SETTLEMENT);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        site.setCategories(set_cat);
         System.out.println(site.getPictures().size());
         return site;
     }
@@ -237,9 +252,7 @@ public class SiteInputController {
             Coordinate coordinate = new Coordinate(info.getLatitude(), info.getLongitude());
             s.setCoordinate(coordinate);
         }
-        if (info.getCategory() != null) {
-            s.setCategory(categoryDAO.getCategoryById(info.getCategory()));
-        }
+
         if (info.getWebsite() != null) {
             s.addMetaData("website", info.getWebsite());
         }
