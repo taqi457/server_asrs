@@ -1,9 +1,6 @@
 package de.p39.asrs.server.model.media;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
@@ -36,7 +33,7 @@ public class Picture extends NamedEntity {
 	 */
 	private static final long serialVersionUID = 2524529774881275743L;
 
-	private Map<Size,String> paths = new HashMap<>();
+	private String[] paths = new String[3];
 	
 	public Picture(){super();}
 
@@ -122,26 +119,43 @@ public class Picture extends NamedEntity {
 	}
 	
 	public void addPath(Size s, String p){
-		this.paths.put(s, p);
-	}
-	
-	public void removeSize(Size s){
-		this.paths.remove(s);
+		switch (s){
+			case SMALL:
+				paths[0] = p;
+				break;
+			case MEDIUM:
+				paths[1] = p;
+				break;
+			case LARGE:
+				paths[2] = p;
+				break;
+			default:
+				break;
+		}
 	}
 	
 	public String getPath(Size s){
-		return this.paths.get(s);
+        switch (s){
+            case SMALL:
+                return paths[0];
+
+            case MEDIUM:
+                return paths[1] ;
+
+            case LARGE:
+                return paths[2] ;
+            default:
+                return "";
+        }
 	}
 
-
 	@ElementCollection(fetch = FetchType.EAGER)
-	public Map<Size,String> getPaths() {
+	public String[] getPaths() {
 		return paths;
 	}
 
-
 	@ElementCollection(fetch = FetchType.EAGER)
-	public void setPaths(Map<Size,String> paths) {
+	public void setPaths(String[] paths) {
 		this.paths = paths;
 	}
 	
