@@ -23,6 +23,7 @@ import de.p39.asrs.server.model.LocaleDescription;
 import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
+import de.p39.asrs.server.model.SiteCategory;
 import de.p39.asrs.server.model.media.Audio;
 import de.p39.asrs.server.model.media.Picture;
 
@@ -103,28 +104,24 @@ public class DBTest {
 	
 	
 	private Route createDummyData(){
-		Audio a1 = new Audio();
 		Picture p1 = new Picture();
-		
-		Category c1 = new Category();
+	
 		Coordinate co1 = new Coordinate();
 		co1.setLatitude(49.257469);
 		co1.setLongitude(7.045455);		
 		
 		Site s1 = new Site();
-		s1.setCategory(c1);
+		Set<SiteCategory> cats = new HashSet<>();
+		cats.add(SiteCategory.MANSION);
 		s1.setCoordinate(co1);
 		s1.addPicture(p1);
-		Audio a2 = new Audio();
+		s1.setCategories(cats);
 		Picture p2 = new Picture();
-		
-		Category c2 = new Category();
 		Coordinate co2 = new Coordinate();
 		co2.setLatitude(49.257364);
 		co2.setLongitude(7.043245);		
 		
 		Site s2 = new Site();
-		s2.setCategory(c2);
 		s2.setCoordinate(co2);
 		s2.addPicture(p2);
 		LocaleName n1 = new LocaleName(Locale.GERMAN, "test_german");
