@@ -25,6 +25,7 @@ import de.p39.asrs.server.model.auth.User;
 import de.p39.asrs.server.model.media.Picture;
 
 /**
+ * these tests will fail if the database is unavailable
  * @author adrianrebmann
  *
  */
