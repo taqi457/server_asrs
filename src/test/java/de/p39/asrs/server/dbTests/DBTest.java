@@ -9,27 +9,22 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import de.p39.asrs.server.controller.db.CrudFacade;
 import de.p39.asrs.server.controller.db.JPACrudService;
-import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.db.dao.SiteDAO;
-import de.p39.asrs.server.model.Category;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.LocaleDescription;
 import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
 import de.p39.asrs.server.model.Site;
 import de.p39.asrs.server.model.SiteCategory;
-import de.p39.asrs.server.model.media.Audio;
+import de.p39.asrs.server.model.auth.User;
 import de.p39.asrs.server.model.media.Picture;
 
 /**
- * this pollutes your database if you don't change update to create in persistence.xml
- * therefore tests are ignored 
  * @author adrianrebmann
  *
  */
@@ -37,14 +32,13 @@ public class DBTest {
 
 	
 	@Test
-	@Ignore
 	public void createDbTest(){
 		CrudFacade cf = new JPACrudService("server");
 		assertTrue(cf.count(Route.class)>=0);
+		assertTrue(cf.count(User.class)>=1);
 	}
 	
 	@Test
-	@Ignore
 	public void routeCreationThenFindingTest(){
 		CrudFacade cf = new JPACrudService("server");
 		RouteDAO dao= new RouteDAO(cf);
@@ -57,13 +51,15 @@ public class DBTest {
 		for(Site s : r.getSites()){
 			assertTrue(s.getPictures().size()==1);
 		}
+		dao.deleteRoute(r.getId());
+		routes=dao.getAllRoutes();
+		assertTrue(routes.size()==0);
 	}
 	
 	@Test
 	public void routeCreationThenDeletingPictureOfSite(){
 		CrudFacade cf = new JPACrudService("server");
 		RouteDAO dao= new RouteDAO(cf);
-		MediumDAO mdao = new MediumDAO(cf);
 		Route r = this.createDummyData();
 		dao.instertRoute(r);
 		List<Route> routes = dao.getAllRoutes();
@@ -73,19 +69,23 @@ public class DBTest {
 		for(Site s : r.getSites()){
 			assertTrue(s.getPictures().size()==1);
 		}
+		dao.deleteRoute(r.getId());
+		routes=dao.getAllRoutes();
+		assertTrue(routes.size()==0);
 	}
 	
 	@Test
-	@Ignore
 	public void localeTest(){
 		CrudFacade cf = new JPACrudService("server");
 		cf.create(new LocaleName(Locale.GERMAN, "test"));
 		List<LocaleName> list = cf.findAll(LocaleName.class);
 		assertTrue(list.get(0).getLocale().equals(Locale.GERMAN));
+		cf.delete(list.get(0).getId(), LocaleName.class);
+		list = cf.findAll(LocaleName.class);
+		assertTrue(list.isEmpty());
 	}
 	
 	@Test
-	@Ignore
 	public void routeCreationThenFindingThenUpdateingTest(){
 		CrudFacade cf = new JPACrudService("server");
 		RouteDAO dao= new RouteDAO(cf);
@@ -100,6 +100,9 @@ public class DBTest {
 		assertTrue(routes.size()>=1);
 		r = routes.get(0);
 		dao.updateRoute(r);
+		dao.deleteRoute(r.getId());
+		routes=dao.getAllRoutes();
+		assertTrue(routes.size()==0);
 	}
 	
 	
