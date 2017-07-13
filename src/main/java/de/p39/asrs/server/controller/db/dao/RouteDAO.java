@@ -49,8 +49,8 @@ public class RouteDAO{
 		this.cf.delete(id, Route.class);
 	}
 
-	public void updateRoute(Route r) {
-		this.cf.update(r);
+	public Route updateRoute(Route r) {
+		return this.cf.update(r);
 	}
 
 	public void addSite(Route r, Site s) {

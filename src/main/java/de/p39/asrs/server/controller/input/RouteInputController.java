@@ -107,6 +107,7 @@ public class RouteInputController {
 			this.uploadMedia(route, audios);
 			this.addInfo(route, info);
 			route.setCategory(CategoryDaoInterface.getCategoryById(category));
+			route.isCompleted();
 			this.dao.updateRoute(route);
 			route = null;
 		}
@@ -122,6 +123,10 @@ public class RouteInputController {
 			this.addInfo(route, info);
 			this.uploadMedia(route, audios);
 			Route new_route = this.dao.instertRoute(route);
+			for(Site s : new_route.getSites()){
+				s.setRoute(new_route.getId());
+			}
+			new_route = this.dao.updateRoute(new_route);
 			route = null;
 			return new_route.getId();
 
