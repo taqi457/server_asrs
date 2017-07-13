@@ -7,6 +7,7 @@ import java.util.*;
 
 import de.p39.asrs.server.controller.db.dao.CategoryDAO;
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
+import de.p39.asrs.server.controller.db.dao.RouteDAO;
 import de.p39.asrs.server.controller.input.info.PictureInfo;
 import de.p39.asrs.server.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -363,7 +364,7 @@ public class SiteInputController {
     @ResponseBody
     public byte[] getImage(@PathVariable(value = "imageName") String imageName) throws IOException {
 
-        File serverFile = new File("media/images/" + imageName + ".jpg");
+        File serverFile = new File("resources/media/images/" + imageName);
         java.nio.file.Path path = serverFile.toPath();
         return Files.readAllBytes(serverFile.toPath());
     }
