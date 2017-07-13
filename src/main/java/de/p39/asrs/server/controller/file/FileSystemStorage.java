@@ -81,18 +81,19 @@ public class FileSystemStorage implements Storage {
             Image image = ImageIO.read(file.getInputStream());
 
 			for(Size size : Size.values()) {
-                Path p = rootLocations.get(FileType.PICTURE).resolve(file.getOriginalFilename()+"_"+size.toString());
+				String[] str_arr = file.getOriginalFilename().split("\\.");
+                Path p = rootLocations.get(FileType.PICTURE).resolve(str_arr[0]+"_"+size.toString() + "." + str_arr[1]);
 
                 int newWidth = sizes.get(size);
-                int scale = newWidth / image.getWidth(null);
-                int newHeight = image.getHeight(null) * scale;
+                float scale = (float) newWidth / (float) image.getWidth(null);
+                int newHeight = (int) (image.getHeight(null) * scale);
                 BufferedImage scaledBI = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
                 Graphics2D g = scaledBI.createGraphics();
                 g.drawImage(image, 0, 0, newWidth, newHeight, null);
                 g.dispose();
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(scaledBI, "jpg",baos);
+				ImageIO.write(scaledBI, str_arr[1],baos);
                 InputStream is = new ByteArrayInputStream(baos.toByteArray());
                 Files.copy(is, p, StandardCopyOption.REPLACE_EXISTING);
 

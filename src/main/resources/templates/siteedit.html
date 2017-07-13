@@ -42,7 +42,7 @@
 												</div>
 												<div class="widget-body">
 													<div class="widget-main">
-														<img th:src='${"/image/"+site.getThumbnail().getNames().get(0).getString()}' class="img-responsive"/>
+														<img th:src='${"/media/img/"+site.getThumbnail().getId() + "?size=thumb"}' class="img-responsive"/>
 													</div>
 												</div>
 											</div>
@@ -725,6 +725,9 @@
                                         extension: "png|jpg|jpeg"
 
                                     },
+                                    category: {
+                                        required: true
+                                    }
 								},
 
 								highlight : function(e) {
