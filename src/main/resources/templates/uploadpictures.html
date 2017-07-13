@@ -229,7 +229,7 @@
                 equalTo : "Please enter the same value again.",
                 accept : "Please enter a value with a valid extension.",
                 maxlength : jQuery.validator
-                    .format("Please enter no more than {0} characters."),
+                    .format("Bitte nicht mehr als {0} Zeichen eingeben."),
                 minlength : jQuery.validator
                     .format("Please enter at least {0} characters."),
                 rangelength : jQuery.validator
@@ -257,23 +257,47 @@
                     ignore : "",
                     rules : {
                         nameDE : {
-                            required : true
+                            required : true,
+                            maxlength: 27
                         },
                         nameEN : {
-                            required : true
+                            required : true,
+                            maxlength: 27
                         },
                         nameFR : {
-                            required : true
+                            required : true,
+                            maxlength: 27
                         },
                         descriptionDE : {
-                            required : true
+                            required : true,
+                            maxlength: 550
                         },
                         descriptionEN : {
-                            required : true
+                            required : true,
+                            maxlength: 550
                         },
                         descriptionFR : {
-                            required : true
+                            required : true,
+                            maxlength: 550
                         },
+                        audio_de: {
+                            required: true,
+                            extension: "mp3"
+                        },
+                        audio_fr: {
+                            required: true,
+                            extension: "mp3"
+
+                        },
+                        audio_en: {
+                            required: true,
+                            extension: "mp3"
+
+                        },
+                        picture: {
+                            required: true,
+                            extension: "png|jpg|jpeg"
+                        }
 
                     },
 

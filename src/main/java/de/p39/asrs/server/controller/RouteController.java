@@ -29,6 +29,7 @@ public class RouteController {
 		if (!kind.equals("all")) {
 			throw new BadRequestException("Specifiy an ID by /route/{id} or all by /route?kind=all");
 		}
+
 		return daoInterface.getAllRoutesCompleted();
 	}
 

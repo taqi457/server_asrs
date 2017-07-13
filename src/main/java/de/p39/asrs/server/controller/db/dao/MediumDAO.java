@@ -20,43 +20,17 @@ public class MediumDAO {
 	public List<Audio> getAllAudios() {
 		return this.cf.findAll(Audio.class);
 	}
-	
 
 	public List<Picture> getAllPictures() {
 		return this.cf.findAll(Picture.class);
 	}
 
 
-	public void insertAudio(Audio a) {
-		this.cf.create(a);
-	}
-
-
-	public void insertPicture(Picture p) {
-		this.cf.create(p);
-	}
-
-	public void updateAudio(Audio a) {
-		this.cf.update(a);
-	}
-
-	public void updatePicture(Picture p) {
-		this.cf.update(p);
-	}
-
-	public void deleteAudio(Long id) {
-		this.cf.delete(id, Audio.class);
-	}
-
-	public void deletePicture(Long id) {
-		this.cf.delete(id, Picture.class);
-	}
-
 	public Picture getPictureById(Long id) {
 		return this.cf.find(id, Picture.class);
 	}
 	
-	public Audio getAudioById(long id){
+	public Audio getAudioById(Long id){
 		return this.cf.find(id, Audio.class);
 	}
 	

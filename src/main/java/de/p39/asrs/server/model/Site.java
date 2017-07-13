@@ -46,7 +46,7 @@ public class Site extends NamedEntity {
 
 	private boolean isCompleted;
 
-	private Category category;
+	private Set<SiteCategory> categories;
 	
 	private Map<String, String> meta = new HashMap<>();
 
@@ -86,23 +86,6 @@ public class Site extends NamedEntity {
 	@OneToMany(targetEntity = Picture.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setPictures(Set<Picture> pictures) {
 		this.pictures = pictures;
-	}
-
-	/**
-	 * @return the category
-	 */
-	@ManyToOne(targetEntity = Category.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public Category getCategory() {
-		return category;
-	}
-
-	/**
-	 * @param category
-	 *            the category to set
-	 */
-	@ManyToOne(targetEntity = Category.class,cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	public void setCategory(Category category) {
-		this.category = category;
 	}
 
 	@Id
@@ -205,11 +188,11 @@ public class Site extends NamedEntity {
 				return false;
 			}
 		}
-		if (this.category == null)
+		if (this.categories == null)
 			return false;
 		if (this.coordinate == null)
 			return false;
-		if (this.pictures.isEmpty())
+		if (this.thumbnail == null)
 			return false;
 		return true;
 	}
@@ -228,7 +211,6 @@ public class Site extends NamedEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((coordinate == null) ? 0 : coordinate.hashCode());
 		return result;
 	}
@@ -242,10 +224,10 @@ public class Site extends NamedEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		Site other = (Site) obj;
-		if (category == null) {
-			if (other.category != null)
+		if (categories == null) {
+			if (other.categories != null)
 				return false;
-		} else if (!category.equals(other.category))
+		} else if (!categories.equals(other.categories))
 			return false;
 		if (coordinate == null) {
 			if (other.coordinate != null)
@@ -304,6 +286,16 @@ public class Site extends NamedEntity {
 	@OneToOne(cascade = CascadeType.ALL,targetEntity=Picture.class,fetch = FetchType.EAGER)
 	public void setThumbnail(Picture thumbnail) {
 		this.thumbnail = thumbnail;
+	}
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	public Set<SiteCategory> getCategories() {
+		return categories;
+	}
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	public void setCategories(Set<SiteCategory> categories) {
+		this.categories = categories;
 	}
 	
 	

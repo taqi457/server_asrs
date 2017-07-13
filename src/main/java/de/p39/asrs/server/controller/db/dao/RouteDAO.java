@@ -33,11 +33,6 @@ public class RouteDAO{
 		return this.cf.find(id, Route.class);
 	}
 	
-	public List<Route> getRouteByPath(String path){
-		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE pathToKml = :path");
-		q.setParameter("path", path);
-		return (List<Route>) q.getResultList();
-	}
 
 	public List<Route> getAllRoutes() {
 				return this.cf.findAll(Route.class);

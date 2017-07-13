@@ -21,16 +21,6 @@ public class SiteInfo {
 	private String descriptionFR;
 	private String descriptionEN;
 
-	private Long category;
-
-	public Long getCategory() {
-		return category;
-	}
-
-	public void setCategory(Long category) {
-		this.category = category;
-	}
-
 	/*private MultipartFile[] audios;
 	private MultipartFile[] pictures;*/
 

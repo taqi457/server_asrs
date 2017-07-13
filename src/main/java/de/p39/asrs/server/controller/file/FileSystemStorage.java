@@ -1,16 +1,27 @@
 package de.p39.asrs.server.controller.file;
 
-import java.io.File;
-import java.io.IOException;
+import java.awt.Image;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
+import java.util.List;
+import javax.imageio.ImageIO;
 
+import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.File;
+
+import de.p39.asrs.server.model.media.Size;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -18,6 +29,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import de.p39.asrs.server.controller.exceptions.StorageException;
+
 
 /**
  * Based on https://spring.io/guides/gs/uploading-files/
@@ -28,13 +40,20 @@ import de.p39.asrs.server.controller.exceptions.StorageException;
 @Service
 public class FileSystemStorage implements Storage {
 
-	final Map<FileType, Path> rootLocations;
+
+    private final Map<Size, Integer> sizes;
+	private final Map<FileType, Path> rootLocations;
 
 	public FileSystemStorage() {
 		this.rootLocations = new HashMap<>();
 		this.rootLocations.put(FileType.AUDIO, Paths.get("resources/media/audio"));
 		this.rootLocations.put(FileType.KML, Paths.get("resources/kmls"));
 		this.rootLocations.put(FileType.PICTURE, Paths.get("resources/media/images"));
+
+		sizes = new HashMap<>();
+		sizes.put(Size.SMALL, 300);
+		sizes.put(Size.MEDIUM, 720);
+		sizes.put(Size.LARGE,1080);
 	}
 
 	public String store(MultipartFile file, FileType type) {
@@ -45,6 +64,42 @@ public class FileSystemStorage implements Storage {
 			Path p = this.rootLocations.get(type).resolve(file.getOriginalFilename());
 			Files.copy(file.getInputStream(), p, StandardCopyOption.REPLACE_EXISTING);
 			return p.toString();
+		} catch (IOException e) {
+			// TODO change this way of providing stack trace
+			e.printStackTrace();
+			throw new StorageException("Failed to store file ");
+		}
+	}
+
+	public List<String> storePicture(MultipartFile file) {
+		try {
+			if (file.isEmpty()) {
+				throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
+			}
+			List<String> result = new ArrayList<>();
+
+            Image image = ImageIO.read(file.getInputStream());
+
+			for(Size size : Size.values()) {
+				String[] str_arr = file.getOriginalFilename().split("\\.");
+                Path p = rootLocations.get(FileType.PICTURE).resolve(str_arr[0]+"_"+size.toString() + "." + str_arr[1]);
+
+                int newWidth = sizes.get(size);
+                float scale = (float) newWidth / (float) image.getWidth(null);
+                int newHeight = (int) (image.getHeight(null) * scale);
+                BufferedImage scaledBI = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+                Graphics2D g = scaledBI.createGraphics();
+                g.drawImage(image, 0, 0, newWidth, newHeight, null);
+                g.dispose();
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ImageIO.write(scaledBI, str_arr[1],baos);
+                InputStream is = new ByteArrayInputStream(baos.toByteArray());
+                Files.copy(is, p, StandardCopyOption.REPLACE_EXISTING);
+
+                result.add(p.toString());
+            }
+			return result;
 		} catch (IOException e) {
 			// TODO change this way of providing stack trace
 			e.printStackTrace();
