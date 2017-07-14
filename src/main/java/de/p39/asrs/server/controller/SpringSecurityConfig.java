@@ -54,7 +54,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
-
+    //TODO delete this
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     	auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
@@ -63,14 +63,4 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("admin").password("password").roles("ADMIN");
     }
-
-    /*
-    //Spring Boot configured this already.
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-    }*/
-
 }

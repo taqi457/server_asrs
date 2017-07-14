@@ -359,14 +359,4 @@ public class SiteInputController {
         sitedao.updateSite(site);
         return "redirect:siteedit/" + siteid + "/editpicture/" + pictureid;
     }
-
-    @RequestMapping(value = "image/{imageName}")
-    @ResponseBody
-    public byte[] getImage(@PathVariable(value = "imageName") String imageName) throws IOException {
-
-        File serverFile = new File("resources/media/images/" + imageName);
-        java.nio.file.Path path = serverFile.toPath();
-        return Files.readAllBytes(serverFile.toPath());
-    }
-
 }
