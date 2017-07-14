@@ -14,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -49,6 +48,8 @@ public class Site extends NamedEntity {
 	private Set<SiteCategory> categories;
 	
 	private Map<String, String> meta = new HashMap<>();
+	
+	private Long route;
 
 	public Site() {
 		super();
@@ -296,6 +297,14 @@ public class Site extends NamedEntity {
 	@ElementCollection(fetch = FetchType.EAGER)
 	public void setCategories(Set<SiteCategory> categories) {
 		this.categories = categories;
+	}
+
+	public Long getRoute() {
+		return route;
+	}
+
+	public void setRoute(Long route) {
+		this.route = route;
 	}
 	
 	
