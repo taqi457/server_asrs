@@ -21,3 +21,4 @@ DataModel.ucls
 CreateRoute.useq
 .DS_Store
 /src/main/resources/META-INF/persistence.xml
+/resources

@@ -39,9 +39,16 @@ public class RouteDAO{
 	}
 
 	public List<Route> getAllRoutesCompleted() {
-
-		Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE completed = true");
-		return (List<Route>) q.getResultList();
+		List<Route> all = this.getAllRoutes();
+		List<Route> result = new ArrayList<>();
+		for(Route r : all){
+			if(r.isCompleted()){
+				result.add(r);
+			}
+		}
+		return result;
+		//Query q = this.cf.createQuery("SELECT e FROM " + Route.class.getName() + " e WHERE completed = true");
+		//return (List<Route>) q.getResultList();
 	}
 
 
@@ -49,8 +56,8 @@ public class RouteDAO{
 		this.cf.delete(id, Route.class);
 	}
 
-	public void updateRoute(Route r) {
-		this.cf.update(r);
+	public Route updateRoute(Route r) {
+		return this.cf.update(r);
 	}
 
 	public void addSite(Route r, Site s) {
