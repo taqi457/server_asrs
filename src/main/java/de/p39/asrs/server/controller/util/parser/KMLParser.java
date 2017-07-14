@@ -60,6 +60,9 @@ public class KMLParser {
      * @throws JAXBException when the syntax of the kml did not match
      */
     public void parseKml(String path, Route route) throws JAXBException {
+        if (path == null || route == null)
+            throw new JAXBException("Given Path or Route was null.");
+
         DocumentType document = openDocument(path);
 
         // set name
@@ -94,6 +97,8 @@ public class KMLParser {
         if (kml == null)
             throw new JAXBException(errorMsg +
                     "Parser could not recognize kml format");
+        if(kml.getAbstractFeatureGroup() == null)
+            throw new JAXBException(errorMsg + "Missing AbstractFeatureGroup");
         DocumentType document =
                 (DocumentType) kml.getAbstractFeatureGroup().getValue();
         if (document == null)
@@ -116,6 +121,8 @@ public class KMLParser {
             throw new JAXBException(errorMsg + "Missing placemark in placemark list");
 
         // LineString contains all coordinates
+        if(placemark.getAbstractGeometryGroup() == null)
+            throw new JAXBException(errorMsg + "Missing AbstractGeometryGroup");
         LineStringType lineString =
                 (LineStringType) placemark.getAbstractGeometryGroup().getValue();
         if (lineString == null)

@@ -15,7 +15,6 @@ dependency-reduced-pom.xml
 README.html
 *.iml
 .idea
-src/main/java/de/p39/asrs/server/controller/ApplicationConstants.java
 /out
 DataModel.ucls
 CreateRoute.useq
