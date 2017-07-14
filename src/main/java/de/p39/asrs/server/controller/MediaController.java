@@ -57,13 +57,13 @@ public class MediaController {
 	    try {
 			return Files.readAllBytes(path);
 		} catch (IOException e) {
-			throw new InternalServerError("Could not load image");
+			throw new InternalServerError("Could not load image. Contact server admin");
 		}
 	}
 
-	@RequestMapping(value = "/audio", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@RequestMapping(value = "/audio/example", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public byte[] audioExample() {
-		Path path = Paths.get("media/audio/example.mp3");
+		Path path = Paths.get("resources/media/audio/example.mp3");
 	    try {
 			return Files.readAllBytes(path);
 		} catch (IOException e) {
@@ -72,8 +72,18 @@ public class MediaController {
 		}
 	    return new byte[1];
 	}
+
+	@RequestMapping(value = "/audio/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public byte[] audioByID(@PathVariable Long id) {
+		Path path = Paths.get(dao.getAudioById(id).getPath());
+		try {
+			return Files.readAllBytes(path);
+		} catch (IOException e) {
+			throw new InternalServerError("Could not load audio. Contact server admin");
+		}
+	}
 	
-	@RequestMapping(value = "/video", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@RequestMapping(value = "/video/example", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public byte[] videoExample() {
 		Path path = Paths.get("media/video/example.mp4");
 	    try {
