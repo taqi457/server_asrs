@@ -119,18 +119,7 @@ public class Picture extends NamedEntity {
 	}
 	
 	public String getPath(Size s){
-        switch (s){
-            case SMALL:
-                return paths.get(0);
-
-            case MEDIUM:
-                return paths.get(1);
-
-            case LARGE:
-                return paths.get(2);
-            default:
-                return "";
-        }
+        return paths.get(s.ordinal());
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
