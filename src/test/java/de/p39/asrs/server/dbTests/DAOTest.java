@@ -26,7 +26,7 @@ public class DAOTest {
 	}
 	
 	@Test
-	public void roteDAOTest(){
+	public void routeDAOTest(){
 		RouteDAO dao = new RouteDAO(cf);
 		dao.getAllRoutes();
 		dao.getAllRoutesCompleted();
@@ -37,6 +37,7 @@ public class DAOTest {
 		r = list.get(0);
 		dao.deleteRoute(r.getId());
 	}
+	@Test
 	public void siteDAOTest(){
 		SiteDAO dao = new SiteDAO(cf);
 		dao.getAllSites();
@@ -49,6 +50,7 @@ public class DAOTest {
 		s = list.get(0);
 		dao.deleteSite(s.getId());
 	}
+	@Test
 	public void mediaDAOTest(){
 		MediumDAO dao = new MediumDAO(cf);
 		dao.getAllAudios();
@@ -56,14 +58,14 @@ public class DAOTest {
 		dao.getAudioById(0L);
 		dao.getAudiosByPath("");
 		dao.getPictureById(0L);
-		dao.getPictureByPath("");
 		
 	}
+	
+	@Test
 	public void categoryDAOTest(){
 		CategoryDAO dao = new CategoryDAO(cf);
 		dao.getAllCategories();
 		dao.getCategoriesByType(CategoryType.ROUTE);
-		dao.getCategoriesByType("");
 		dao.getCategoryById(0L);
 		Category c = new Category();
 		dao.insertCategory(c);
