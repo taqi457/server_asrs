@@ -63,12 +63,12 @@ public class MediaController {
 		}
 	}
 
-	@RequestMapping(value = "/audio/example", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@RequestMapping(value = "/audio/example", method = RequestMethod.GET)
 	public FileSystemResource audioExample() {
 		return new FileSystemResource(new File("resources/media/audio/example.mp3"));
 	}
 
-	@RequestMapping(value = "/audio/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
 	public FileSystemResource audioByID(@PathVariable Long id) {
 		Path path = Paths.get(dao.getAudioById(id).getPath());
 		return new FileSystemResource(new File(path.toString()));
