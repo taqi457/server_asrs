@@ -34,12 +34,7 @@ public class MediumDAO {
 		return this.cf.find(id, Audio.class);
 	}
 	
-	
-	public List<Picture> getPictureByPath(String path) {
-		Query q = this.cf.createQuery("SELECT e FROM " + Picture.class.getName() + " e WHERE path = :path");
-		q.setParameter("path", path);
-		return (List<Picture>) q.getResultList();
-	}
+
 
 	public List<Audio> getAudiosByPath(String path) {
 		Query q = this.cf.createQuery("SELECT e FROM " + Audio.class.getName() + " e WHERE path = :path");

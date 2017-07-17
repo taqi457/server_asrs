@@ -44,10 +44,4 @@ public class CategoryDAO{
 	public Category getCategoryById(Long id) {
 		return this.cf.find(id, Category.class);
 	}
-
-	public List<Category> getCategoriesByType(String type){
-		Query q = this.cf.createQuery("SELECT e FROM " + Category.class.getName() + " e WHERE type = :type");
-		q.setParameter("type", type);
-		return (List<Category>) q.getResultList();
-	}
 }
