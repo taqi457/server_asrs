@@ -72,6 +72,7 @@ public class MediaController {
 	public void audioExample(HttpServletResponse response) {
         try {
             InputStream is = new FileInputStream("resources/media/audio/example.mp3");
+            response.setHeader("Content-Disposition", "attachment; filename= example.mp3");
             response.setContentType("audio/mpeg");
             IOUtils.copy(is, response.getOutputStream());
             response.flushBuffer();
