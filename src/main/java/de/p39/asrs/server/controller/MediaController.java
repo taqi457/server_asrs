@@ -85,7 +85,8 @@ public class MediaController {
 	public void audioByID(@PathVariable Long id, HttpServletResponse response) {
 	    Path path = Paths.get(dao.getAudioById(id).getPath());
         try {
-            InputStream is = new FileInputStream("resources/media/audio/example.mp3");
+            InputStream is = new FileInputStream(path.toString());
+			response.setHeader("Content-Disposition", "attachment; filename= audio.mp3");
             response.setContentType("audio/mpeg");
             IOUtils.copy(is, response.getOutputStream());
             response.flushBuffer();
