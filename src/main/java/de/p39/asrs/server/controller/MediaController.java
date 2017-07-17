@@ -1,5 +1,6 @@
 package de.p39.asrs.server.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,6 +9,7 @@ import java.nio.file.Paths;
 import de.p39.asrs.server.controller.exceptions.BadRequestException;
 import de.p39.asrs.server.model.media.Size;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,25 +64,20 @@ public class MediaController {
 	}
 
 	@RequestMapping(value = "/audio/example", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public byte[] audioExample() {
-		Path path = Paths.get("resources/media/audio/example.mp3");
-	    try {
-			return Files.readAllBytes(path);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    return new byte[1];
+	public FileSystemResource audioExample() {
+		return new FileSystemResource(new File("resources/media/audio/example.mp3"));
 	}
 
 	@RequestMapping(value = "/audio/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public byte[] audioByID(@PathVariable Long id) {
+	public FileSystemResource audioByID(@PathVariable Long id) {
 		Path path = Paths.get(dao.getAudioById(id).getPath());
-		try {
-			return Files.readAllBytes(path);
+		return new FileSystemResource(new File(path.toString()));
+		/*try {
+
+					//Files.readAllBytes(path);
 		} catch (IOException e) {
 			throw new InternalServerError("Could not load audio. Contact server admin");
-		}
+		}*/
 	}
 	
 	@RequestMapping(value = "/video/example", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
