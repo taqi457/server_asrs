@@ -72,6 +72,7 @@ public class MediaController {
 	public void audioExample(HttpServletResponse response) {
         try {
             InputStream is = new FileInputStream("resources/media/audio/example.mp3");
+            response.setContentType("audio/mpeg");
             IOUtils.copy(is, response.getOutputStream());
             response.flushBuffer();
         } catch (IOException ex) {
@@ -84,6 +85,7 @@ public class MediaController {
 	    Path path = Paths.get(dao.getAudioById(id).getPath());
         try {
             InputStream is = new FileInputStream("resources/media/audio/example.mp3");
+            response.setContentType("audio/mpeg");
             IOUtils.copy(is, response.getOutputStream());
             response.flushBuffer();
         } catch (IOException ex) {
