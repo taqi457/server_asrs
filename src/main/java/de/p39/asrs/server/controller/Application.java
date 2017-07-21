@@ -57,7 +57,7 @@ public class Application {
     //	return new FileSystemStorage();
     //}
 
-    @Bean
+    /*@Bean
     public EmbeddedServletContainerFactory servletContainer() {
         TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
             @Override
@@ -80,10 +80,10 @@ public class Application {
         connector.setScheme("http");
         connector.setPort(8080);
         connector.setSecure(false);
-        connector.setRedirectPort(8443);
+        //connector.setRedirectPort(8443);
 
         return connector;
-    }
+    }*/
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
