@@ -134,5 +134,9 @@ public class HomeController {
         model.addAttribute("site", SiteDaoInterface.getSiteById(id));
         return "map";
     }
+    @GetMapping("/error")
+    public String error(){
+        return "error/403";
+    }
 
 }
