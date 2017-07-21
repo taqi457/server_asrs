@@ -38,6 +38,7 @@ public class SiteInputController {
     private FileSystemStorage storageService;
 
 
+
     @Autowired
     public SiteInputController(SiteDAO sdao, CategoryDAO cdao, MediumDAO mdao, FileSystemStorage storage) {
         super();
