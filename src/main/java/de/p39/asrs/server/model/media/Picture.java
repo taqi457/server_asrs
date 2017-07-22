@@ -34,6 +34,8 @@ public class Picture extends NamedEntity {
 	private static final long serialVersionUID = 2524529774881275743L;
 
 	private List<String> paths;
+	
+	private int order;
 
 	public Picture(){super();}
 
@@ -141,6 +143,15 @@ public class Picture extends NamedEntity {
 	@OneToMany(targetEntity = LocaleAudio.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	public void setAudios(List<LocaleAudio> audios) {
 		this.audios = audios;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		assert(order>=0);
+		this.order = order;
 	}
 	
 	

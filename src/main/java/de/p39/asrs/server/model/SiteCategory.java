@@ -4,6 +4,9 @@ public enum SiteCategory {
 	
 	MANSION,
 	SETTLEMENT,
-	SANCTUARIES
+	SANCTUARIES,
+	MUSEUM,
+	VICUS,
+	OTHER
 
 }
