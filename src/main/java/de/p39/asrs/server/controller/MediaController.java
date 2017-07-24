@@ -89,7 +89,7 @@ public class MediaController {
     // Helper
     private HttpEntity<byte[]> getAudioResponse(String path) throws IOException {
         // Put the file to the output stream
-        FileInputStream is = new FileInputStream("");
+        FileInputStream is = new FileInputStream(path);
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         IOUtils.copy(is, os);
         byte[] documentBody = os.toByteArray();
