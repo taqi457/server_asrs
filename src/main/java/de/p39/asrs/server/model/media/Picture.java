@@ -35,7 +35,7 @@ public class Picture extends NamedEntity {
 
 	private List<String> paths;
 	
-	private int order;
+	private int position;
 
 	public Picture(){super();}
 
@@ -145,13 +145,12 @@ public class Picture extends NamedEntity {
 		this.audios = audios;
 	}
 
-	public int getOrder() {
-		return order;
+	public int getPosition() {
+		return position;
 	}
 
-	public void setOrder(int order) {
-		assert(order>=0);
-		this.order = order;
+	public void setPosition(int position) {
+		this.position = position;
 	}
 	
 	
