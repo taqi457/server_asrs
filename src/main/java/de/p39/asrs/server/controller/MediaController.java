@@ -1,9 +1,6 @@
 package de.p39.asrs.server.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,6 +10,8 @@ import de.p39.asrs.server.model.media.Size;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,34 +68,40 @@ public class MediaController {
     }
 
     @RequestMapping(value = "/audio/example", method = RequestMethod.GET)
-    public void audioExample(HttpServletResponse response) {
+    public HttpEntity<byte[]> audioExample() {
         try {
-            setResponseValues(response, "resources/media/audio/example.mp3");
+            return getAudioResponse("resources/media/audio/ElectricGuitar.mp3");
         } catch (IOException ex) {
             throw new InternalServerError("Could not load audio. Contact server admin");
         }
+
     }
 
     @RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
-    public void audioByID(@PathVariable Long id, HttpServletResponse response) {
+    public HttpEntity<byte[]> audioByID(@PathVariable Long id) {
         Path path = Paths.get(dao.getAudioById(id).getPath());
         try {
-            setResponseValues(response, path.toString());
+            return getAudioResponse(path.toString());
         } catch (IOException ex) {
             throw new InternalServerError("Could not load audio. Contact server admin");
         }
     }
-
     // Helper
-    private void setResponseValues(HttpServletResponse response, String path) throws IOException {
-        FileInputStream is = new FileInputStream(path.toString());
-        response.addHeader("Content-Disposition", "attachment; filename= audio.mp3");
-        response.setContentType("audio/mpeg");
-        response.setContentLength(is.available());
-        response.addHeader("Accept-Ranges", "bytes");
-        response.addHeader("Access-Controll-Allow-Origin", "*");
-        response.addHeader("Connection", "keep-alive");
-        IOUtils.copy(is, response.getOutputStream());
-        response.flushBuffer();
+    private HttpEntity<byte[]> getAudioResponse(String path) throws IOException {
+        // Put the file to the output stream
+        FileInputStream is = new FileInputStream("");
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        IOUtils.copy(is, os);
+        byte[] documentBody = os.toByteArray();
+
+        // Set the headers
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Accept-Ranges", "bytes");
+        responseHeaders.add("Connection", "close");
+        responseHeaders.add("Content-Length", Integer.toString(documentBody.length));
+        responseHeaders.add("Content-Type", "audio/mpeg");
+        responseHeaders.add("Date", "Mon, 24 Jul 2017 12:00:00 GMT");
+
+        return new HttpEntity<>(documentBody, responseHeaders);
     }
 }
