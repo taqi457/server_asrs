@@ -28,26 +28,26 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping(value = "/media")
 public class MediaController {
-	
-	@Autowired
-	private MediumDAO dao;
-	
-	@RequestMapping(value = "/img/example", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public byte[] imageExample() {
-	    Path path = Paths.get("media/images/example.jpg");
-	    try {
-			return Files.readAllBytes(path);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    return new byte[1];
-	}
-	
-	@RequestMapping(value = "/img/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public byte[] imageByID(@PathVariable Long id, @RequestParam(value = "size") String size) {
+
+    @Autowired
+    private MediumDAO dao;
+
+    @RequestMapping(value = "/img/example", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] imageExample() {
+        Path path = Paths.get("media/images/example.jpg");
+        try {
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return new byte[1];
+    }
+
+    @RequestMapping(value = "/img/{id}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] imageByID(@PathVariable Long id, @RequestParam(value = "size") String size) {
         Size pictureSize;
-        switch(size){
+        switch (size) {
             case "thumb":
                 pictureSize = Size.SMALL;
                 break;
@@ -60,50 +60,40 @@ public class MediaController {
             default:
                 throw new BadRequestException("Provide size as thumb, medium or large!");
         }
-	    Path path = Paths.get(dao.getPictureById(id).getPath(pictureSize));
-	    try {
-			return Files.readAllBytes(path);
-		} catch (IOException e) {
-			throw new InternalServerError("Could not load image. Contact server admin");
-		}
-	}
-
-	@RequestMapping(value = "/audio/example", method = RequestMethod.GET)
-	public void audioExample(HttpServletResponse response) {
+        Path path = Paths.get(dao.getPictureById(id).getPath(pictureSize));
         try {
-            InputStream is = new FileInputStream("resources/media/audio/example.mp3");
-            response.setHeader("Content-Disposition", "attachment; filename= example.mp3");
-            response.setContentType("audio/mpeg");
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            throw new InternalServerError("Could not load image. Contact server admin");
+        }
+    }
+
+    @RequestMapping(value = "/audio/example", method = RequestMethod.GET)
+    public void audioExample(HttpServletResponse response) {
+        try {
+            setResponseValues(response, "resources/media/audio/example.mp3");
         } catch (IOException ex) {
             throw new InternalServerError("Could not load audio. Contact server admin");
         }
-	}
+    }
 
-	@RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
-	public void audioByID(@PathVariable Long id, HttpServletResponse response) {
-	    Path path = Paths.get(dao.getAudioById(id).getPath());
+    @RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
+    public void audioByID(@PathVariable Long id, HttpServletResponse response) {
+        Path path = Paths.get(dao.getAudioById(id).getPath());
         try {
-            InputStream is = new FileInputStream(path.toString());
-			response.setHeader("Content-Disposition", "attachment; filename= audio.mp3");
-            response.setContentType("audio/mpeg");
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
+            setResponseValues(response, path.toString());
         } catch (IOException ex) {
             throw new InternalServerError("Could not load audio. Contact server admin");
         }
-	}
-	
-	@RequestMapping(value = "/video/example", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public byte[] videoExample() {
-		Path path = Paths.get("media/video/example.mp4");
-	    try {
-			return Files.readAllBytes(path);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    return new byte[1];
-	}
+    }
+
+    // Helper
+    private void setResponseValues(HttpServletResponse response, String path) throws IOException {
+        InputStream is = new FileInputStream(path.toString());
+        response.setHeader("Content-Disposition", "attachment; filename= audio.mp3");
+        response.setContentType("audio/mpeg");
+        response.setContentLength(is.available());
+        IOUtils.copy(is, response.getOutputStream());
+        response.flushBuffer();
+    }
 }
