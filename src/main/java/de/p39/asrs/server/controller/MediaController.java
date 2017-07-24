@@ -89,10 +89,13 @@ public class MediaController {
 
     // Helper
     private void setResponseValues(HttpServletResponse response, String path) throws IOException {
-        InputStream is = new FileInputStream(path.toString());
-        response.setHeader("Content-Disposition", "attachment; filename= audio.mp3");
+        FileInputStream is = new FileInputStream(path.toString());
+        response.addHeader("Content-Disposition", "attachment; filename= audio.mp3");
         response.setContentType("audio/mpeg");
         response.setContentLength(is.available());
+        response.addHeader("Accept-Ranges", "bytes");
+        response.addHeader("Access-Controll-Allow-Origin", "*");
+        response.addHeader("Connection", "keep-alive");
         IOUtils.copy(is, response.getOutputStream());
         response.flushBuffer();
     }
