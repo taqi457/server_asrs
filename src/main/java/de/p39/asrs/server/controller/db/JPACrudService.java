@@ -70,7 +70,7 @@ public class JPACrudService implements CrudFacade {
 			User u = new User();
 			u.setUsername("admin");
 			BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
-			String password = hash.encode("test123");
+			String password = hash.encode("NuH/GP;+h<#8is?");
 			u.setPassword(password);
 			Set<Role> sr = new HashSet<>();
 			sr.add(Role.ADMIN);
