@@ -115,6 +115,33 @@ public class SiteInputController {
         Site site = new Site();
         site = this.uploadMedia(site, audios, picture);
         this.addInfo(site, info);
+        HashSet set_cat = new HashSet();
+        for (String category : categories){
+            switch(category){
+                case "Villa":
+                    set_cat.add(SiteCategory.MANSION);
+                    break;
+                case "Heiligtum":
+                    set_cat.add((SiteCategory.SANCTUARIES));
+                    break;
+                case "Grabstätte":
+                    set_cat.add(SiteCategory.SETTLEMENT);
+                    break;
+                case "Vicus":
+                    set_cat.add(SiteCategory.VICUS);
+                    break;
+                case "Museum":
+                    set_cat.add((SiteCategory.MUSEUM));
+                    break;
+                case "Weitere":
+                    set_cat.add(SiteCategory.OTHER);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        site.setCategories(set_cat);
 
         return site;
     }
@@ -134,6 +161,15 @@ public class SiteInputController {
                     break;
                 case "Grabstätte":
                     set_cat.add(SiteCategory.SETTLEMENT);
+                    break;
+                case "Vicus":
+                    set_cat.add(SiteCategory.VICUS);
+                    break;
+                case "Museum":
+                    set_cat.add((SiteCategory.MUSEUM));
+                    break;
+                case "Weitere":
+                    set_cat.add(SiteCategory.OTHER);
                     break;
                 default:
                     break;
@@ -319,6 +355,7 @@ public class SiteInputController {
                 break;
             }
         }
+        p.setPosition(site.getPictures().size()+1);
         site.addPicture(p);
         sitedao.updateSite(site);
         if (button.equals("finish"))
@@ -337,7 +374,6 @@ public class SiteInputController {
         model.addAttribute("picture", picture);
         model.addAttribute("siteid", siteid);
         model.addAttribute("PictureInfo", new PictureInfo());
-
         return "editpicture";
     }
 
@@ -359,5 +395,28 @@ public class SiteInputController {
         site.addPicture(p);
         sitedao.updateSite(site);
         return "redirect:siteedit/" + siteid + "/editpicture/" + pictureid;
+    }
+
+    @PostMapping("editorder")
+    public String ChangePictureOrder(@RequestParam("orders[]") int[] orders, @RequestParam("siteid") Long siteid){
+        Site s = sitedao.getSiteById(siteid);
+
+        Object[] pictures = s.getPictures().toArray();
+
+        int i = 0;
+        while (i< orders.length) {
+            Picture p = (Picture) pictures[i];
+            p.setPosition(orders[i]);
+            i++;
+        }
+        Set<Picture> pictureSet = new HashSet<>();
+        for (Object picture: pictures){
+
+            pictureSet.add((Picture) picture);
+
+        }
+        s.setPictures(pictureSet);
+        sitedao.updateSite(s);
+        return "redirect:siteedit/"+siteid;
     }
 }

@@ -1,934 +1,1043 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<meta http-equiv="content-script-type" content="text/javascript" />
-<meta http-equiv="content-style-type" content="text/css" />
-<meta http-equiv="content-language" content="de" />
-<meta name="author" content="Thomas Heiles" />
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="content-script-type" content="text/javascript"/>
+<meta http-equiv="content-style-type" content="text/css"/>
+<meta http-equiv="content-language" content="de"/>
+<meta name="author" content="Thomas Heiles"/>
 <head>
-<title>Sehenswürdigkeit editieren - Saarromanus</title>
+    <title>Sehenswürdigkeit editieren - Saarromanus</title>
 
-<div th:replace="fragments/header :: header-css" />
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.full.min.css" rel="stylesheet" />
+    <div th:replace="fragments/header :: header-css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.full.min.css" rel="stylesheet"/>
 
 
 </head>
 <body class="no-skin">
-	<div th:replace="fragments/header :: header" />
-	<div class="main-container ace-save-state" id="main-container">
-		<div th:replace="fragments/sidebar :: sidebar" />
-		<div class="main-content">
-			<div class="main-content-inner">
+<div th:replace="fragments/header :: header"/>
+<div class="main-container ace-save-state" id="main-container">
+    <div th:replace="fragments/sidebar :: sidebar"/>
+    <div class="main-content">
+        <div class="main-content-inner">
 
-				<div class="page-content">
+            <div class="page-content">
 
-					<div class="page-header">
-						<h1>Sehenswürdigkeit editieren</h1>
-					</div>
-					<!-- /.page-header -->
+                <div class="page-header">
+                    <h1>Sehenswürdigkeit editieren</h1>
+                </div>
+                <!-- /.page-header -->
 
-					<div class="row">
-						<div class="col-xs-12">
-							<!-- PAGE CONTENT BEGINS -->
-							<div class="widget-box">
-								<div class="widget-main" th:if="${site.getThumbnail() != null}">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="widget-box">
-												<div class="widget-header">
-													<h4 class="widget-title">Hauptbild</h4>
-												</div>
-												<div class="widget-body">
-													<div class="widget-main">
-														<img th:src='${"/media/img/"+site.getThumbnail().getId() + "?size=thumb"}' class="img-responsive"/>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-									<div class="widget-main">
-										<form class="form-horizontal" id="validation-form"
-											  th:action="@{/editsite}" th:object="${SiteInfo}" method="post"
-											  enctype="multipart/form-data">
-											<input type="hidden" th:value="${site.getId()}" name="id" />
-										<div>
-											<div class="step-content pos-rel">
-												<div class="step-pane active" data-step="1">
-													<h3 class="lighter block green">Bitte füllen Sie die
-														untenstehenden Felder aus</h3>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="widget-box">
+                            <div class="widget-main" th:if="${site.getThumbnail() != null}">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="widget-box">
+                                            <div class="widget-header">
+                                                <h4 class="widget-title">Hauptbild</h4>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+                                                    <img th:src='${"/media/img/"+site.getThumbnail().getId() + "?size=thumb"}'
+                                                         class="img-responsive"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-main">
+                                <form class="form-horizontal" id="validation-form"
+                                      th:action="@{/editsite}" th:object="${SiteInfo}" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" th:value="${site.getId()}" name="id"/>
+                                    <div>
+                                        <div class="step-content pos-rel">
+                                            <div class="step-pane active" data-step="1">
+                                                <h3 class="lighter block green">Bitte füllen Sie die
+                                                    untenstehenden Felder aus</h3>
 
-													<div class="row">
-														<div class="col-md-6">
-															<div class="widget-box">
-																<div class="widget-header">
-																	<h4 class="widget-title">Namen</h4>
-																</div>
-																<div class="widget-body">
-																	<div class="widget-main">
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="nameDE">Deutsch</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">Namen</h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="nameDE">Deutsch</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="nameDE" id="nameDE"
-																						th:value="${site.getNameByLocale(new java.util.Locale('de'))}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="nameEN">Englisch</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="nameDE"
+                                                                                       id="nameDE"
+                                                                                       th:value="${site.getNameByLocale(new java.util.Locale('de'))}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="nameEN">Englisch</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="nameEN" id="nameEN"
-																						th:value="${site.getNameByLocale(new java.util.Locale('en'))}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="nameFR">Französisch</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="nameEN"
+                                                                                       id="nameEN"
+                                                                                       th:value="${site.getNameByLocale(new java.util.Locale('en'))}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="nameFR">Französisch</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="nameFR" id="nameFR"
-																						th:value="${site.getNameByLocale(new java.util.Locale('fr'))}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="widget-box">
-																<div class="widget-header">
-																	<h4 class="widget-title">Routenparameter</h4>
-																</div>
-																<div class="widget-body">
-																	<div class="widget-main">
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="nameFR"
+                                                                                       id="nameFR"
+                                                                                       th:value="${site.getNameByLocale(new java.util.Locale('fr'))}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">Routenparameter</h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
 
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="select">Art der Sehenswürdigkeit</label>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="select">Art der
+                                                                            Sehenswürdigkeit</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<select name="category[]" id="select" multiple="multiple" class="select2">
-																						<option th:selected="${site.getCategories().contains(category.MANSION)}">Villa</option>
-																						<option th:selected="${site.getCategories().contains(category.SANCTUARIES)}">Heiligtum</option>
-																						<option th:selected="${site.getCategories().contains(category.SETTLEMENT)}">Grabstätte</option>
-																					</select>
-																				</div>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="longitude">Längengrad</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <select name="category[]" id="select"
+                                                                                        multiple="multiple"
+                                                                                        class="select2">
+                                                                                    <option th:selected="${site.getCategories().contains(category.MANSION)}">
+                                                                                        Villa
+                                                                                    </option>
+                                                                                    <option th:selected="${site.getCategories().contains(category.SANCTUARIES)}">
+                                                                                        Heiligtum
+                                                                                    </option>
+                                                                                    <option th:selected="${site.getCategories().contains(category.SETTLEMENT)}">
+                                                                                        Grabstätte
+                                                                                    </option>
+                                                                                    <option th:selected="${site.getCategories().contains(category.MUSEUM)}">
+                                                                                        Museum
+                                                                                    </option>
+                                                                                    <option th:selected="${site.getCategories().contains(category.VICUS)}">
+                                                                                        Vicus
+                                                                                    </option>
+                                                                                    <option th:selected="${site.getCategories().contains(category.OTHER)}">
+                                                                                        Weitere
+                                                                                    </option>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="longitude" id="longitude"
-																						th:value="${site.getCoordinate().getLongitude()}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="latitude">Breitengrad</label>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="longitude">Längengrad</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="latitude" id="latitude"
-																						th:value="${site.getCoordinate().getLatitude()}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label
-																					class="control-label col-xs-12 col-sm-3 no-padding-right"
-																					for="latitude">Karte</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="longitude"
+                                                                                       id="longitude"
+                                                                                       th:value="${site.getCoordinate().getLongitude()}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="latitude">Breitengrad</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<a class="map" target="_top" th:href='${"/sitemap/" + site.getId()}'>Karte</a>
-																				</div>
-																			</div>
-																		</div>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="latitude"
+                                                                                       id="latitude"
+                                                                                       th:value="${site.getCoordinate().getLatitude()}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="latitude">Karte</label>
 
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="widget-box">
-																<div class="widget-header">
-																	<h4 class="widget-title">Beschreibung</h4>
-																</div>
-																<div class="widget-body">
-																	<div class="widget-main">
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="descriptionDE">Deutsch</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <a class="map" target="_top"
+                                                                                   th:href='${"/sitemap/" + site.getId()}'>Karte</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<textarea name="descriptionDE" id="descriptionDE"
-																						th:text="${site.getDescriptionByLocale(new java.util.Locale('de'))}"
-																						class="col-xs-12 col-sm-6"></textarea>
-																				</div>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="descriptionEN">Englisch</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">Beschreibung</h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="descriptionDE">Deutsch</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<textarea name="descriptionEN" id="descriptionEN"
-																						th:text="${site.getDescriptionByLocale(new java.util.Locale('en'))}"
-																						class="col-xs-12 col-sm-6"></textarea>
-																				</div>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="descriptionFR">Französisch</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+																					<textarea name="descriptionDE"
+                                                                                              id="descriptionDE"
+                                                                                              th:text="${site.getDescriptionByLocale(new java.util.Locale('de'))}"
+                                                                                              class="col-xs-12 col-sm-6"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="descriptionEN">Englisch</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<textarea name="descriptionFR" id="descriptionFR"
-																						th:text="${site.getDescriptionByLocale(new java.util.Locale('fr'))}"
-																						class="col-xs-12 col-sm-6"></textarea>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+																					<textarea name="descriptionEN"
+                                                                                              id="descriptionEN"
+                                                                                              th:text="${site.getDescriptionByLocale(new java.util.Locale('en'))}"
+                                                                                              class="col-xs-12 col-sm-6"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="descriptionFR">Französisch</label>
 
-														<div class="col-md-6">
-															<div class="widget-box">
-																<div class="widget-header">
-																	<h4 class="widget-title">Zusätzliche Eigenschaften
-																	</h4>
-																</div>
-																<div class="widget-body">
-																	<div class="widget-main">
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="Website">Website</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+																					<textarea name="descriptionFR"
+                                                                                              id="descriptionFR"
+                                                                                              th:text="${site.getDescriptionByLocale(new java.util.Locale('fr'))}"
+                                                                                              class="col-xs-12 col-sm-6"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="website" id="website"
-																						th:value="${site.getMetaData('website')}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="street">Straße Nummer</label>
+                                                    <div class="col-md-6">
+                                                        <div class="widget-box">
+                                                            <div class="widget-header">
+                                                                <h4 class="widget-title">Zusätzliche Eigenschaften
+                                                                </h4>
+                                                            </div>
+                                                            <div class="widget-body">
+                                                                <div class="widget-main">
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="Website">Website</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="street" id="street"
-																						th:value="${site.getMetaData('street')}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="zip">Postleitzahl</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="website"
+                                                                                       id="website"
+                                                                                       th:value="${site.getMetaData('website')}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="street">Straße Nummer</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="zip" id="zip"
-																						th:value="${site.getMetaData('zip')}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																			<label
-																				class="control-label col-xs-12 col-sm-3 no-padding-right"
-																				for="city">Stadt</label>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="street"
+                                                                                       id="street"
+                                                                                       th:value="${site.getMetaData('street')}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="zip">Postleitzahl</label>
 
-																			<div class="col-xs-12 col-sm-9">
-																				<div class="clearfix">
-																					<input type="text" name="city" id="city"
-																						th:value="${site.getMetaData('city')}"
-																						class="col-xs-12 col-sm-6" />
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="zip" id="zip"
+                                                                                       th:value="${site.getMetaData('zip')}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <label
+                                                                                class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                for="city">Stadt</label>
 
-													<br />
+                                                                        <div class="col-xs-12 col-sm-9">
+                                                                            <div class="clearfix">
+                                                                                <input type="text" name="city" id="city"
+                                                                                       th:value="${site.getMetaData('city')}"
+                                                                                       class="col-xs-12 col-sm-6"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-													<div class="widget-box">
-														<div class="widget-body">
-															<div class="widget-main">
-																<div id="fuelux-wizard-container">
+                                                <br/>
 
-
-
-																	<div class="step-content pos-rel">
-																		<div class="step-pane active" data-step="1">
-
-																			<div class="row">
-																				<div class="col-md-12">
-																					<div class="widget-box">
-																						<div class="widget-header">
-																							<h4 class="widget-title">Hochladen der
-																								Audio-Dateien</h4>
-																						</div>
-																						<div class="widget-body">
-																							<div class="widget-main">
-
-																								<div class="form-group">
-																									<label
-																											class="control-label col-xs-12 col-sm-3 no-padding-right"
-																											for="id-input-audio-de">Audiodatei Deutsch</label>
-
-																									<div class="col-xs-12 col-sm-9">
-																										<div class="clearfix">
-																											<input type="file" name="audio_de"
-																												   id="id-input-audio-de"
-																												   class="col-xs-12 col-sm-6" />
-																										</div>
-																									</div>
-																								</div>
-																								<div class="form-group">
-																									<label
-																											class="control-label col-xs-12 col-sm-3 no-padding-right"
-																											for="id-input-audio-en">Audiodatei Englisch</label>
-
-																									<div class="col-xs-12 col-sm-9">
-																										<div class="clearfix">
-																											<input type="file" name="audio_en"
-																												   id="id-input-audio-en"
-																												   class="col-xs-12 col-sm-6" />
-																										</div>
-																									</div>
-																								</div>
-																								<div class="form-group">
-																									<label
-																											class="control-label col-xs-12 col-sm-3 no-padding-right"
-																											for="id-input-audio-fr">Audiodatei Französisch</label>
-
-																									<div class="col-xs-12 col-sm-9">
-																										<div class="clearfix">
-																											<input type="file" name="audio_fr"
-																												   id="id-input-audio-fr"
-																												   class="col-xs-12 col-sm-6" />
-																										</div>
-																									</div>
-																								</div>
-
-																							</div>
-																						</div>
-																					</div>
-																					<div class="widget-box">
-																						<div class="widget-header">
-																							<h4 class="widget-title">Hochladen von
-																								Bildern</h4>
-																						</div>
-																						<div class="widget-body">
-																							<div class="widget-main">
-
-																								<div class="form-group">
-																									<div class="col-xs-12">
-																										<input type="file" id="id-input-picture"
-																											name="pictures" multiple="multiple" />
-																									</div>
-																								</div>
-
-																							</div>
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-
-																			<br />
-																			<div class="wizard-actions">
-																				<div class="text-center">
-																					<button class="btn btn-success btn-next" type="submit" name="button" value="finish">
-																						Speichern <i
-																							class="ace-icon fa fa-arrow-right icon-on-right"></i>
-																					</button>
-																					<button class="btn btn-success btn-next" type="submit" name="button" value="continue">
-																						Weitere Bilder hochladen <i
-																							class="ace-icon fa fa-arrow-right icon-on-right"></i>
-																					</button>
-																				</div>
-
-																			</div>
-
-																		</div>
+                                                <div class="widget-box">
+                                                    <div class="widget-body">
+                                                        <div class="widget-main">
+                                                            <div id="fuelux-wizard-container">
 
 
-																	</div>
-																</div>
+                                                                <div class="step-content pos-rel">
+                                                                    <div class="step-pane active" data-step="1">
 
-															</div>
-															<!-- /.widget-main -->
-														</div>
-														<!-- /.widget-body -->
-													</div>
-												</div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="widget-box">
+                                                                                    <div class="widget-header">
+                                                                                        <h4 class="widget-title">
+                                                                                            Hochladen der
+                                                                                            Audio-Dateien</h4>
+                                                                                    </div>
+                                                                                    <div class="widget-body">
+                                                                                        <div class="widget-main">
 
-											</div>
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                        class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                                        for="id-input-audio-de">Audiodatei
+                                                                                                    Deutsch</label>
 
-										</div>
-										<!-- /.widget-main -->
-								</form>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="widget-box">
-											<div class="widget-header">
-												<h4 class="widget-title">Medien</h4>
-											</div>
-											<div class="widget-body">
-												<div class="widget-main">
-													<div class="row">
-														<div class="col-xs-12">
-															<div class="widget-box">
-																<div class="widget-header">
-																	<h4 class="widget-title">Audio-Dateien</h4>
-																</div>
-																<div class="widget-body">
-																	<div class="widget-main">
-																		<table id="audio-table"
-																			   class="table  table-bordered table-hover">
-																			<thead>
-																			<tr>
+                                                                                                <div class="col-xs-12 col-sm-9">
+                                                                                                    <div class="clearfix">
+                                                                                                        <input type="file"
+                                                                                                               name="audio_de"
+                                                                                                               id="id-input-audio-de"
+                                                                                                               class="col-xs-12 col-sm-6"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                        class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                                        for="id-input-audio-en">Audiodatei
+                                                                                                    Englisch</label>
 
-																				<th>ID</th>
-																				<th>Name</th>
+                                                                                                <div class="col-xs-12 col-sm-9">
+                                                                                                    <div class="clearfix">
+                                                                                                        <input type="file"
+                                                                                                               name="audio_en"
+                                                                                                               id="id-input-audio-en"
+                                                                                                               class="col-xs-12 col-sm-6"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                        class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                                                                                        for="id-input-audio-fr">Audiodatei
+                                                                                                    Französisch</label>
 
-																				<th></th>
-																			</tr>
-																			</thead>
+                                                                                                <div class="col-xs-12 col-sm-9">
+                                                                                                    <div class="clearfix">
+                                                                                                        <input type="file"
+                                                                                                               name="audio_fr"
+                                                                                                               id="id-input-audio-fr"
+                                                                                                               class="col-xs-12 col-sm-6"/>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
 
-																			<tbody>
-																			<tr th:each="sb : ${site.getAudios()}">
-																				<td th:text="${{sb.id}}">13/01/2011</td>
-																				<td
-																						th:text="${{sb.getAudio().getNames().get(0).getString()}}">13/01/2011</td>
-																				<td>
-																					<div class="hidden-sm hidden-xs btn-group">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="widget-box">
+                                                                                    <div class="widget-header">
+                                                                                        <h4 class="widget-title">
+                                                                                            Hochladen von
+                                                                                            Bildern</h4>
+                                                                                    </div>
+                                                                                    <div class="widget-body">
+                                                                                        <div class="widget-main">
+
+                                                                                            <div class="form-group">
+                                                                                                <div class="col-xs-12">
+                                                                                                    <input type="file"
+                                                                                                           id="id-input-picture"
+                                                                                                           name="pictures"
+                                                                                                           multiple="multiple"/>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <br/>
+                                                                        <div class="wizard-actions">
+                                                                            <div class="text-center">
+                                                                                <button class="btn btn-success btn-next"
+                                                                                        type="submit" name="button"
+                                                                                        value="finish">
+                                                                                    Speichern <i
+                                                                                        class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                                                                                </button>
+                                                                                <button class="btn btn-success btn-next"
+                                                                                        type="submit" name="button"
+                                                                                        value="continue">
+                                                                                    Weitere Bilder hochladen <i
+                                                                                        class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                                                                                </button>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
 
 
-																						 <a th:href='${"/deleteaudio/"+sb.id}'><button
-																							class="btn btn-xs btn-danger">
-																						<i
-																								class="ace-icon fa fa-trash-o bigger-120"></i>
-																					</button></a>
+                                                                </div>
+                                                            </div>
 
-																						<div class="hidden-md hidden-lg">
-																							<div class="inline pos-rel">
-																								<button
-																										class="btn btn-minier btn-primary dropdown-toggle"
-																										data-toggle="dropdown"
-																										data-position="auto">
-																									<i
-																											class="ace-icon fa fa-cog icon-only bigger-110"></i>
-																								</button>
+                                                        </div>
+                                                        <!-- /.widget-main -->
+                                                    </div>
+                                                    <!-- /.widget-body -->
+                                                </div>
+                                            </div>
 
-																								<ul
-																										class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-																									<li><a href="#" class="tooltip-info"
-																										   data-rel="tooltip" title="View"> <span
-																											class="blue"> <i
-																											class="ace-icon fa fa-search-plus bigger-120"></i>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.widget-main -->
+                                </form>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="widget-box">
+                                            <div class="widget-header">
+                                                <h4 class="widget-title">Medien</h4>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="widget-box">
+                                                                <div class="widget-header">
+                                                                    <h4 class="widget-title">Audio-Dateien</h4>
+                                                                </div>
+                                                                <div class="widget-body">
+                                                                    <div class="widget-main">
+                                                                        <table id="audio-table"
+                                                                               class="table  table-bordered table-hover">
+                                                                            <thead>
+                                                                            <tr>
+
+                                                                                <th>ID</th>
+                                                                                <th>Name</th>
+
+                                                                                <th></th>
+                                                                            </tr>
+                                                                            </thead>
+
+                                                                            <tbody>
+                                                                            <tr th:each="sb : ${site.getAudios()}">
+                                                                                <td th:text="${{sb.id}}">13/01/2011</td>
+                                                                                <td
+                                                                                        th:text="${{sb.getAudio().getNames().get(0).getString()}}">
+                                                                                    13/01/2011
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="hidden-sm hidden-xs btn-group">
+
+
+                                                                                        <a th:href='${"/deleteaudio/"+sb.id}'>
+                                                                                            <button
+                                                                                                    class="btn btn-xs btn-danger">
+                                                                                                <i
+                                                                                                        class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                                            </button>
+                                                                                        </a>
+
+                                                                                        <div class="hidden-md hidden-lg">
+                                                                                            <div class="inline pos-rel">
+                                                                                                <button
+                                                                                                        class="btn btn-minier btn-primary dropdown-toggle"
+                                                                                                        data-toggle="dropdown"
+                                                                                                        data-position="auto">
+                                                                                                    <i
+                                                                                                            class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                                                                </button>
+
+                                                                                                <ul
+                                                                                                        class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                                                                    <li><a href="#"
+                                                                                                           class="tooltip-info"
+                                                                                                           data-rel="tooltip"
+                                                                                                           title="View"> <span
+                                                                                                            class="blue"> <i
+                                                                                                            class="ace-icon fa fa-search-plus bigger-120"></i>
 																																</span>
-																									</a></li>
+                                                                                                    </a></li>
 
-																									<li><a href="#"
-																										   class="tooltip-success"
-																										   data-rel="tooltip" title="Edit"> <span
-																											class="green"> <i
-																											class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                                                    <li><a href="#"
+                                                                                                           class="tooltip-success"
+                                                                                                           data-rel="tooltip"
+                                                                                                           title="Edit"> <span
+                                                                                                            class="green"> <i
+                                                                                                            class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																																</span>
-																									</a></li>
+                                                                                                    </a></li>
 
-																									<li><a href="#"
-																										   class="tooltip-error" data-rel="tooltip"
-																										   title="Delete"> <span class="red">
+                                                                                                    <li><a href="#"
+                                                                                                           class="tooltip-error"
+                                                                                                           data-rel="tooltip"
+                                                                                                           title="Delete"> <span
+                                                                                                            class="red">
 																																		<i
-																																				class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                                                                                                class="ace-icon fa fa-trash-o bigger-120"></i>
 																																</span>
-																									</a></li>
-																								</ul>
-																							</div>
-																						</div>
-																					</div>
-																				</td>
-																			</tr>
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<!-- /.span -->
-													</div>
-												</div>
-											</div>
-											<div class="widget-body">
-												<div class="widget-main">
-													<div class="row">
-														<div class="col-xs-12">
-															<div class="widget-box">
-																<div class="widget-header">
-																	<h4 class="widget-title">Bilder</h4>
-																</div>
-																<div class="widget-body">
-																	<div class="widget-main">
-																		<table id="picture-table"
-																			   class="table  table-bordered table-hover">
-																			<thead>
-																			<tr>
+                                                                                                    </a></li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.span -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="widget-body">
+                                                <form class="form-horizontal"
+                                                      th:action="@{/editorder}" method="post"
+                                                      enctype="multipart/form-data">
+                                                    <input type="hidden" name="siteid" th:value="${site.getId()}"/>
+                                                    <div class="widget-main">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="widget-box">
+                                                                    <div class="widget-header">
+                                                                        <h4 class="widget-title">Bilder</h4>
+                                                                    </div>
+                                                                    <div class="widget-body">
 
-																				<th>ID</th>
-																				<th>Name</th>
-																				<th></th>
-																			</tr>
-																			</thead>
+                                                                        <div class="widget-main">
+                                                                            <table id="picture-table" class="table  table-bordered table-hover">
+                                                                                <thead>
+                                                                                <tr>
 
-																			<tbody>
-																			<tr th:each="sb : ${site.getPictures()}">
-																				<td th:text="${{sb.id}}">13/01/2011</td>
-																				<td
-																						th:text="${{sb.getNames().get(0).getString()}}">13/01/2011</td>
+                                                                                    <th>ID</th>
+                                                                                    <th>Name</th>
+                                                                                    <th>Reihenfolge</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                                </thead>
 
-																				<td>
-																					<div class="hidden-sm hidden-xs btn-group">
+                                                                                <tbody>
+                                                                                <tr th:each="sb : ${site.getPictures()}">
+                                                                                    <td th:text="${{sb.id}}">
+                                                                                        13/01/2011
+                                                                                    </td>
+                                                                                    <td
+                                                                                            th:text="${{sb.getNames().get(0).getString()}}">
+                                                                                        13/01/2011
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <select name="orders[]"
+                                                                                                id="order"
+                                                                                                class="col-xs-12 col-sm-6">
+                                                                                            <option th:each="id : ${ids}"
+                                                                                                    th:text="${id}"
+                                                                                                    th:value="${id}"
+                                                                                                    th:selected="${id == sb.getPosition()}">
+                                                                                                test
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <div class="hidden-sm hidden-xs btn-group">
 
 
-																						<a th:href='${"/siteedit/" + site.id + "/editpicture/" + sb.id}'> <button class="btn btn-xs btn-info">
-																							<i class="ace-icon fa fa-pencil bigger-120"></i>
-																						</button></a>
+                                                                                            <a th:href='${"/siteedit/" + site.id + "/editpicture/" + sb.id}'>
+                                                                                                <button class="btn btn-xs btn-info">
+                                                                                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                                                                </button>
+                                                                                            </a>
 
-																						<a th:href='${"/deletepicture/"+site.id+"/"+sb.id}'><button
-																								class="btn btn-xs btn-danger">
-																							<i
-																									class="ace-icon fa fa-trash-o bigger-120"></i>
-																						</button></a>
+                                                                                            <a th:href='${"/deletepicture/"+site.id+"/"+sb.id}'>
+                                                                                                <button
+                                                                                                        class="btn btn-xs btn-danger">
+                                                                                                    <i
+                                                                                                            class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                                                </button>
+                                                                                            </a>
 
-																					</div>
+                                                                                        </div>
 
-																					<div class="hidden-md hidden-lg">
-																						<div class="inline pos-rel">
-																							<button
-																									class="btn btn-minier btn-primary dropdown-toggle"
-																									data-toggle="dropdown"
-																									data-position="auto">
-																								<i
-																										class="ace-icon fa fa-cog icon-only bigger-110"></i>
-																							</button>
+                                                                                        <div class="hidden-md hidden-lg">
+                                                                                            <div class="inline pos-rel">
+                                                                                                <button
+                                                                                                        class="btn btn-minier btn-primary dropdown-toggle"
+                                                                                                        data-toggle="dropdown"
+                                                                                                        data-position="auto">
+                                                                                                    <i
+                                                                                                            class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                                                                </button>
 
-																							<ul
-																									class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-																								<li><a href="#" class="tooltip-info"
-																									   data-rel="tooltip" title="View"> <span
-																										class="blue"> <i
-																										class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                                                                <ul
+                                                                                                        class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                                                                    <li><a href="#"
+                                                                                                           class="tooltip-info"
+                                                                                                           data-rel="tooltip"
+                                                                                                           title="View"> <span
+                                                                                                            class="blue"> <i
+                                                                                                            class="ace-icon fa fa-search-plus bigger-120"></i>
 																															</span>
-																								</a></li>
+                                                                                                    </a></li>
 
-																								<li><a href="#"
-																									   class="tooltip-success"
-																									   data-rel="tooltip" title="Edit"> <span
-																										class="green"> <i
-																										class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                                                    <li><a href="#"
+                                                                                                           class="tooltip-success"
+                                                                                                           data-rel="tooltip"
+                                                                                                           title="Edit"> <span
+                                                                                                            class="green"> <i
+                                                                                                            class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																															</span>
-																								</a></li>
+                                                                                                    </a></li>
 
-																								<li><a href="#" class="tooltip-error"
-																									   data-rel="tooltip" title="Delete"> <span
-																										class="red"> <i
-																										class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                                                    <li><a href="#"
+                                                                                                           class="tooltip-error"
+                                                                                                           data-rel="tooltip"
+                                                                                                           title="Delete"> <span
+                                                                                                            class="red"> <i
+                                                                                                            class="ace-icon fa fa-trash-o bigger-120"></i>
 																															</span>
-																								</a></li>
-																							</ul>
-																						</div>
-																					</div>
-																				</td>
-																			</tr>
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<!-- /.span -->
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /.widget-body -->
-							</div>
+                                                                                                    </a></li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <button class="btn btn-success btn-next"
+                                                                                    type="submit" name="button"
+                                                                                    value="finish">
+                                                                                Reihenfolge speichern <i
+                                                                                    class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.span -->
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.widget-body -->
+                        </div>
 
-							<!-- PAGE CONTENT ENDS -->
-						</div>
-						<!-- /.col -->
-					</div>
-					<!-- /.row -->
-				</div>
-				<!-- /.page-content -->
-			</div>
-		</div>
-		<!-- /.main-content -->
+                        <!-- PAGE CONTENT ENDS -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.page-content -->
+        </div>
+    </div>
+    <!-- /.main-content -->
 
-		<div th:replace="fragments/footer :: footer" />
-	</div>
-	<div th:replace="fragments/footer :: js " />
+    <div th:replace="fragments/footer :: footer"/>
+</div>
+<div th:replace="fragments/footer :: js "/>
 
-	<script th:src="@{/js/wizard.min.js}" src="../../js/wizard.min.js"></script>
-	<script th:src="@{/js/jquery.validate.min.js}"
-		src="../../js/jquery.validate.min.js"></script>
-	<script th:src="@{/js/jquery-additional-methods.min.js}"
-		src="../../js/jquery-additional-methods.min.js"></script>
-	<script th:src="@{/js/bootbox.js}" src="../../js/bootbox.js"></script>
+<script th:src="@{/js/wizard.min.js}" src="../../js/wizard.min.js"></script>
+<script th:src="@{/js/jquery.validate.min.js}"
+        src="../../js/jquery.validate.min.js"></script>
+<script th:src="@{/js/jquery-additional-methods.min.js}"
+        src="../../js/jquery-additional-methods.min.js"></script>
+<script th:src="@{/js/bootbox.js}" src="../../js/bootbox.js"></script>
 
-	<script type="text/javascript">
-		jQuery
-				.extend(
-						jQuery.validator.messages,
-						{
-							required : "Dieses Feld muss ausgefüllt werden",
-							remote : "Please fix this field.",
-							email : "Please enter a valid email address.",
-							url : "Please enter a valid URL.",
-							date : "Please enter a valid date.",
-							dateISO : "Please enter a valid date (ISO).",
-							number : "Please enter a valid number.",
-							digits : "Please enter only digits.",
-							creditcard : "Please enter a valid credit card number.",
-							equalTo : "Please enter the same value again.",
-							accept : "Please enter a value with a valid extension.",
-							maxlength : jQuery.validator
-									.format("Bitte nicht mehr als {0} Zeichen eingeben."),
-							minlength : jQuery.validator
-									.format("Please enter at least {0} characters."),
-							rangelength : jQuery.validator
-									.format("Please enter a value between {0} and {1} characters long."),
-							range : jQuery.validator
-									.format("Please enter a value between {0} and {1}."),
-							max : jQuery.validator
-									.format("Please enter a value less than or equal to {0}."),
-							min : jQuery.validator
-									.format("Please enter a value greater than or equal to {0}.")
-						});
-	</script>
-	<script type="text/javascript">
-        jQuery.validator.addMethod("double", function (value, element) {
-            return this.optional(element) || /^\d*\.\d*$/.test(value);
-        }, "Wert muss mit einem Punkt getrennt werden");
+<script type="text/javascript">
+    jQuery
+        .extend(
+            jQuery.validator.messages,
+            {
+                required: "Dieses Feld muss ausgefüllt werden",
+                remote: "Please fix this field.",
+                email: "Please enter a valid email address.",
+                url: "Please enter a valid URL.",
+                date: "Please enter a valid date.",
+                dateISO: "Please enter a valid date (ISO).",
+                number: "Please enter a valid number.",
+                digits: "Please enter only digits.",
+                creditcard: "Please enter a valid credit card number.",
+                equalTo: "Please enter the same value again.",
+                accept: "Please enter a value with a valid extension.",
+                maxlength: jQuery.validator
+                    .format("Bitte nicht mehr als {0} Zeichen eingeben."),
+                minlength: jQuery.validator
+                    .format("Please enter at least {0} characters."),
+                rangelength: jQuery.validator
+                    .format("Please enter a value between {0} and {1} characters long."),
+                range: jQuery.validator
+                    .format("Please enter a value between {0} and {1}."),
+                max: jQuery.validator
+                    .format("Please enter a value less than or equal to {0}."),
+                min: jQuery.validator
+                    .format("Please enter a value greater than or equal to {0}.")
+            });
+</script>
+<script type="text/javascript">
+    jQuery.validator.addMethod("double", function (value, element) {
+        return this.optional(element) || /^\d*\.\d*$/.test(value);
+    }, "Wert muss mit einem Punkt getrennt werden");
 
-        jQuery.validator.addMethod("image", function (value, element) {
-            return this.optional(element) || /^\d*\.\d*$/.test(value);
-        }, "Wert muss mit einem Punkt getrennt werden");
+    jQuery.validator.addMethod("image", function (value, element) {
+        return this.optional(element) || /^\d*\.\d*$/.test(value);
+    }, "Wert muss mit einem Punkt getrennt werden");
 
-        jQuery(function($) {
-			$('[data-rel=tooltip]').tooltip();
-			//documentation : http://docs.jquery.com/Plugins/Validation/validate
+    jQuery(function ($) {
+        $('[data-rel=tooltip]').tooltip();
+        //documentation : http://docs.jquery.com/Plugins/Validation/validate
 
-			$('#validation-form')
-					.validate(
-							{
-								errorElement : 'div',
-								errorClass : 'help-block',
-								focusInvalid : false,
-								ignore : "",
-								rules : {
-                                    nameDE : {
-                                        required : true,
-                                        maxlength: 27
-                                    },
-                                    nameEN : {
-                                        required : true,
-                                        maxlength: 27
-                                    },
-                                    nameFR : {
-                                        required : true,
-                                        maxlength: 27
-                                    },
-                                    descriptionDE : {
-                                        required : true,
-                                        maxlength: 36
-                                    },
-                                    descriptionEN : {
-                                        required : true,
-                                        maxlength: 36
-                                    },
-                                    descriptionFR : {
-                                        required : true,
-                                        maxlength: 36
-                                    },
-									longitude : {
-										double: "required",
-										required : true
-									},
-									latitude : {
-                                        double: "required",
-										required : true
-									},
-                                    audio_en: {
-                                        extension: "mp3"
+        $('#validation-form')
+            .validate(
+                {
+                    errorElement: 'div',
+                    errorClass: 'help-block',
+                    focusInvalid: false,
+                    ignore: "",
+                    rules: {
+                        nameDE: {
+                            required: true,
+                            maxlength: 27
+                        },
+                        nameEN: {
+                            required: true,
+                            maxlength: 27
+                        },
+                        nameFR: {
+                            required: true,
+                            maxlength: 27
+                        },
+                        descriptionDE: {
+                            required: true,
+                            maxlength: 36
+                        },
+                        descriptionEN: {
+                            required: true,
+                            maxlength: 36
+                        },
+                        descriptionFR: {
+                            required: true,
+                            maxlength: 36
+                        },
+                        longitude: {
+                            double: "required",
+                            required: true
+                        },
+                        latitude: {
+                            double: "required",
+                            required: true
+                        },
+                        audio_en: {
+                            extension: "mp3"
 
-                                    },
-                                    audio_de: {
-                                        extension: "mp3"
+                        },
+                        audio_de: {
+                            extension: "mp3"
 
-                                    },
-                                    audio_fr: {
-                                        extension: "mp3"
+                        },
+                        audio_fr: {
+                            extension: "mp3"
 
-                                    },
-                                    picture: {
-                                        extension: "png|jpg|jpeg"
+                        },
+                        picture: {
+                            extension: "png|jpg|jpeg"
 
-                                    },
-                                    category: {
-                                        required: true
-                                    }
-								},
+                        },
+                        category: {
+                            required: true
+                        }
+                    },
 
-								highlight : function(e) {
-									$(e).closest('.form-group').removeClass(
-											'has-info').addClass('has-error');
-								},
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass(
+                            'has-info').addClass('has-error');
+                    },
 
-								success : function(e) {
-									$(e).closest('.form-group').removeClass(
-											'has-error');//.addClass('has-info');
-									$(e).remove();
-								},
+                    success: function (e) {
+                        $(e).closest('.form-group').removeClass(
+                            'has-error');//.addClass('has-info');
+                        $(e).remove();
+                    },
 
-								errorPlacement : function(error, element) {
-									if (element.is('input[type=checkbox]')
-											|| element.is('input[type=radio]')) {
-										var controls = element
-												.closest('div[class*="col-"]');
-										if (controls.find(':checkbox,:radio').length > 1)
-											controls.append(error);
-										else
-											error.insertAfter(element.nextAll(
-													'.lbl:eq(0)').eq(0));
-									} else if (element.is('.select2')) {
-										error
-												.insertAfter(element
-														.siblings('[class*="select2-container"]:eq(0)'));
-									} else if (element.is('.chosen-select')) {
-										error
-												.insertAfter(element
-														.siblings('[class*="chosen-container"]:eq(0)'));
-									} else
-										error.insertAfter(element.parent());
-								},
+                    errorPlacement: function (error, element) {
+                        if (element.is('input[type=checkbox]')
+                            || element.is('input[type=radio]')) {
+                            var controls = element
+                                .closest('div[class*="col-"]');
+                            if (controls.find(':checkbox,:radio').length > 1)
+                                controls.append(error);
+                            else
+                                error.insertAfter(element.nextAll(
+                                    '.lbl:eq(0)').eq(0));
+                        } else if (element.is('.select2')) {
+                            error
+                                .insertAfter(element
+                                    .siblings('[class*="select2-container"]:eq(0)'));
+                        } else if (element.is('.chosen-select')) {
+                            error
+                                .insertAfter(element
+                                    .siblings('[class*="chosen-container"]:eq(0)'));
+                        } else
+                            error.insertAfter(element.parent());
+                    },
 
-								submitHandler : function(form) {
-									form.submit();
-								},
-								invalidHandler : function(form) {
-								}
-							});
+                    submitHandler: function (form) {
+                        form.submit();
+                    },
+                    invalidHandler: function (form) {
+                    }
+                });
 
-			$('#modal-wizard-container').ace_wizard();
-			$('#modal-wizard .wizard-actions .btn[data-dismiss=modal]')
-					.removeAttr('disabled');
+        $('#modal-wizard-container').ace_wizard();
+        $('#modal-wizard .wizard-actions .btn[data-dismiss=modal]')
+            .removeAttr('disabled');
 
-			/**
-			 $('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
+        /**
+         $('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
 						$(this).closest('form').validate().element($(this));
 					});
 
-			 $('#mychosen').chosen().on('change', function(ev) {
+         $('#mychosen').chosen().on('change', function(ev) {
 						$(this).closest('form').validate().element($(this));
 					});
-			 */
+         */
 
 
 
-			$('#id-input-file-1 , #id-input-file-2').ace_file_input({
-				no_file : 'No File ...',
-				btn_choose : 'Choose',
-				btn_change : 'Change',
-				droppable : false,
-				onchange : null,
-				thumbnail : false
-			//| true | large
-			//whitelist:'gif|png|jpg|jpeg'
-			//blacklist:'exe|php'
-			//onchange:''
-			//
-			});
-			//pre-show a file name, for example a previously selected file
-			//$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
+        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
+            no_file: 'No File ...',
+            btn_choose: 'Choose',
+            btn_change: 'Change',
+            droppable: false,
+            onchange: null,
+            thumbnail: false
+            //| true | large
+            //whitelist:'gif|png|jpg|jpeg'
+            //blacklist:'exe|php'
+            //onchange:''
+            //
+        });
+        //pre-show a file name, for example a previously selected file
+        //$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
 
-            $('#id-input-audio-de').ace_file_input({
-                style: 'well',
-                btn_choose: 'Deutsche Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
-                btn_change: null,
-                no_icon: 'ace-icon fa fa-cloud-upload',
-                droppable: true,
-                thumbnail: 'large',//large | fit
-                whitelist:'kml'
-                //,icon_remove:null//set null, to hide remove/reset button
-                /**,before_change:function(files, dropped) {
+        $('#id-input-audio-de').ace_file_input({
+            style: 'well',
+            btn_choose: 'Deutsche Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist: 'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
 						//Check an example below
 						//or examples/file-upload.html
 						return true;
 					}*/
-                /**,before_remove : function() {
+            /**,before_remove : function() {
 						return true;
 					}*/
-                ,
-                preview_error : function(filename, error_code) {
-                    //name of the file that failed
-                    //error_code values
-                    //1 = 'FILE_LOAD_FAILED',
-                    //2 = 'IMAGE_LOAD_FAILED',
-                    //3 = 'THUMBNAIL_FAILED'
-                    //alert(error_code);
-                }
+            ,
+            preview_error: function (filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
 
-            }).on('change', function(){
-                //console.log($(this).data('ace_input_files'));
-                //console.log($(this).data('ace_input_method'));
-            });
-            $('#id-input-audio-fr').ace_file_input({
-                style: 'well',
-                btn_choose: 'Französische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
-                btn_change: null,
-                no_icon: 'ace-icon fa fa-cloud-upload',
-                droppable: true,
-                thumbnail: 'large',//large | fit
-                whitelist:'kml'
-                //,icon_remove:null//set null, to hide remove/reset button
-                /**,before_change:function(files, dropped) {
+        }).on('change', function () {
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-audio-fr').ace_file_input({
+            style: 'well',
+            btn_choose: 'Französische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist: 'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
 						//Check an example below
 						//or examples/file-upload.html
 						return true;
 					}*/
-                /**,before_remove : function() {
+            /**,before_remove : function() {
 						return true;
 					}*/
-                ,
-                preview_error : function(filename, error_code) {
-                    //name of the file that failed
-                    //error_code values
-                    //1 = 'FILE_LOAD_FAILED',
-                    //2 = 'IMAGE_LOAD_FAILED',
-                    //3 = 'THUMBNAIL_FAILED'
-                    //alert(error_code);
-                }
+            ,
+            preview_error: function (filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
 
-            }).on('change', function(){
-                //console.log($(this).data('ace_input_files'));
-                //console.log($(this).data('ace_input_method'));
-            });
-            $('#id-input-audio-en').ace_file_input({
-                style: 'well',
-                btn_choose: 'Englische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
-                btn_change: null,
-                no_icon: 'ace-icon fa fa-cloud-upload',
-                droppable: true,
-                thumbnail: 'large',//large | fit
-                whitelist:'kml'
-                //,icon_remove:null//set null, to hide remove/reset button
-                /**,before_change:function(files, dropped) {
+        }).on('change', function () {
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-audio-en').ace_file_input({
+            style: 'well',
+            btn_choose: 'Englische Audiodatei hier rein ziehen oder klicken um sie auszuwählen',
+            btn_change: null,
+            no_icon: 'ace-icon fa fa-cloud-upload',
+            droppable: true,
+            thumbnail: 'large',//large | fit
+            whitelist: 'kml'
+            //,icon_remove:null//set null, to hide remove/reset button
+            /**,before_change:function(files, dropped) {
 						//Check an example below
 						//or examples/file-upload.html
 						return true;
 					}*/
-                /**,before_remove : function() {
+            /**,before_remove : function() {
 						return true;
 					}*/
-                ,
-                preview_error : function(filename, error_code) {
-                    //name of the file that failed
-                    //error_code values
-                    //1 = 'FILE_LOAD_FAILED',
-                    //2 = 'IMAGE_LOAD_FAILED',
-                    //3 = 'THUMBNAIL_FAILED'
-                    //alert(error_code);
-                }
+            ,
+            preview_error: function (filename, error_code) {
+                //name of the file that failed
+                //error_code values
+                //1 = 'FILE_LOAD_FAILED',
+                //2 = 'IMAGE_LOAD_FAILED',
+                //3 = 'THUMBNAIL_FAILED'
+                //alert(error_code);
+            }
 
-            }).on('change', function(){
-                //console.log($(this).data('ace_input_files'));
-                //console.log($(this).data('ace_input_method'));
-            });
-			$('#id-input-picture')
-					.ace_file_input(
-							{
-								style : 'well',
-								btn_choose : '.Bild hier rein ziehen oder klicken um es auszuwählen',
-								btn_change : null,
-								no_icon : 'ace-icon fa fa-cloud-upload',
-								droppable : true,
-								thumbnail : 'large',//large | fit
-								whitelist : 'kml'
-								//,icon_remove:null//set null, to hide remove/reset button
-								/**,before_change:function(files, dropped) {
+        }).on('change', function () {
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#id-input-picture')
+            .ace_file_input(
+                {
+                    style: 'well',
+                    btn_choose: '.Bild hier rein ziehen oder klicken um es auszuwählen',
+                    btn_change: null,
+                    no_icon: 'ace-icon fa fa-cloud-upload',
+                    droppable: true,
+                    thumbnail: 'large',//large | fit
+                    whitelist: 'kml'
+                    //,icon_remove:null//set null, to hide remove/reset button
+                    /**,before_change:function(files, dropped) {
 											//Check an example below
 											//or examples/file-upload.html
 											return true;
 										}*/
-								/**,before_remove : function() {
+                    /**,before_remove : function() {
 											return true;
 										}*/
-								,
-								preview_error : function(filename, error_code) {
-									//name of the file that failed
-									//error_code values
-									//1 = 'FILE_LOAD_FAILED',
-									//2 = 'IMAGE_LOAD_FAILED',
-									//3 = 'THUMBNAIL_FAILED'
-									//alert(error_code);
-								}
+                    ,
+                    preview_error: function (filename, error_code) {
+                        //name of the file that failed
+                        //error_code values
+                        //1 = 'FILE_LOAD_FAILED',
+                        //2 = 'IMAGE_LOAD_FAILED',
+                        //3 = 'THUMBNAIL_FAILED'
+                        //alert(error_code);
+                    }
 
-							}).on('change', function() {
-						//console.log($(this).data('ace_input_files'));
-						//console.log($(this).data('ace_input_method'));
-					});
+                }).on('change', function () {
+            //console.log($(this).data('ace_input_files'));
+            //console.log($(this).data('ace_input_method'));
+        });
+        $('#order').on('change', function (e) {
+            var tralse = true;
+            var selectRound_arr = []; // for contestant name
+            $('.selectRound').each(function (k, v) {
+                var getVal = $(v).val();
+                if ($.trim(selectRound_arr.indexOf(getVal)) != -1) { //
+                    tralse = false;
+                    //it should be if value 1 = value 1 then alert
+                    //But -select- = -select- are still keep validating, how to prevent this
+                    alert('Contestant cannot be same name');
+                    return false;
+                } else {
+                    selectRound_arr.push($(v).val());
+                }
 
-        })
-	</script>
+            });
+            if (!tralse) {
+                return false;
+            }
+        });
 
+    })
+</script>
 
 
 </body>
