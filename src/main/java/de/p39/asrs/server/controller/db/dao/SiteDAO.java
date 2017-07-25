@@ -17,6 +17,7 @@ public class SiteDAO{
 	private CrudFacade cf;
 	
 	public SiteDAO(CrudFacade cf) {
+		super();
 		this.cf=cf;
 	}
 
