@@ -69,9 +69,8 @@ public class MediaController {
         }
     }
 
-    @RequestMapping(value = "/audio/example", method = RequestMethod.GET)
+    @RequestMapping(value = "/audio/example", method = RequestMethod.GET, produces = "audio/mpeg")
     public StreamingResponseBody audioExample() {
-
         return new StreamingResponseBody() {
             @Override
             public void writeTo(OutputStream outputStream) throws IOException {
@@ -79,10 +78,9 @@ public class MediaController {
                 IOUtils.copy(is, outputStream);
             }
         };
-
     }
 
-    @RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
     public HttpEntity<byte[]> audioByID(@PathVariable Long id) {
         Path path = Paths.get(dao.getAudioById(id).getPath());
         try {
@@ -114,5 +112,5 @@ public class MediaController {
     public void getAudioMedia(HttpServletRequest request, HttpServletResponse response) throws IOException{
         byte[] bytes = Files.readAllBytes(Paths.get("resources/media/audio/ElectricGuitar.mp3"));
         response.getOutputStream().write(bytes);
-    }
+    }*/
 }
