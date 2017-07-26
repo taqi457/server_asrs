@@ -103,9 +103,16 @@ public class HomeController {
 
     @GetMapping("/siteedit/{id}")
     public String editsite(Model model, @PathVariable Long id){
-        model.addAttribute("site", SiteDaoInterface.getSiteById(id));
+        Site s = SiteDaoInterface.getSiteById(id);
+        model.addAttribute("site", s);
         model.addAttribute("SiteInfo", new SiteInfo());
         model.addAttribute("category", SiteCategory.class);
+        ArrayList ints = new ArrayList();
+        for(int i = 1; i <= s.getPictures().size(); i++){
+            ints.add(i);
+        }
+        model.addAttribute("ids", ints.toArray());
+
         return "siteedit";
     }
 

@@ -23,6 +23,7 @@ import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.exceptions.InternalServerError;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
@@ -107,5 +108,11 @@ public class MediaController {
         responseHeaders.add("Date", "Mon, 24 Jul 2017 12:00:00 GMT");
 
         return new HttpEntity<>(documentBody, responseHeaders);
+    }
+    
+    @RequestMapping(value="/audio/test", method=RequestMethod.GET)
+    public void getAudioMedia(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        byte[] bytes = Files.readAllBytes(Paths.get("resources/media/audio/ElectricGuitar.mp3"));
+        response.getOutputStream().write(bytes);
     }
 }
