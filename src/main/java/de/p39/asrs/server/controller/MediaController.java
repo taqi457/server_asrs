@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.p39.asrs.server.controller.db.dao.MediumDAO;
 import de.p39.asrs.server.controller.exceptions.InternalServerError;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -68,12 +69,15 @@ public class MediaController {
     }
 
     @RequestMapping(value = "/audio/example", method = RequestMethod.GET)
-    public HttpEntity<byte[]> audioExample() {
-        try {
-            return getAudioResponse("resources/media/audio/ElectricGuitar.mp3");
-        } catch (IOException ex) {
-            throw new InternalServerError("Could not load audio. Contact server admin");
-        }
+    public StreamingResponseBody audioExample() {
+
+        return new StreamingResponseBody() {
+            @Override
+            public void writeTo(OutputStream outputStream) throws IOException {
+                FileInputStream is = new FileInputStream("resources/media/audio/ElectricGuitar.mp3");
+                IOUtils.copy(is, outputStream);
+            }
+        };
 
     }
 
