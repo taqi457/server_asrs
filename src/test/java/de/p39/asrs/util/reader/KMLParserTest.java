@@ -22,7 +22,7 @@ public class KMLParserTest {
     public void testSbTour() {
         Route r = new Route();
         try {
-            new KMLParser(null).parseKml("src/main/resources/kml_testfiles/saarbrucken_tour.kml", r);
+            new KMLParser().parseKml("src/main/resources/kml_testfiles/saarbrucken_tour.kml", r);
         } catch (JAXBException e) {
             e.printStackTrace();
             fail("An error occured when parsing kml");
@@ -91,7 +91,7 @@ public class KMLParserTest {
     @Test
     public void testNullInput() {
         try {
-            new KMLParser(null).parseKml(null, null);
+            new KMLParser().parseKml(null, null);
         } catch (JAXBException e) {
 
         }
@@ -101,7 +101,7 @@ public class KMLParserTest {
     public void testEmptyPath() {
         Route r = new Route();
         try {
-            new KMLParser(null).parseKml("", r);
+            new KMLParser().parseKml("", r);
         } catch (JAXBException e) {
 
         }
@@ -111,7 +111,7 @@ public class KMLParserTest {
     public void testBrokenKML() {
         Route r = new Route();
         try {
-            new KMLParser(null).parseKml("src/main/resources/kml_testfiles/broken1.kml", r);
+            new KMLParser().parseKml("src/main/resources/kml_testfiles/broken1.kml", r);
         } catch (JAXBException e) {
 
         }
@@ -121,7 +121,7 @@ public class KMLParserTest {
     public void testBrokenKML2() {
         Route r = new Route();
         try {
-            new KMLParser(null).parseKml("src/main/resources/kml_testfiles/broken2.kml", r);
+            new KMLParser().parseKml("src/main/resources/kml_testfiles/broken2.kml", r);
         } catch (JAXBException e) {
 
         }
@@ -131,7 +131,7 @@ public class KMLParserTest {
     public void testBrokenKML3() {
         Route r = new Route();
         try {
-            new KMLParser(null).parseKml("src/main/resources/kml_testfiles/broken3.kml", r);
+            new KMLParser().parseKml("src/main/resources/kml_testfiles/broken3.kml", r);
         } catch (JAXBException e) {
 
         }
@@ -141,7 +141,7 @@ public class KMLParserTest {
     public void testBrokenKML4() {
         Route r = new Route();
         try {
-            new KMLParser(null).parseKml("src/main/resources/kml_testfiles/broken4.kml", r);
+            new KMLParser().parseKml("src/main/resources/kml_testfiles/broken4.kml", r);
         } catch (JAXBException e) {
 
         }
@@ -151,7 +151,7 @@ public class KMLParserTest {
     public void testBrokenKML5() {
         Route r = new Route();
         try {
-            new KMLParser(null).parseKml("src/main/resources/kml_testfiles/broken5.kml", r);
+            new KMLParser().parseKml("src/main/resources/kml_testfiles/broken5.kml", r);
         } catch (JAXBException e) {
 
         }
@@ -161,9 +161,20 @@ public class KMLParserTest {
     public void testBrokenKML6() {
         Route r = new Route();
         try {
-            new KMLParser(null).parseKml("src/main/resources/kml_testfiles/broken6.kml", r);
+            new KMLParser().parseKml("src/main/resources/kml_testfiles/broken6.kml", r);
         } catch (JAXBException e) {
 
+        }
+    }
+
+    @Test
+    public void testGoodKml() {
+        Route r = new Route();
+        try {
+            new KMLParser().parseKml("src/main/resources/kml_testfiles/Another_tour.kml", r);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            fail("An error occured when parsing kml");
         }
     }
 }

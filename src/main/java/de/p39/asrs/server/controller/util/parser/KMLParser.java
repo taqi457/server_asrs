@@ -73,7 +73,13 @@ public class KMLParser {
         if (features == null || features.isEmpty())
             throw new JAXBException(errorMsg + "Missing features in document");
 
-        parseFolder((FolderType) features.get(0).getValue(), route);
+        for(int i= 0; i<features.size();i++)
+            try {
+                parseFolder((FolderType) features.get(i).getValue(), route);
+            } catch (JAXBException e) {
+                System.out.println("Parser info: found bad folder.. skipping and try the next one.");
+            }
+
 
         //calculate other data from coords
         calculateLength(route);

@@ -46,8 +46,9 @@ dependencies {
 
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4'
     compile 'org.webjars:bootstrap:3.3.7'
-
     compile 'org.springframework:spring-context:4.3.8.RELEASE'
+
+    compile group: 'com.googlecode.soundlibs', name: 'mp3spi', version: '1.9.5.4'
     runtime('mysql:mysql-connector-java')
     testCompile('com.jayway.jsonpath:json-path')
 }

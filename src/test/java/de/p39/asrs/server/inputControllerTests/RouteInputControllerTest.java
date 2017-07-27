@@ -53,11 +53,10 @@ public class RouteInputControllerTest {
         audio_de = new MockMultipartFile("data", "example.mp3", "audio/mp3", "some xml".getBytes());
         picture = new MockMultipartFile("image", ".img", "application/json", data);
         storage = new FileSystemStorage();
-        sdao = new MockSiteDAO(cf);
         cdao = new MockCategoryDAO(cf);
         mdao = new MockMediaDAO(cf);
         rdao = new MockRouteDAO(cf);
-        controller = new RouteInputController(sdao, rdao, cdao, storage);
+        controller = new RouteInputController(rdao, cdao, storage);
     }
 
     @Test
