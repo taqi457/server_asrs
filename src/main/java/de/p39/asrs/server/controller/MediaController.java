@@ -69,18 +69,16 @@ public class MediaController {
         }
     }
 
-    @RequestMapping(value = "/audio/example", method = RequestMethod.GET, produces = "audio/mpeg")
-    public StreamingResponseBody audioExample() {
-        return new StreamingResponseBody() {
-            @Override
-            public void writeTo(OutputStream outputStream) throws IOException {
-                FileInputStream is = new FileInputStream("resources/media/audio/ElectricGuitar.mp3");
-                IOUtils.copy(is, outputStream);
-            }
-        };
+    @RequestMapping(value = "/audio/example", method = RequestMethod.GET)
+    public HttpEntity<byte[]> audioExample(HttpServletResponse response) {
+        try {
+            return getAudioResponse("resources/media/audio/ElectricGuitar.mp3");
+        } catch (IOException e) {
+            throw new InternalServerError("Could not load audio. Contact server admin");
+        }
     }
 
-   /* @RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/audio/{id}", method = RequestMethod.GET)
     public HttpEntity<byte[]> audioByID(@PathVariable Long id) {
         Path path = Paths.get(dao.getAudioById(id).getPath());
         try {
@@ -89,6 +87,7 @@ public class MediaController {
             throw new InternalServerError("Could not load audio. Contact server admin");
         }
     }
+
     // Helper
     private HttpEntity<byte[]> getAudioResponse(String path) throws IOException {
         // Put the file to the output stream
@@ -99,11 +98,8 @@ public class MediaController {
 
         // Set the headers
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Accept-Ranges", "bytes");
-        responseHeaders.add("Connection", "close");
         responseHeaders.add("Content-Length", Integer.toString(documentBody.length));
         responseHeaders.add("Content-Type", "audio/mpeg");
-        responseHeaders.add("Date", "Mon, 24 Jul 2017 12:00:00 GMT");
 
         return new HttpEntity<>(documentBody, responseHeaders);
     }
@@ -112,5 +108,5 @@ public class MediaController {
     public void getAudioMedia(HttpServletRequest request, HttpServletResponse response) throws IOException{
         byte[] bytes = Files.readAllBytes(Paths.get("resources/media/audio/ElectricGuitar.mp3"));
         response.getOutputStream().write(bytes);
-    }*/
+    }
 }

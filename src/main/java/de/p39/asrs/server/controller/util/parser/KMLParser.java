@@ -10,7 +10,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import de.p39.asrs.server.controller.db.dao.SiteDAO;
 import de.p39.asrs.server.model.Coordinate;
 import de.p39.asrs.server.model.LocaleName;
 import de.p39.asrs.server.model.Route;
@@ -38,14 +37,8 @@ public class KMLParser {
     private static final float speedByBike = 250.0f; // in meters per minute (= 15 km/h)
 
     private Unmarshaller unmarshaller;
-    private SiteDAO dao;
 
-    public KMLParser(SiteDAO dao) {
-        this.dao = dao;
-        init();
-    }
-
-    private void init() {
+    public KMLParser() {
         try {
             JAXBContext jaxbcontext = JAXBContext.newInstance("de.p39.asrs.server.controller.util.parser.kml");
             unmarshaller = jaxbcontext.createUnmarshaller();
@@ -56,7 +49,6 @@ public class KMLParser {
 
     /**
      * @param path The path to the KML file
-     * @return The parsed Route from the KML
      * @throws JAXBException when the syntax of the kml did not match
      */
     public void parseKml(String path, Route route) throws JAXBException {
@@ -147,18 +139,12 @@ public class KMLParser {
 
     private void insertSite(Route result, PlacemarkType placemark)
             throws JAXBException {
-        List<Site> sites = null;
-        Site site = null;
-        if (dao != null)
-            sites = dao.getSitesByName(placemark.getName());
-        if (sites == null || sites.isEmpty()) {
-            site = new Site();
-            LocaleName ln = new LocaleName();
-            ln.setLocale(Locale.GERMAN);
-            ln.setString(placemark.getName());
-            site.addLocaleName(ln);
-        } else
-            site = sites.get(0);
+        Site site = new Site();
+        LocaleName ln = new LocaleName();
+        ln.setLocale(Locale.GERMAN);
+        ln.setString(placemark.getName());
+        site.addLocaleName(ln);
+        site.setRoute(result.getId());
         PointType point =
                 (PointType) placemark.getAbstractGeometryGroup().getValue();
         if (point == null)
