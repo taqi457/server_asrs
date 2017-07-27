@@ -75,7 +75,6 @@ public class SiteInputController {
         return "redirect:/siteedit/" + site + "/";
     }
 
-
     @PostMapping("/newsite")
     public String handleSiteInfo(@ModelAttribute SiteInfo info, @RequestParam("audio_de") MultipartFile audio_de,
                                  @RequestParam("audio_en") MultipartFile audio_en, @RequestParam("audio_fr") MultipartFile audio_fr,

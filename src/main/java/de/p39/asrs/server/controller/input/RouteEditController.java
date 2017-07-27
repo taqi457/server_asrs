@@ -32,10 +32,10 @@ public class RouteEditController {
 
 
 	@Autowired
-	public RouteEditController(SiteDAO siteDAO, RouteDAO routeDAO, Storage storage, CategoryDAO cdao) {
+	public RouteEditController(RouteDAO routeDAO, Storage storage, CategoryDAO cdao) {
 		this.dao = routeDAO;
 		this.storageService = storage;
-		parser = new KMLParser(siteDAO);
+		parser = new KMLParser();
 		this.CategoryDaoInterface = cdao;
 
 	}

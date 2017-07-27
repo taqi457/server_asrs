@@ -59,7 +59,7 @@ public class RouteInputController {
 	private Route route;
 
 	@Autowired
-	public RouteInputController(SiteDAO siteDAO ,RouteDAO routeDAO, CategoryDAO cdao, Storage storage) {
+	public RouteInputController(RouteDAO routeDAO, CategoryDAO cdao, Storage storage) {
 		this.dao = routeDAO;
 		this.CategoryDaoInterface = cdao;
 		this.storageService = storage;
