@@ -45,6 +45,7 @@
                                     <tbody>
                                     <tr th:each="sb : ${allSites}">
                                         <td th:text="${{sb.id}}">13/01/2011</td>
+                                        <div th:if=“${not #lists.isEmpty(sb.getNames())}“>
                                         <td th:text="${{sb.getNames().get(0).getString()}}">13/01/2011</td>
                                         <td th:if="${sb.isCompleted()}"><span class="label label-sm label-success">Vollständig</span></td>
                                         <td th:if="${!sb.isCompleted()}"><span class="label label-sm label-warning">Unvollständig</span></td>

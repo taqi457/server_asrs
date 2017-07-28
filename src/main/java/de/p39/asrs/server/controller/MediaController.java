@@ -70,7 +70,7 @@ public class MediaController {
     }
 
     @RequestMapping(value = "/audio/example", method = RequestMethod.GET)
-    public HttpEntity<byte[]> audioExample(HttpServletResponse response) {
+    public HttpEntity<byte[]> audioExample() {
         try {
             return getAudioResponse("resources/media/audio/ElectricGuitar.mp3");
         } catch (IOException e) {
@@ -102,11 +102,5 @@ public class MediaController {
         responseHeaders.add("Content-Type", "audio/mpeg");
 
         return new HttpEntity<>(documentBody, responseHeaders);
-    }
-    
-    @RequestMapping(value="/audio/test", method=RequestMethod.GET)
-    public void getAudioMedia(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        byte[] bytes = Files.readAllBytes(Paths.get("resources/media/audio/ElectricGuitar.mp3"));
-        response.getOutputStream().write(bytes);
     }
 }
