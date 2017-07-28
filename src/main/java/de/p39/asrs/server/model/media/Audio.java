@@ -41,7 +41,7 @@ public class Audio extends NamedEntity {
 
     private String path;
 
-    private Long duration;
+    private long duration;
 
     public Audio() {
         super();
@@ -62,7 +62,7 @@ public class Audio extends NamedEntity {
         try {
             File file = new File(path);
             AudioFileFormat baseFileFormat = mpegAudioFileReader.getAudioFileFormat(file);
-            duration = (Long) baseFileFormat.properties().get("duration") / 1000; //convert from micro sec to ms
+            duration = (long) baseFileFormat.properties().get("duration") / 1000; //convert from micro sec to ms
 
         } catch (IOException | UnsupportedAudioFileException e) {
             duration = 0L;
