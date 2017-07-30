@@ -15,8 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 import org.hibernate.annotations.Fetch;
@@ -61,9 +60,16 @@ public class Audio extends NamedEntity {
         this.path = path;
         try {
             File file = new File(path);
-            AudioFileFormat baseFileFormat = mpegAudioFileReader.getAudioFileFormat(file);
-            duration = (long) baseFileFormat.properties().get("duration") / 1000; //convert from micro sec to ms
-
+            if (path.endsWith(".wav")) {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+                AudioFormat format = audioInputStream.getFormat();
+                duration = Math.round(file.length() / format.getSampleRate() / (format.getSampleSizeInBits() / 8.0) / format.getChannels() * 1000); // convert from seconds to ms
+            } else if (path.endsWith(".mp3")) {
+                AudioFileFormat baseFileFormat = mpegAudioFileReader.getAudioFileFormat(file);
+                duration = (long) baseFileFormat.properties().get("duration") / 1000; //convert from micro sec to ms
+            } else {
+                duration = 0L;
+            }
         } catch (IOException | UnsupportedAudioFileException e) {
             duration = 0L;
         }

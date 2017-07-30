@@ -150,7 +150,6 @@ public class KMLParser {
         ln.setLocale(Locale.GERMAN);
         ln.setString(placemark.getName());
         site.addLocaleName(ln);
-        site.setRoute(result.getId());
         PointType point =
                 (PointType) placemark.getAbstractGeometryGroup().getValue();
         if (point == null)

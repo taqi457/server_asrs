@@ -122,13 +122,13 @@ public class RouteInputController {
 			}*/
 			this.addInfo(route, info);
 			this.uploadMedia(route, audios);
-			Route new_route = this.dao.updateRoute(route);
-			for(Site s : new_route.getSites()){
-				s.setRoute(new_route.getId());
+			route = this.dao.instertRoute(route);
+			for(Site s : route.getSites()){
+				s.setRoute(route.getId());
 			}
-			new_route = this.dao.updateRoute(new_route);
+			route = this.dao.updateRoute(route);
 			route = null;
-			return new_route.getId();
+			return route.getId();
 
 		}
 		return 0;
@@ -165,7 +165,6 @@ public class RouteInputController {
 			RedirectAttributes redirectAttributes, Model model) {
 		String path = storageService.store(file, FileType.KML);
 		Route r = new Route();
-		r = dao.instertRoute(r);
 		try {
 			parser.parseKml(path,r);
 		} catch (JAXBException e) {
