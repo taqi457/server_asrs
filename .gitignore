@@ -21,5 +21,4 @@ CreateRoute.useq
 .DS_Store
 src/main/resources/META-INF/persistence.xml
 src/main/resources/application.properties
-resources/
 keystore.p12

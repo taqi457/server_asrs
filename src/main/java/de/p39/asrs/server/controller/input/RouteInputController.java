@@ -105,10 +105,10 @@ public class RouteInputController {
 				this.dao.deleteRoute(existing.getId());
 			}*/
 			this.uploadMedia(route, audios);
-			this.addInfo(route, info);
+			route = this.addInfo(route, info);
 			route.setCategory(CategoryDaoInterface.getCategoryById(category));
 			route.isCompleted();
-			this.dao.updateRoute(route);
+			route = this.dao.updateRoute(route);
 			route = null;
 		}
 	}
@@ -127,18 +127,23 @@ public class RouteInputController {
 				s.setRoute(route.getId());
 			}
 			route = this.dao.updateRoute(route);
+			long routeid = route.getId();
 			route = null;
-			return route.getId();
+			return routeid;
 
 		}
 		return 0;
 	}
 
 	private void uploadMedia(Route route, MultipartFile[] audios) {
+
+		ArrayList<LocaleAudio> newaudios = new ArrayList<LocaleAudio>();
+
 		for (int i = 0; i < audios.length; i++) {
-			if (audios[i].isEmpty()) {
-				if(route.getAudios().size() >= i)
-				route.addLocaleAudio(route.getAudios().get(i));
+			if (route.getAudios() != null && audios[i].isEmpty()) {
+				if (route.getAudios().size() > i)
+					newaudios.add(route.getAudios().get(i));
+
 				continue;
 			}
 			String path = storageService.store(audios[i], FileType.AUDIO);
@@ -147,16 +152,15 @@ public class RouteInputController {
 			List<LocaleName> names = new ArrayList<>();
 			names.add(new LocaleName(Locale.GERMAN, audios[i].getOriginalFilename()));
 			audio.setNames(names);
-			if (i == 0){
-				route.addLocaleAudio(new LocaleAudio(Locale.GERMAN, audio));
-			}
-			else if (i == 1){
-				route.addLocaleAudio(new LocaleAudio(Locale.FRENCH, audio));
-			}
-			else if (i==2){
-				route.addLocaleAudio(new LocaleAudio(Locale.ENGLISH, audio));
+			if (i == 0) {
+				newaudios.add(new LocaleAudio(Locale.GERMAN, audio));
+			} else if (i == 1) {
+				newaudios.add(new LocaleAudio(Locale.FRENCH, audio));
+			} else if (i == 2) {
+				newaudios.add(new LocaleAudio(Locale.ENGLISH, audio));
 			}
 		}
+		route.setAudios(newaudios);
 
 	}
 

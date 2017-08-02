@@ -32,7 +32,7 @@ Route editieren                    </h1>
                                         <div class="step-pane active" data-step="1">
                                             <h3 class="lighter block green">Bitte füllen Sie die untenstehenden Felder aus</h3>
 
-                                            <form class="form-horizontal" id="validation-form" th:action="@{/editroute}" th:object="${RouteInfo}" method="post">
+                                            <form class="form-horizontal" id="validation-form" th:action="@{/editroute}" th:object="${RouteInfo}" method="post" enctype="multipart/form-data">
                                                 <input type="hidden" th:value="${route.getId()}" name="id" />
 
                                                 <div class="row">
@@ -393,61 +393,7 @@ Route editieren                    </h1>
                                     </div>
                             </div>
                         </div>
-                        <div class="widget-box">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <div id="fuelux-wizard-container">
 
-
-
-                                        <div class="step-content pos-rel">
-                                            <div class="step-pane active" data-step="1">
-
-                                                <form class="form-horizontal" action="/kml" enctype="multipart/form-data" method="POST">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="widget-box">
-                                                                <div class="widget-header">
-                                                                    <h4 class="widget-title">
-                                                                        Hochladen der .kml-Datei
-                                                                    </h4>
-                                                                </div>
-                                                                <div class="widget-body">
-                                                                    <div class="widget-main">
-
-                                                                        <div class="form-group">
-                                                                            <div class="col-xs-12">
-                                                                                <input type="file" id="id-input-file-3" name="kml"/>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-<br/>
-                                                    <div class="wizard-actions">
-                                                        <div class="text-center">
-                                                            <button class="btn btn-success btn-next" type="submit" >
-                                                                Abschicken
-                                                                <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-                                                            </button>
-                                                        </div>
-
-                                                    </div>
-
-                                                </form>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-                                </div><!-- /.widget-main -->
-                            </div><!-- /.widget-body -->
-                        </div>
 
                         <!-- PAGE CONTENT ENDS -->
                     </div><!-- /.col -->
