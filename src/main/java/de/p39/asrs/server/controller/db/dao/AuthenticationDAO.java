@@ -46,4 +46,6 @@ public class AuthenticationDAO {
 
 	public User update(User user) {return this.cf.update(user);}
 
+	public void deleteUser(Long id){ this.cf.delete(id, User.class);}
+
 }

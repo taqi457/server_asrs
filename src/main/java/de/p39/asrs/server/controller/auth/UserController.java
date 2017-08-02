@@ -72,18 +72,21 @@ public class UserController {
     }
 
     @GetMapping("newuser")
-    public String NewUserForm(Model model){
+    public String NewUserForm(Model model, @RequestParam("error") boolean error){
         model.addAttribute("UserInfo", new UserInfo());
+        model.addAttribute("error", error);
+
         return "userform";
     }
 
     @GetMapping("edituser/{id}")
-    public String EditUserForm(Model model, @PathVariable("id") Long id){
+    public String EditUserForm(Model model, @PathVariable("id") Long id, @RequestParam("error") boolean error){
         model.addAttribute("UserInfo", new UserInfo());
         User user = authDAO.findById(id);
         String username = user.getUsername();
         model.addAttribute("user", user);
         model.addAttribute("username", user.getUsername());
+        model.addAttribute("error", error);
         return "edituser";
     }
 
@@ -95,20 +98,32 @@ public class UserController {
 
             user.setPassword(bcrypt.encode(info.getPassword()));
         }
+        if (authDAO.findByUsername(info.getUsername())!= null && !authDAO.findByUsername(info.getUsername()).getId().equals(user.getId()))
+            return "redirect:/edituser/" + id + "?error=true";
         authDAO.update(user);
-        return "redirect:/edituser/" + id;
+        return "redirect:/edituser/" + id + "?error=false";
+    }
+
+    @GetMapping("deleteuser/{id}")
+    public String handleEdit(@PathVariable("id") Long id){
+        authDAO.deleteUser(id);
+        return "redirect:/useroverview";
     }
 
     @PostMapping("newuser")
     public String handleEdit(@ModelAttribute UserInfo info){
+        User testuser = authDAO.findByUsername(info.getUsername());
+        if (authDAO.findByUsername(info.getUsername())!= null)
+            return "redirect:/newuser?error=true";
         User user = new User();
         user.setUsername(info.getUsername());
         user.setPassword(bcrypt.encode(info.getPassword()));
         Set<Role> roles = new HashSet<>();
         roles.add(Role.USER);
         user.setRoles(roles);
+
         User new_user = authDAO.update(user);
-        return "redirect:/edituser/" + new_user.getId();
+        return "redirect:/edituser/" + new_user.getId() + "?error=false";
     }
 
 }

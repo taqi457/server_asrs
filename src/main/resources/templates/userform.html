@@ -38,12 +38,19 @@
                                                     <div class="col-md-12">
                                                         <div class="widget-box">
                                                             <div class="widget-header">
+
                                                                 <h4 class="widget-title">
                                                                     User-Informationen
                                                                 </h4>
                                                             </div>
                                                             <div class="widget-body">
                                                                 <div class="widget-main">
+                                                                    <div th:if="${error}">
+                                                                        <div class="alert alert-danger">
+                                                                            Username bereits vergeben.
+                                                                        </div>
+                                                                    </div>
+                                                                    <br/>
                                                                     <div style="align-content: center">
                                                                     <div class="form-group">
                                                                         <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="username">Username</label>

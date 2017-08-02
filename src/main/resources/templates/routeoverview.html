@@ -48,7 +48,7 @@
 											<td th:if="${sb.isCompleted()}"><span class="label label-sm label-success">Vollständig</span></td>
 											<td th:if="${!sb.isCompleted()}"><span class="label label-sm label-warning">Unvollständig</span></td>
 											<td>
-												<div class="hidden-sm hidden-xs btn-group">
+												<div class="btn-group">
 
 
 													<a th:href='${"/editroute/"+sb.id}'><button class="btn btn-xs btn-info">
